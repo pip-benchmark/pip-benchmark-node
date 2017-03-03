@@ -9,7 +9,7 @@ export class RandomDataGenerator {
         let count = Math.max(0, minCount + Math.random() * (maxCount - minCount));
 
         for (let index = 0; index < count; index++) 
-            result[index] = this.randomString(itemSize);
+            result.push(this.randomString(itemSize));
 
         return result;
     }
@@ -28,7 +28,7 @@ export class RandomDataGenerator {
     public randomByteArray(size: number): number[] {
         let result = [];
         for (let index = 0; index < size; index++) {
-            result[index] = this.randomInteger(0, 256);
+            result.push(this.randomInteger(0, 256));
         }
         return result;
     }
