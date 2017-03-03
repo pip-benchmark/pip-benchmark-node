@@ -3,3 +3,4 @@
 /.idea
 *.map
 /obj/test/**/*
+/data/test_write.properties

@@ -1,12 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Parameter_1 = require("./Parameter");
-const Benchmark_1 = require("./Benchmark");
 const DelegatedBenchmark_1 = require("./DelegatedBenchmark");
 class BenchmarkSuite {
     constructor(name, description) {
         this.parameters = {};
-        this.benchmarks = Benchmark_1.Benchmark[];
+        this.benchmarks = [];
         this.name = name;
         this.description = description;
     }

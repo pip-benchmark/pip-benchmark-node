@@ -5,8 +5,8 @@ export declare abstract class BenchmarkSuite {
     protected constructor(name: string, description: string);
     name: string;
     description: string;
-    parameters: {};
-    benchmarks: any;
+    parameters: any;
+    benchmarks: Benchmark[];
     context: IExecutionContext;
     addParameter(parameter: Parameter): Parameter;
     createParameter(name: string, description: string, defaultValue?: string): Parameter;
