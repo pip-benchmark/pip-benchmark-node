@@ -1,7 +1,7 @@
 {
     "name": "pip-benchmark-node",
     "version": "1.0.0",
-    "author": "Conceptual Vision Consulting LLC <www.conceptual.vision>",
+    "author": "Conceptual Vision Consulting LLC",
     "description": "Portable Benchmarking Framework in Node.js",
     "contributors": [
         {
