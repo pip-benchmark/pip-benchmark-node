@@ -1,4 +1,7 @@
 "use strict";
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
 Object.defineProperty(exports, "__esModule", { value: true });
 var SimpleTypeConverter_1 = require("./SimpleTypeConverter");
 exports.SimpleTypeConverter = SimpleTypeConverter_1.SimpleTypeConverter;
@@ -14,4 +17,5 @@ var DelegatedBenchmark_1 = require("./DelegatedBenchmark");
 exports.DelegatedBenchmark = DelegatedBenchmark_1.DelegatedBenchmark;
 var BenchmarkSuite_1 = require("./BenchmarkSuite");
 exports.BenchmarkSuite = BenchmarkSuite_1.BenchmarkSuite;
+__export(require("./runner"));
 //# sourceMappingURL=index.js.map

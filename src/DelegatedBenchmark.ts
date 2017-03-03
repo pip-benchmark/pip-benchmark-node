@@ -1,9 +1,10 @@
 import { Benchmark } from './Benchmark';
 
 export class DelegatedBenchmark extends Benchmark {
-    private _executeCallback: () => void;
+    private _executeCallback: (callback: (err: any) => void) => void;
 
-    public constructor(name: string, description: string, executeCallback: () => void) {
+    public constructor(name: string, description: string, 
+        executeCallback: (callback: (err: any) => void) => void) {
         super(name, description);
         
         if (executeCallback == null)
@@ -12,12 +13,8 @@ export class DelegatedBenchmark extends Benchmark {
        this._executeCallback = executeCallback;
     }
 
-    public setUp(): void { }
-
-    public execute(): void {
-        this._executeCallback();
+    public execute(callback: (err: any) => void): void {
+        this._executeCallback(callback);
     }
-
-    public tearDown(): void { }
 }
 

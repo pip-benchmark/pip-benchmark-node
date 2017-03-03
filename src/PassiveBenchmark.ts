@@ -5,7 +5,7 @@ export class PassiveBenchmark extends Benchmark {
         super(name, description);
     }
 
-    public execute(): void {
-        throw new Error("Active measurement via Execute is not allow for passive benchmarks");
+    public execute(callback: (err: any) => void): void {
+        callback(new Error("Active measurement via Execute is not allow for passive benchmarks"));
     }
 }

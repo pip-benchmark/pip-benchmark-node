@@ -1,10 +1,13 @@
 import { IExecutionContext } from './IExecutionContext';
 export declare abstract class Benchmark {
+    private _name;
+    private _description;
+    private _context;
     constructor(name: string, description: string);
-    name: string;
-    description: string;
+    readonly name: string;
+    readonly description: string;
     context: IExecutionContext;
-    setUp(): void;
-    abstract execute(): void;
-    tearDown(): void;
+    setUp(callback: (err: any) => void): void;
+    abstract execute(callback: (err: any) => void): void;
+    tearDown(callback: (err: any) => void): void;
 }

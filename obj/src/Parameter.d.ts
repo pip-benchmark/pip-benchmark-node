@@ -1,8 +1,12 @@
 export declare class Parameter {
+    private _name;
+    private _description;
+    private _defaultValue;
+    private _value;
     constructor(name: string, description: string, defaultValue: string);
-    name: string;
-    description: string;
-    defaultValue: string;
+    readonly name: string;
+    readonly description: string;
+    readonly defaultValue: string;
     value: string;
     getAsString(): string;
     setAsString(value: string): void;

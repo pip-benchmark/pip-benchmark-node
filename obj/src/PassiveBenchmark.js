@@ -5,8 +5,8 @@ class PassiveBenchmark extends Benchmark_1.Benchmark {
     constructor(name, description) {
         super(name, description);
     }
-    execute() {
-        throw new Error("Active measurement via Execute is not allow for passive benchmarks");
+    execute(callback) {
+        callback(new Error("Active measurement via Execute is not allow for passive benchmarks"));
     }
 }
 exports.PassiveBenchmark = PassiveBenchmark;

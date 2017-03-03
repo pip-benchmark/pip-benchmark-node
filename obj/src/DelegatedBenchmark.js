@@ -8,11 +8,9 @@ class DelegatedBenchmark extends Benchmark_1.Benchmark {
             throw new Error("ExecuteCallback cannot be null");
         this._executeCallback = executeCallback;
     }
-    setUp() { }
-    execute() {
-        this._executeCallback();
+    execute(callback) {
+        this._executeCallback(callback);
     }
-    tearDown() { }
 }
 exports.DelegatedBenchmark = DelegatedBenchmark;
 //# sourceMappingURL=DelegatedBenchmark.js.map

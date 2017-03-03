@@ -3,10 +3,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const SimpleTypeConverter_1 = require("./SimpleTypeConverter");
 class Parameter {
     constructor(name, description, defaultValue) {
-        this.name = name;
-        this.description = description;
-        this.defaultValue = defaultValue;
-        this.value = defaultValue;
+        this._name = name;
+        this._description = description;
+        this._defaultValue = defaultValue;
+        this._value = defaultValue;
+    }
+    get name() {
+        return this._name;
+    }
+    get description() {
+        return this._description;
+    }
+    get defaultValue() {
+        return this._defaultValue;
+    }
+    get value() {
+        return this._value;
+    }
+    set value(value) {
+        this._value = value;
     }
     getAsString() {
         return this.value;

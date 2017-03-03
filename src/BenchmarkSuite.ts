@@ -4,40 +4,68 @@ import { DelegatedBenchmark } from './DelegatedBenchmark';
 import { IExecutionContext } from './IExecutionContext';
 
 export abstract class BenchmarkSuite {
+    private _name: string;
+    private _description: string;
+    private _parameters: any = {};
+    private _benchmarks: Benchmark[] = [];
+    private _context: IExecutionContext;
 
     protected constructor(name: string, description: string) {
-        this.name = name;
-        this.description = description;
+        this._name = name;
+        this._description = description;
     }
 
-    public name: string;
-    public description: string;
-    public parameters: any = {};
-    public benchmarks: Benchmark[] = [];
-    public context: IExecutionContext;
+    public get name(): string {
+        return this._name;
+    }
+
+    public get description(): string {
+        return this._description;
+    }
+
+    public get context(): IExecutionContext {
+        return this._context;
+    }
+
+    public set context(value: IExecutionContext) {
+        this._context = value;
+    }
+
+    public get parameters(): any {
+        return this._parameters;
+    }
 
     public addParameter(parameter: Parameter): Parameter {
-        this.parameters[parameter.name] = parameter;
+        this._parameters[parameter.name] = parameter;
         return parameter;
     }
     
     public createParameter(name: string, description: string, defaultValue?: string): Parameter {
         let parameter = new Parameter(name, description, defaultValue);
-        this.parameters[name] = parameter;
+        this._parameters[name] = parameter;
         return parameter;
     }
     
+    public get benchmarks(): Benchmark[] {
+        return this._benchmarks;
+    }
+
     protected addBenchmark(benchmark: Benchmark): Benchmark {
-        this.benchmarks.push(benchmark);
+        this._benchmarks.push(benchmark);
         return benchmark;
     }
 
     protected createBenchmark(name: string, description: string, executeCallback: () => void): Benchmark {
         let benchmark = new DelegatedBenchmark(name, description, executeCallback);
-        this.benchmarks.push(benchmark);
+        this._benchmarks.push(benchmark);
         return benchmark;
     }
 
-    public setUp(): void {}
-    public tearDown(): void {}
+    public setUp(callback: (err: any) => void): void {
+        callback(null);
+    }
+
+    public tearDown(callback: (err: any) => void): void {
+        callback(null);
+    }
 }

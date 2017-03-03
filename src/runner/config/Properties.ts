@@ -5,9 +5,6 @@ import { PropertyFileLine } from './PropertyFileLine';
 import { SimpleTypeConverter } from '../../SimpleTypeConverter';
 
 export class Properties {
-
-    public constructor() {}
-
     public lines: PropertyFileLine[] = [];
 
     public loadFromFile(file: string): void {

@@ -1,6 +1,5 @@
 import { PropertyFileLine } from './PropertyFileLine';
 export declare class Properties {
-    constructor();
     lines: PropertyFileLine[];
     loadFromFile(file: string): void;
     private populateItems();

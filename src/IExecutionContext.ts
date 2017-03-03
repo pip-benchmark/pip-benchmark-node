@@ -1,5 +1,5 @@
 export interface IExecutionContext {
-	getParameters(): any;
+    parameters: any;
 	
     incrementCounter(increment?: number): void;
     

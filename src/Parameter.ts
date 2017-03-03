@@ -1,18 +1,37 @@
 import { SimpleTypeConverter } from './SimpleTypeConverter';
 
 export class Parameter {
+    private _name: string;
+    private _description: string;
+    private _defaultValue: string;
+    private _value: string;
 
     public constructor(name: string, description: string, defaultValue: string) {
-        this.name = name;
-        this.description = description;
-        this.defaultValue = defaultValue;
-        this.value = defaultValue;
+        this._name = name;
+        this._description = description;
+        this._defaultValue = defaultValue;
+        this._value = defaultValue;
     }
 
-    public name: string;
-    public description: string;
-    public defaultValue: string;
-    public value: string;
+    public get name(): string {
+        return this._name;
+    }
+
+    public get description(): string {
+        return this._description;
+    }
+
+    public get defaultValue(): string {
+        return this._defaultValue;
+    }
+
+    public get value(): string {
+        return this._value;
+    }
+
+    public set value(value: string) {
+        this._value = value;
+    }
 
     public getAsString(): string {
         return this.value;
