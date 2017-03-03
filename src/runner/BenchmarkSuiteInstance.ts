@@ -3,6 +3,7 @@ var async = require('async');
 import { BenchmarkSuite } from '../BenchmarkSuite';
 import { BenchmarkInstance } from './BenchmarkInstance';
 import { IExecutionContext } from '../IExecutionContext';
+import { Parameter } from '../Parameter';
 
 export class BenchmarkSuiteInstance {
     private _suite: BenchmarkSuite;
@@ -29,8 +30,17 @@ export class BenchmarkSuiteInstance {
         return this._suite.description;
     }
 
-    public get parameters(): any {
-        return this._suite.parameters; 
+    public get parameters(): Parameter[] {
+        let result: Parameter[] = [];
+        let parameters = this._suite.parameters;
+        for (let prop in parameters) {
+            if (parameters.hasOwnProperty(prop)) {
+                let parameter = parameters[prop];
+                if (parameter instanceof Parameter)
+                    result.push(parameter);
+            }
+        }
+        return result;
     }
 
     public get benchmarks(): BenchmarkInstance[] {

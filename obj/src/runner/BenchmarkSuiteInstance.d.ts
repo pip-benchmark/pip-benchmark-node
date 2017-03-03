@@ -1,6 +1,7 @@
 import { BenchmarkSuite } from '../BenchmarkSuite';
 import { BenchmarkInstance } from './BenchmarkInstance';
 import { IExecutionContext } from '../IExecutionContext';
+import { Parameter } from '../Parameter';
 export declare class BenchmarkSuiteInstance {
     private _suite;
     private _benchmarks;
@@ -8,7 +9,7 @@ export declare class BenchmarkSuiteInstance {
     readonly suite: BenchmarkSuite;
     readonly name: string;
     readonly description: string;
-    readonly parameters: any;
+    readonly parameters: Parameter[];
     readonly benchmarks: BenchmarkInstance[];
     selectAllBenchmarks(): void;
     selectBenchmark(benchmarkName: string): void;

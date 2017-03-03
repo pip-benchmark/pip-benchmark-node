@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var async = require('async');
 const BenchmarkInstance_1 = require("./BenchmarkInstance");
+const Parameter_1 = require("../Parameter");
 class BenchmarkSuiteInstance {
     constructor(suite) {
         this._benchmarks = [];
@@ -21,7 +22,16 @@ class BenchmarkSuiteInstance {
         return this._suite.description;
     }
     get parameters() {
-        return this._suite.parameters;
+        let result = [];
+        let parameters = this._suite.parameters;
+        for (let prop in parameters) {
+            if (parameters.hasOwnProperty(prop)) {
+                let parameter = parameters[prop];
+                if (parameter instanceof Parameter_1.Parameter)
+                    result.push(parameter);
+            }
+        }
+        return result;
     }
     get benchmarks() {
         return this._benchmarks;
