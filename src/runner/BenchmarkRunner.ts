@@ -1,14 +1,18 @@
 import { Parameter } from '../Parameter';
 import { BenchmarkSuite } from '../BenchmarkSuite';
+import { BenchmarkSuiteInstance } from './BenchmarkSuiteInstance';
+import { BenchmarkInstance } from './BenchmarkInstance';
 import { ResultCallback } from './ResultCallback';
 import { MessageCallback } from './MessageCallback';
 import { ConfigurationCallback } from './ConfigurationCallback';
-import { ConfigurationManager } from './config/ConfigurationManager';
 import { ExecutionState } from './ExecutionState';
 import { BenchmarkResult } from './BenchmarkResult';
- 
+
+import { BenchmarkSuiteManager } from './BenchmarkSuiteManager';
+import { ConfigurationManager } from './config/ConfigurationManager';
+
 export class BenchmarkRunner {
-    // private _suiteManager: BenchmarkSuiteManager;
+    private _suiteManager: BenchmarkSuiteManager;
     private _configurationManager: ConfigurationManager;
     // private _process: BenchmarkProcess;
     // private _reportGenerator: ReportGenerator;
@@ -20,7 +24,7 @@ export class BenchmarkRunner {
     private _errorReportedListeners: MessageCallback[] = [];
 
     public constructor() {
-        // this._suiteManager = new BenchmarkSuiteManager(this);
+        this._suiteManager = new BenchmarkSuiteManager(this);
         // this._process = new BenchmarkProcess(this);
         this._configurationManager = new ConfigurationManager(this);
         // this._reportGenerator = new ReportGenerator(this);
@@ -35,9 +39,9 @@ export class BenchmarkRunner {
     //     return this._process;
     // }
 
-    // public get suiteManager(): BenchmarkSuiteManager {
-    //     return this._suiteManager;
-    // }
+    public get suiteManager(): BenchmarkSuiteManager {
+        return this._suiteManager;
+    }
 
     // public get reportGenerator(): ReportGenerator {
     //     return this._reportGenerator;
@@ -47,49 +51,45 @@ export class BenchmarkRunner {
     //     return this._environmentState;
     // }
 
-    // public get suiteInstances(): BenchmarkSuiteInstance[] {
-    //     return this.suiteManager.suites;
-    // }
+    public get suiteInstances(): BenchmarkSuiteInstance[] {
+        return this._suiteManager.suites;
+    }
 
-    // public addSuiteFromClass(moduleName: string, className: string): void {
-    //     this.suiteManager.addSuiteFromClass(moduleName, className);
-    // }
+    public addSuiteFromClass(className: string): void {
+        this._suiteManager.addSuiteFromClass(className);
+    }
 
-    // public void addSuite(BenchmarkSuite suite) {
-    //     getSuiteManager().addSuite(suite);
-    // }
+    public addSuite(suite: any): void {
+        this._suiteManager.addSuite(suite);
+    }
 
-    // public void addSuiteInstance(BenchmarkSuiteInstance suite) {
-    //     getSuiteManager().addSuite(suite);
-    // }
+    public loadSuitesFromModule(moduleName: string): void {
+        this._suiteManager.loadSuitesFromModule(moduleName);
+    }
 
-    // public void loadSuitesFromLibrary(String fileName) throws IOException {
-    //     getSuiteManager().loadSuitesFromLibrary(fileName);
-    // }
+    public unloadSuiteByName(suiteName: string): void {
+        this._suiteManager.removeSuiteByName(suiteName);
+    }
 
-    // public void unloadSuite(String suiteName) {
-    //     getSuiteManager().removeSuite(suiteName);
-    // }
+    public unloadAllSuites(): void {
+        this._suiteManager.removeAllSuites();
+    }
 
-    // public void unloadAllSuites() {
-    //     getSuiteManager().removeAllSuites();
-    // }
+    public unloadSuite(suite: any): void {
+        this._suiteManager.removeSuite(suite);
+    }
 
-    // public void unloadSuite(BenchmarkSuiteInstance suite) {
-    //     getSuiteManager().removeSuite(suite);
-    // }
+    public selectAllBenchmarks(): void {
+        this._suiteManager.selectAllBenchmarks();
+    }
 
-    // public void selectAllBenchmarks() {
-    //     getSuiteManager().selectAllBenchmarks();
-    // }
+    public selectBenchmarksByName(...benchmarkNames: string[]): void {
+        this._suiteManager.selectBenchmarksByName(benchmarkNames);
+    }
 
-    // public void selectBenchmarks(String ...benchmarkNames) {
-    //     getSuiteManager().selectBenchmarks(benchmarkNames);
-    // }
-
-    // public void selectBenchmarks(BenchmarkInstance ...benchmarks) {
-    //     getSuiteManager().selectBenchmarks(benchmarks);
-    // }
+    public selectBenchmarks(...benchmarks: BenchmarkInstance[]): void {
+        this._suiteManager.selectBenchmarks(benchmarks);
+    }
 
     public get configuration(): Parameter[] {
         return this._configurationManager.getFilteredParameters();

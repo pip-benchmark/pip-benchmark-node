@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const BenchmarkSuiteManager_1 = require("./BenchmarkSuiteManager");
 const ConfigurationManager_1 = require("./config/ConfigurationManager");
 class BenchmarkRunner {
     constructor() {
@@ -10,7 +11,7 @@ class BenchmarkRunner {
         this._configurationUpdatedListeners = [];
         this._messageSentListeners = [];
         this._errorReportedListeners = [];
-        // this._suiteManager = new BenchmarkSuiteManager(this);
+        this._suiteManager = new BenchmarkSuiteManager_1.BenchmarkSuiteManager(this);
         // this._process = new BenchmarkProcess(this);
         this._configurationManager = new ConfigurationManager_1.ConfigurationManager(this);
         // this._reportGenerator = new ReportGenerator(this);
@@ -22,48 +23,45 @@ class BenchmarkRunner {
     // public get process(): BenchmarkProcess {
     //     return this._process;
     // }
-    // public get suiteManager(): BenchmarkSuiteManager {
-    //     return this._suiteManager;
-    // }
+    get suiteManager() {
+        return this._suiteManager;
+    }
     // public get reportGenerator(): ReportGenerator {
     //     return this._reportGenerator;
     // }
     // public get environmentState(): EnvironmentState {
     //     return this._environmentState;
     // }
-    // public get suiteInstances(): BenchmarkSuiteInstance[] {
-    //     return this.suiteManager.suites;
-    // }
-    // public addSuiteFromClass(moduleName: string, className: string): void {
-    //     this.suiteManager.addSuiteFromClass(moduleName, className);
-    // }
-    // public void addSuite(BenchmarkSuite suite) {
-    //     getSuiteManager().addSuite(suite);
-    // }
-    // public void addSuiteInstance(BenchmarkSuiteInstance suite) {
-    //     getSuiteManager().addSuite(suite);
-    // }
-    // public void loadSuitesFromLibrary(String fileName) throws IOException {
-    //     getSuiteManager().loadSuitesFromLibrary(fileName);
-    // }
-    // public void unloadSuite(String suiteName) {
-    //     getSuiteManager().removeSuite(suiteName);
-    // }
-    // public void unloadAllSuites() {
-    //     getSuiteManager().removeAllSuites();
-    // }
-    // public void unloadSuite(BenchmarkSuiteInstance suite) {
-    //     getSuiteManager().removeSuite(suite);
-    // }
-    // public void selectAllBenchmarks() {
-    //     getSuiteManager().selectAllBenchmarks();
-    // }
-    // public void selectBenchmarks(String ...benchmarkNames) {
-    //     getSuiteManager().selectBenchmarks(benchmarkNames);
-    // }
-    // public void selectBenchmarks(BenchmarkInstance ...benchmarks) {
-    //     getSuiteManager().selectBenchmarks(benchmarks);
-    // }
+    get suiteInstances() {
+        return this._suiteManager.suites;
+    }
+    addSuiteFromClass(className) {
+        this._suiteManager.addSuiteFromClass(className);
+    }
+    addSuite(suite) {
+        this._suiteManager.addSuite(suite);
+    }
+    loadSuitesFromModule(moduleName) {
+        this._suiteManager.loadSuitesFromModule(moduleName);
+    }
+    unloadSuiteByName(suiteName) {
+        this._suiteManager.removeSuiteByName(suiteName);
+    }
+    unloadAllSuites() {
+        this._suiteManager.removeAllSuites();
+    }
+    unloadSuite(suite) {
+        this._suiteManager.removeSuite(suite);
+    }
+    selectAllBenchmarks() {
+        this._suiteManager.selectAllBenchmarks();
+    }
+    selectBenchmarksByName(...benchmarkNames) {
+        this._suiteManager.selectBenchmarksByName(benchmarkNames);
+    }
+    selectBenchmarks(...benchmarks) {
+        this._suiteManager.selectBenchmarks(benchmarks);
+    }
     get configuration() {
         return this._configurationManager.getFilteredParameters();
     }

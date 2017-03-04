@@ -1,11 +1,15 @@
 import { Parameter } from '../Parameter';
+import { BenchmarkSuiteInstance } from './BenchmarkSuiteInstance';
+import { BenchmarkInstance } from './BenchmarkInstance';
 import { ResultCallback } from './ResultCallback';
 import { MessageCallback } from './MessageCallback';
 import { ConfigurationCallback } from './ConfigurationCallback';
-import { ConfigurationManager } from './config/ConfigurationManager';
 import { ExecutionState } from './ExecutionState';
 import { BenchmarkResult } from './BenchmarkResult';
+import { BenchmarkSuiteManager } from './BenchmarkSuiteManager';
+import { ConfigurationManager } from './config/ConfigurationManager';
 export declare class BenchmarkRunner {
+    private _suiteManager;
     private _configurationManager;
     private _resultUpdatedListeners;
     private _configurationUpdatedListeners;
@@ -13,6 +17,17 @@ export declare class BenchmarkRunner {
     private _errorReportedListeners;
     constructor();
     readonly configurationManager: ConfigurationManager;
+    readonly suiteManager: BenchmarkSuiteManager;
+    readonly suiteInstances: BenchmarkSuiteInstance[];
+    addSuiteFromClass(className: string): void;
+    addSuite(suite: any): void;
+    loadSuitesFromModule(moduleName: string): void;
+    unloadSuiteByName(suiteName: string): void;
+    unloadAllSuites(): void;
+    unloadSuite(suite: any): void;
+    selectAllBenchmarks(): void;
+    selectBenchmarksByName(...benchmarkNames: string[]): void;
+    selectBenchmarks(...benchmarks: BenchmarkInstance[]): void;
     readonly configuration: Parameter[];
     loadConfigurationFromFile(fileName: string): void;
     saveConfigurationToFile(fileName: string): void;
