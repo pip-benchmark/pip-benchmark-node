@@ -9,3 +9,4 @@ export { BenchmarkResult } from './BenchmarkResult';
 export { ConfigurationCallback } from './ConfigurationCallback';
 export { MessageCallback } from './MessageCallback';
 export { ResultCallback } from './ResultCallback';
+export { BenchmarkRunner } from './BenchmarkRunner';

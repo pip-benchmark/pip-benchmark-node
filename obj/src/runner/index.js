@@ -16,4 +16,6 @@ var BenchmarkSuiteInstance_1 = require("./BenchmarkSuiteInstance");
 exports.BenchmarkSuiteInstance = BenchmarkSuiteInstance_1.BenchmarkSuiteInstance;
 var BenchmarkResult_1 = require("./BenchmarkResult");
 exports.BenchmarkResult = BenchmarkResult_1.BenchmarkResult;
+var BenchmarkRunner_1 = require("./BenchmarkRunner");
+exports.BenchmarkRunner = BenchmarkRunner_1.BenchmarkRunner;
 //# sourceMappingURL=index.js.map

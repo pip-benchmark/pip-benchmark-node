@@ -3,7 +3,7 @@ import { Benchmark } from './Benchmark';
 import { DelegatedBenchmark } from './DelegatedBenchmark';
 import { IExecutionContext } from './IExecutionContext';
 
-export abstract class BenchmarkSuite {
+export class BenchmarkSuite {
     private _name: string;
     private _description: string;
     private _parameters: any = {};
@@ -50,12 +50,12 @@ export abstract class BenchmarkSuite {
         return this._benchmarks;
     }
 
-    protected addBenchmark(benchmark: Benchmark): Benchmark {
+    public addBenchmark(benchmark: Benchmark): Benchmark {
         this._benchmarks.push(benchmark);
         return benchmark;
     }
 
-    protected createBenchmark(name: string, description: string, executeCallback: () => void): Benchmark {
+    public createBenchmark(name: string, description: string, executeCallback: () => void): Benchmark {
         let benchmark = new DelegatedBenchmark(name, description, executeCallback);
         this._benchmarks.push(benchmark);
         return benchmark;

@@ -1,7 +1,7 @@
 import { Parameter } from './Parameter';
 import { Benchmark } from './Benchmark';
 import { IExecutionContext } from './IExecutionContext';
-export declare abstract class BenchmarkSuite {
+export declare class BenchmarkSuite {
     private _name;
     private _description;
     private _parameters;
@@ -15,8 +15,8 @@ export declare abstract class BenchmarkSuite {
     addParameter(parameter: Parameter): Parameter;
     createParameter(name: string, description: string, defaultValue?: string): Parameter;
     readonly benchmarks: Benchmark[];
-    protected addBenchmark(benchmark: Benchmark): Benchmark;
-    protected createBenchmark(name: string, description: string, executeCallback: () => void): Benchmark;
+    addBenchmark(benchmark: Benchmark): Benchmark;
+    createBenchmark(name: string, description: string, executeCallback: () => void): Benchmark;
     setUp(callback: (err: any) => void): void;
     tearDown(callback: (err: any) => void): void;
 }

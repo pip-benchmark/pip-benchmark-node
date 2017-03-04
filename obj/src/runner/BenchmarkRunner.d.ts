@@ -1,0 +1,33 @@
+import { Parameter } from '../Parameter';
+import { ResultCallback } from './ResultCallback';
+import { MessageCallback } from './MessageCallback';
+import { ConfigurationCallback } from './ConfigurationCallback';
+import { ConfigurationManager } from './config/ConfigurationManager';
+import { ExecutionState } from './ExecutionState';
+import { BenchmarkResult } from './BenchmarkResult';
+export declare class BenchmarkRunner {
+    private _configurationManager;
+    private _resultUpdatedListeners;
+    private _configurationUpdatedListeners;
+    private _messageSentListeners;
+    private _errorReportedListeners;
+    constructor();
+    readonly configurationManager: ConfigurationManager;
+    readonly configuration: Parameter[];
+    loadConfigurationFromFile(fileName: string): void;
+    saveConfigurationToFile(fileName: string): void;
+    setConfigurationToDefault(): void;
+    setConfiguration(parameters: any): void;
+    addConfigurationUpdatedListener(listener: ConfigurationCallback): void;
+    removeConfigurationUpdatedListener(listener: ConfigurationCallback): void;
+    notifyConfigurationUpdated(): void;
+    addResultUpdatedListener(listener: ResultCallback): void;
+    removeResultUpdatedListener(listener: ResultCallback): void;
+    notifyResultUpdated(status: ExecutionState, result: BenchmarkResult): void;
+    addMessageSentListener(listener: MessageCallback): void;
+    removeMessageSentListener(listener: MessageCallback): void;
+    notifyMessageSent(message: string): void;
+    addErrorReportedListener(listener: MessageCallback): void;
+    removeErrorReportedListener(listener: MessageCallback): void;
+    notifyErrorReported(message: string): void;
+}
