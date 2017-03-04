@@ -1,15 +1,15 @@
-import { Benchmark } from '../Benchmark';
+import { Benchmark } from '../../Benchmark';
 
-export class StandardCpuBenchmark extends Benchmark {
+export class DefaultCpuBenchmark extends Benchmark {
     private static readonly NumberOfAttempts = 20000;
 
     public constructor() {
-        super("CPU", "Measures CPU speed by running arythmetical operations");
+        super("CPU", "Measures CPU performance");
     }
 
-    public execute(callback: (err: any) => void): void {
+   public execute(callback: (err: any) => void): void {
         // Count increment, comparison and goto for 1 arithmetic operation
-        for (let value = 0; value < StandardCpuBenchmark.NumberOfAttempts; value++) {
+        for (let value = 0; value < DefaultCpuBenchmark.NumberOfAttempts; value++) {
             // #1
             let result1 = value + value;
             let result2 = result1 - value;

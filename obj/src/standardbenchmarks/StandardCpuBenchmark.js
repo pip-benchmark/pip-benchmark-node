@@ -5,9 +5,6 @@ class StandardCpuBenchmark extends Benchmark_1.Benchmark {
     constructor() {
         super("CPU", "Measures CPU speed by running arythmetical operations");
     }
-    setUp(callback) {
-        callback(null);
-    }
     execute(callback) {
         // Count increment, comparison and goto for 1 arithmetic operation
         for (let value = 0; value < StandardCpuBenchmark.NumberOfAttempts; value++) {
@@ -66,15 +63,12 @@ class StandardCpuBenchmark extends Benchmark_1.Benchmark {
             result4 = result2 / result3;
             Math.log(result4);
             // #10
-            //result1 = value + value;
-            //result2 = result1 - value;
-            //result3 = result1 * result2;
+            result1 = value + value;
+            result2 = result1 - value;
+            result3 = result1 * result2;
             result4 = result2 / result3;
             Math.log(result4);
         }
-        callback(null);
-    }
-    tearDown(callback) {
         callback(null);
     }
 }
