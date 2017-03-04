@@ -16,7 +16,7 @@ export declare class BenchmarkSuite {
     createParameter(name: string, description: string, defaultValue?: string): Parameter;
     readonly benchmarks: Benchmark[];
     addBenchmark(benchmark: Benchmark): Benchmark;
-    createBenchmark(name: string, description: string, executeCallback: () => void): Benchmark;
-    setUp(callback: (err: any) => void): void;
-    tearDown(callback: (err: any) => void): void;
+    createBenchmark(name: string, description: string, executeCallback: (callback: (err?: any) => void) => void): Benchmark;
+    setUp(callback: (err?: any) => void): void;
+    tearDown(callback: (err?: any) => void): void;
 }

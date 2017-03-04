@@ -55,17 +55,17 @@ export class BenchmarkSuite {
         return benchmark;
     }
 
-    public createBenchmark(name: string, description: string, executeCallback: () => void): Benchmark {
+    public createBenchmark(name: string, description: string, executeCallback: (callback: (err?: any) => void) => void): Benchmark {
         let benchmark = new DelegatedBenchmark(name, description, executeCallback);
         this._benchmarks.push(benchmark);
         return benchmark;
     }
 
-    public setUp(callback: (err: any) => void): void {
+    public setUp(callback: (err?: any) => void): void {
         callback(null);
     }
 
-    public tearDown(callback: (err: any) => void): void {
+    public tearDown(callback: (err?: any) => void): void {
         callback(null);
     }
 }

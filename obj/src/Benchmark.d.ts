@@ -7,7 +7,7 @@ export declare abstract class Benchmark {
     readonly name: string;
     readonly description: string;
     context: IExecutionContext;
-    setUp(callback: (err: any) => void): void;
-    abstract execute(callback: (err: any) => void): void;
-    tearDown(callback: (err: any) => void): void;
+    setUp(callback: (err?: any) => void): void;
+    abstract execute(callback: (err?: any) => void): void;
+    tearDown(callback: (err?: any) => void): void;
 }

@@ -26,13 +26,13 @@ export abstract class Benchmark {
         this._context = value;
     }
 
-    public setUp(callback: (err: any) => void): void {
+    public setUp(callback: (err?: any) => void): void {
         callback(null);
     }
 
-    public abstract execute(callback: (err: any) => void): void;
+    public abstract execute(callback: (err?: any) => void): void;
     
-    public tearDown(callback: (err: any) => void): void {
+    public tearDown(callback: (err?: any) => void): void {
         callback(null);
     }
 }
