@@ -5,18 +5,18 @@ export declare class BenchmarksManager {
     private _suites;
     constructor(runner: any);
     readonly suites: BenchmarkSuiteInstance[];
-    getSelectedBenchmarks(): BenchmarkInstance[];
-    selectAllBenchmarks(): void;
-    selectBenchmarksByName(benchmarkNames: string[]): void;
-    selectBenchmarks(benchmarks: BenchmarkInstance[]): void;
-    unselectAllBenchmarks(): void;
-    unselectBenchmarksByName(benchmarkNames: string[]): void;
-    unselectBenchmarks(benchmarks: BenchmarkInstance[]): void;
+    readonly selected: BenchmarkInstance[];
+    selectAll(): void;
+    selectByName(benchmarkNames: string[]): void;
+    select(benchmarks: BenchmarkInstance[]): void;
+    unselectAll(): void;
+    unselectByName(benchmarkNames: string[]): void;
+    unselect(benchmarks: BenchmarkInstance[]): void;
     addSuiteFromClass(suiteClassName: string): void;
     addSuite(suite: any): void;
-    loadSuitesFromModule(moduleName: string): void;
+    addSuitesFromModule(moduleName: string): void;
     private findSuite(suiteName);
     removeSuiteByName(suiteName: string): void;
     removeSuite(suite: any): void;
-    removeAllSuites(): void;
+    clear(): void;
 }

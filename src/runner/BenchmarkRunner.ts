@@ -42,7 +42,7 @@ export class BenchmarkRunner {
         return this._process;
     }
 
-    public get suiteManager(): BenchmarksManager {
+    public get benchmarks(): BenchmarksManager {
         return this._benchmarks;
     }
 
@@ -52,46 +52,6 @@ export class BenchmarkRunner {
 
     public get environment(): EnvironmentManager {
         return this._environment;
-    }
-
-    public get suiteInstances(): BenchmarkSuiteInstance[] {
-        return this._benchmarks.suites;
-    }
-
-    public addSuiteFromClass(className: string): void {
-        this._benchmarks.addSuiteFromClass(className);
-    }
-
-    public addSuite(suite: any): void {
-        this._benchmarks.addSuite(suite);
-    }
-
-    public loadSuitesFromModule(moduleName: string): void {
-        this._benchmarks.loadSuitesFromModule(moduleName);
-    }
-
-    public unloadSuiteByName(suiteName: string): void {
-        this._benchmarks.removeSuiteByName(suiteName);
-    }
-
-    public unloadAllSuites(): void {
-        this._benchmarks.removeAllSuites();
-    }
-
-    public unloadSuite(suite: any): void {
-        this._benchmarks.removeSuite(suite);
-    }
-
-    public selectAllBenchmarks(): void {
-        this._benchmarks.selectAllBenchmarks();
-    }
-
-    public selectBenchmarksByName(...benchmarkNames: string[]): void {
-        this._benchmarks.selectBenchmarksByName(benchmarkNames);
-    }
-
-    public selectBenchmarks(...benchmarks: BenchmarkInstance[]): void {
-        this._benchmarks.selectBenchmarks(benchmarks);
     }
 
     public get measurementType(): MeasurementType {

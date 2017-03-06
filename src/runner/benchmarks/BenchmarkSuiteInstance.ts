@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var async = require('async');
 
 import { BenchmarkSuite } from '../../BenchmarkSuite';
@@ -47,34 +48,30 @@ export class BenchmarkSuiteInstance {
         return this._benchmarks;
     }
 
-    public selectAllBenchmarks(): void {
-        for (let index = 0; index < this._benchmarks.length; index++) {
-            let benchmark = this._benchmarks[index];
+    public selectAll(): void {
+        _.each(this._benchmarks, (benchmark) => {
             benchmark.selected = true;
-        }
+        });
     }
 
-    public selectBenchmark(benchmarkName: string): void {
-        for (let index = 0; index < this._benchmarks.length; index++) {
-            let benchmark = this._benchmarks[index];
+    public selectByName(benchmarkName: string): void {
+        _.each(this._benchmarks, (benchmark) => {
             if (benchmark.name == benchmarkName)
                 benchmark.selected = true;
-        }
+        });
     }
 
-    public unselectAllBenchmarks(): void {
-        for (let index = 0; index < this._benchmarks.length; index++) {
-            let benchmark = this._benchmarks[index];
+    public unselectAll(): void {
+        _.each(this._benchmarks, (benchmark) => {
             benchmark.selected = false;
-        }
+        });
     }
 
-    public unselectBenchmark(benchmarkName: string): void {
-        for (let index = 0; index < this._benchmarks.length; index++) {
-            let benchmark = this._benchmarks[index];
+    public unselectByName(benchmarkName: string): void {
+        _.each(this._benchmarks, (benchmark) => {
             if (benchmark.name == benchmarkName)
                 benchmark.selected = false;
-        }
+        });
     }
 
     public setUp(context: IExecutionContext, callback: (err: any) => void): void {

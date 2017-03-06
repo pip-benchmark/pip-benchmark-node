@@ -57,7 +57,7 @@ export class ReportGenerator {
         output += "Executed Benchmarks:";
         output += ReportGenerator.NewLine;
         let index = 0;
-        _.each(this._runner.suiteManager.getSelectedBenchmarks(), (benchmark) => {
+        _.each(this._runner.benchmarks.selected, (benchmark) => {
             index++;
             output += util.format("  %d. %s.%s [%d%%]",
                 index, benchmark.suite.name, benchmark.name, benchmark.proportion

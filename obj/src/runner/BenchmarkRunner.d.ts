@@ -1,5 +1,3 @@
-import { BenchmarkSuiteInstance } from './benchmarks/BenchmarkSuiteInstance';
-import { BenchmarkInstance } from './benchmarks/BenchmarkInstance';
 import { ResultCallback } from './ResultCallback';
 import { MessageCallback } from './MessageCallback';
 import { ExecutionState } from './ExecutionState';
@@ -23,19 +21,9 @@ export declare class BenchmarkRunner {
     constructor();
     readonly parameters: ParametersManager;
     readonly process: BenchmarkProcess;
-    readonly suiteManager: BenchmarksManager;
+    readonly benchmarks: BenchmarksManager;
     readonly reportGenerator: ReportGenerator;
     readonly environment: EnvironmentManager;
-    readonly suiteInstances: BenchmarkSuiteInstance[];
-    addSuiteFromClass(className: string): void;
-    addSuite(suite: any): void;
-    loadSuitesFromModule(moduleName: string): void;
-    unloadSuiteByName(suiteName: string): void;
-    unloadAllSuites(): void;
-    unloadSuite(suite: any): void;
-    selectAllBenchmarks(): void;
-    selectBenchmarksByName(...benchmarkNames: string[]): void;
-    selectBenchmarks(...benchmarks: BenchmarkInstance[]): void;
     measurementType: MeasurementType;
     nominalRate: number;
     executionType: ExecutionType;

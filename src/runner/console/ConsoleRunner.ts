@@ -34,12 +34,12 @@ export class ConsoleRunner {
 
             // Load modules
             _.each(this._args.modules, (module) => {
-                this._runner.loadSuitesFromModule(module);
+                this._runner.benchmarks.addSuitesFromModule(module);
             });
 
             // Load test suites classes
             _.each(this._args.classes, (clazz) => {
-                this._runner.addSuiteFromClass(clazz);
+                this._runner.benchmarks.addSuiteFromClass(clazz);
             });
             
             // Load configuration
@@ -52,9 +52,9 @@ export class ConsoleRunner {
 
             // Select benchmarks
             if (this._args.benchmarks.length == 0)
-                this._runner.selectAllBenchmarks();
+                this._runner.benchmarks.selectAll();
             else 
-                this._runner.selectBenchmarksByName(...this._args.benchmarks);
+                this._runner.benchmarks.selectByName(this._args.benchmarks);
             
             if (this._args.showParameters) {
                 this.printParameters();
@@ -138,7 +138,7 @@ export class ConsoleRunner {
         console.log();
         console.log("Benchmarks:");
 
-        let suites = this._runner.suiteManager.suites;
+        let suites = this._runner.benchmarks.suites;
         _.each(suites, (suite) => {
             _.each(suite.benchmarks, (benchmark) => {
                 console.log(benchmark.fullName + ' - ' + benchmark.description);

@@ -100,8 +100,8 @@ export class EnvironmentManager extends BenchmarkProcess {
         let suite = new StandardBenchmarkSuite();
         let instance = new BenchmarkSuiteInstance(suite);
         
-        instance.unselectAllBenchmarks();
-        instance.selectBenchmark(suite.cpuBenchmark.name);
+        instance.unselectAll();
+        instance.selectByName(suite.cpuBenchmark.name);
 
         super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {
@@ -114,8 +114,8 @@ export class EnvironmentManager extends BenchmarkProcess {
         let suite = new StandardBenchmarkSuite();
         let instance = new BenchmarkSuiteInstance(suite);
         
-        instance.unselectAllBenchmarks();
-        instance.selectBenchmark(suite.diskBenchmark.name);
+        instance.unselectAll();
+        instance.selectByName(suite.diskBenchmark.name);
 
         super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {
@@ -128,8 +128,8 @@ export class EnvironmentManager extends BenchmarkProcess {
         let suite = new StandardBenchmarkSuite();
         let instance = new BenchmarkSuiteInstance(suite);
         
-        instance.unselectAllBenchmarks();
-        instance.selectBenchmark(suite.videoBenchmark.name);
+        instance.unselectAll();
+        instance.selectByName(suite.videoBenchmark.name);
 
         super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {

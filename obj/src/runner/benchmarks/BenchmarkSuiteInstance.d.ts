@@ -11,10 +11,10 @@ export declare class BenchmarkSuiteInstance {
     readonly description: string;
     readonly parameters: Parameter[];
     readonly benchmarks: BenchmarkInstance[];
-    selectAllBenchmarks(): void;
-    selectBenchmark(benchmarkName: string): void;
-    unselectAllBenchmarks(): void;
-    unselectBenchmark(benchmarkName: string): void;
+    selectAll(): void;
+    selectByName(benchmarkName: string): void;
+    unselectAll(): void;
+    unselectByName(benchmarkName: string): void;
     setUp(context: IExecutionContext, callback: (err: any) => void): void;
     tearDown(callback: (err: any) => void): void;
 }

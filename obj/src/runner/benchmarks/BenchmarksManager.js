@@ -12,7 +12,7 @@ class BenchmarksManager {
     get suites() {
         return this._suites;
     }
-    getSelectedBenchmarks() {
+    get selected() {
         let benchmarks = [];
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
@@ -25,7 +25,7 @@ class BenchmarksManager {
         }
         return benchmarks;
     }
-    selectAllBenchmarks() {
+    selectAll() {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -34,7 +34,7 @@ class BenchmarksManager {
             }
         }
     }
-    selectBenchmarksByName(benchmarkNames) {
+    selectByName(benchmarkNames) {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -47,7 +47,7 @@ class BenchmarksManager {
             }
         }
     }
-    selectBenchmarks(benchmarks) {
+    select(benchmarks) {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -60,7 +60,7 @@ class BenchmarksManager {
             }
         }
     }
-    unselectAllBenchmarks() {
+    unselectAll() {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -69,7 +69,7 @@ class BenchmarksManager {
             }
         }
     }
-    unselectBenchmarksByName(benchmarkNames) {
+    unselectByName(benchmarkNames) {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -82,7 +82,7 @@ class BenchmarksManager {
             }
         }
     }
-    unselectBenchmarks(benchmarks) {
+    unselect(benchmarks) {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -127,7 +127,7 @@ class BenchmarksManager {
         this._suites.push(suite);
         this._runner.parameters.addSuite(suite);
     }
-    loadSuitesFromModule(moduleName) {
+    addSuitesFromModule(moduleName) {
         this._runner.process.stop();
         if (moduleName.startsWith('.'))
             moduleName = path.resolve(moduleName);
@@ -177,7 +177,7 @@ class BenchmarksManager {
         this._runner.parameters.removeSuite(suite);
         this._suites = _.remove(this._suites, (s) => s == suite);
     }
-    removeAllSuites() {
+    clear() {
         this._runner.process.stop();
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];

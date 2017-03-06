@@ -18,7 +18,7 @@ export class BenchmarksManager {
         return this._suites;
     }
 
-    public getSelectedBenchmarks(): BenchmarkInstance[] {
+    public get selected(): BenchmarkInstance[] {
         let benchmarks: BenchmarkInstance[] = [];
 
         for (let index = 0; index < this._suites.length; index++) {
@@ -34,7 +34,7 @@ export class BenchmarksManager {
         return benchmarks;
     }
 
-    public selectAllBenchmarks(): void {
+    public selectAll(): void {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -44,7 +44,7 @@ export class BenchmarksManager {
         }
     }
 
-    public selectBenchmarksByName(benchmarkNames: string[]): void {
+    public selectByName(benchmarkNames: string[]): void {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -58,7 +58,7 @@ export class BenchmarksManager {
         }
     }
 
-    public selectBenchmarks(benchmarks: BenchmarkInstance[]): void {
+    public select(benchmarks: BenchmarkInstance[]): void {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -72,7 +72,7 @@ export class BenchmarksManager {
         }
     }
 
-    public unselectAllBenchmarks(): void {
+    public unselectAll(): void {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -82,7 +82,7 @@ export class BenchmarksManager {
         }
     }
 
-    public unselectBenchmarksByName(benchmarkNames: string[]): void {
+    public unselectByName(benchmarkNames: string[]): void {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -96,7 +96,7 @@ export class BenchmarksManager {
         }
     }
 
-    public unselectBenchmarks(benchmarks: BenchmarkInstance[]): void {
+    public unselect(benchmarks: BenchmarkInstance[]): void {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -151,7 +151,7 @@ export class BenchmarksManager {
         this._runner.parameters.addSuite(suite);
     }
 
-    public loadSuitesFromModule(moduleName: string): void {
+    public addSuitesFromModule(moduleName: string): void {
         this._runner.process.stop();
 
         if (moduleName.startsWith('.'))
@@ -211,7 +211,7 @@ export class BenchmarksManager {
         this._suites = _.remove(this._suites, (s) => s == suite);
     }
 
-    public removeAllSuites(): void {
+    public clear(): void {
         this._runner.process.stop();
 
         for (let index = 0; index < this._suites.length; index++) {

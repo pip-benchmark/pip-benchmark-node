@@ -22,7 +22,7 @@ class BenchmarkRunner {
     get process() {
         return this._process;
     }
-    get suiteManager() {
+    get benchmarks() {
         return this._benchmarks;
     }
     get reportGenerator() {
@@ -30,36 +30,6 @@ class BenchmarkRunner {
     }
     get environment() {
         return this._environment;
-    }
-    get suiteInstances() {
-        return this._benchmarks.suites;
-    }
-    addSuiteFromClass(className) {
-        this._benchmarks.addSuiteFromClass(className);
-    }
-    addSuite(suite) {
-        this._benchmarks.addSuite(suite);
-    }
-    loadSuitesFromModule(moduleName) {
-        this._benchmarks.loadSuitesFromModule(moduleName);
-    }
-    unloadSuiteByName(suiteName) {
-        this._benchmarks.removeSuiteByName(suiteName);
-    }
-    unloadAllSuites() {
-        this._benchmarks.removeAllSuites();
-    }
-    unloadSuite(suite) {
-        this._benchmarks.removeSuite(suite);
-    }
-    selectAllBenchmarks() {
-        this._benchmarks.selectAllBenchmarks();
-    }
-    selectBenchmarksByName(...benchmarkNames) {
-        this._benchmarks.selectBenchmarksByName(benchmarkNames);
-    }
-    selectBenchmarks(...benchmarks) {
-        this._benchmarks.selectBenchmarks(benchmarks);
     }
     get measurementType() {
         return this._process.measurementType;

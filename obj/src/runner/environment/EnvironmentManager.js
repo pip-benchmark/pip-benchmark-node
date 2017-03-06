@@ -87,8 +87,8 @@ class EnvironmentManager extends BenchmarkProcess_1.BenchmarkProcess {
     measureCpu(callback) {
         let suite = new StandardBenchmarkSuite_1.StandardBenchmarkSuite();
         let instance = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
-        instance.unselectAllBenchmarks();
-        instance.selectBenchmark(suite.cpuBenchmark.name);
+        instance.unselectAll();
+        instance.selectByName(suite.cpuBenchmark.name);
         super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {
             let result = super.results[0].performanceMeasurement.averageValue;
@@ -98,8 +98,8 @@ class EnvironmentManager extends BenchmarkProcess_1.BenchmarkProcess {
     measureDisk(callback) {
         let suite = new StandardBenchmarkSuite_1.StandardBenchmarkSuite();
         let instance = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
-        instance.unselectAllBenchmarks();
-        instance.selectBenchmark(suite.diskBenchmark.name);
+        instance.unselectAll();
+        instance.selectByName(suite.diskBenchmark.name);
         super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {
             let result = super.results[0].performanceMeasurement.averageValue;
@@ -109,8 +109,8 @@ class EnvironmentManager extends BenchmarkProcess_1.BenchmarkProcess {
     measureVideo(callback) {
         let suite = new StandardBenchmarkSuite_1.StandardBenchmarkSuite();
         let instance = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
-        instance.unselectAllBenchmarks();
-        instance.selectBenchmark(suite.videoBenchmark.name);
+        instance.unselectAll();
+        instance.selectByName(suite.videoBenchmark.name);
         super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {
             let result = super.results[0].performanceMeasurement.averageValue;

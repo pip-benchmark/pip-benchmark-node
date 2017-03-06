@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var _ = require('lodash');
 var async = require('async');
 const BenchmarkInstance_1 = require("./BenchmarkInstance");
 const Parameter_1 = require("../../Parameter");
@@ -36,31 +37,27 @@ class BenchmarkSuiteInstance {
     get benchmarks() {
         return this._benchmarks;
     }
-    selectAllBenchmarks() {
-        for (let index = 0; index < this._benchmarks.length; index++) {
-            let benchmark = this._benchmarks[index];
+    selectAll() {
+        _.each(this._benchmarks, (benchmark) => {
             benchmark.selected = true;
-        }
+        });
     }
-    selectBenchmark(benchmarkName) {
-        for (let index = 0; index < this._benchmarks.length; index++) {
-            let benchmark = this._benchmarks[index];
+    selectByName(benchmarkName) {
+        _.each(this._benchmarks, (benchmark) => {
             if (benchmark.name == benchmarkName)
                 benchmark.selected = true;
-        }
+        });
     }
-    unselectAllBenchmarks() {
-        for (let index = 0; index < this._benchmarks.length; index++) {
-            let benchmark = this._benchmarks[index];
+    unselectAll() {
+        _.each(this._benchmarks, (benchmark) => {
             benchmark.selected = false;
-        }
+        });
     }
-    unselectBenchmark(benchmarkName) {
-        for (let index = 0; index < this._benchmarks.length; index++) {
-            let benchmark = this._benchmarks[index];
+    unselectByName(benchmarkName) {
+        _.each(this._benchmarks, (benchmark) => {
             if (benchmark.name == benchmarkName)
                 benchmark.selected = false;
-        }
+        });
     }
     setUp(context, callback) {
         this._suite.context = context;
