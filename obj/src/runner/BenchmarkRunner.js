@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const ConfigurationManager_1 = require("./config/ConfigurationManager");
 const BenchmarksManager_1 = require("./benchmarks/BenchmarksManager");
 const ParametersManager_1 = require("./parameters/ParametersManager");
 const BenchmarkProcess_1 = require("./execution/BenchmarkProcess");
@@ -10,11 +11,15 @@ class BenchmarkRunner {
         this._resultUpdatedListeners = [];
         this._messageSentListeners = [];
         this._errorReportedListeners = [];
-        this._benchmarks = new BenchmarksManager_1.BenchmarksManager(this);
-        this._process = new BenchmarkProcess_1.BenchmarkProcess(this);
-        this._parameters = new ParametersManager_1.ParametersManager(this);
+        this._configuration = new ConfigurationManager_1.ConfigurationManager();
+        this._parameters = new ParametersManager_1.ParametersManager(this._configuration);
+        this._benchmarks = new BenchmarksManager_1.BenchmarksManager(this._configuration, this._parameters);
+        this._process = new BenchmarkProcess_1.BenchmarkProcess(this._configuration);
         this._reportGenerator = new ReportGenerator_1.ReportGenerator(this);
-        this._environment = new EnvironmentManager_1.EnvironmentManager(this);
+        this._environment = new EnvironmentManager_1.EnvironmentManager();
+    }
+    get configuration() {
+        return this._configuration;
     }
     get parameters() {
         return this._parameters;
@@ -30,36 +35,6 @@ class BenchmarkRunner {
     }
     get environment() {
         return this._environment;
-    }
-    get measurementType() {
-        return this._process.measurementType;
-    }
-    set measurementType(value) {
-        this._process.measurementType = value;
-    }
-    get nominalRate() {
-        return this._process.nominalRate;
-    }
-    set nominalRate(value) {
-        this._process.nominalRate = value;
-    }
-    get executionType() {
-        return this._process.executionType;
-    }
-    set executionType(value) {
-        this._process.executionType = value;
-    }
-    get duration() {
-        return this._process.duration;
-    }
-    set duration(value) {
-        this._process.duration = value;
-    }
-    get forceContinue() {
-        return this._process.forceContinue;
-    }
-    set forceContinue(value) {
-        this._process.forceContinue = value;
     }
     get results() {
         return this._process.results;

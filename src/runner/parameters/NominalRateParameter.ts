@@ -1,23 +1,24 @@
 import { Parameter } from '../../Parameter';
 import { SimpleTypeConverter } from '../../SimpleTypeConverter';
+import { ConfigurationManager } from '../config/ConfigurationManager';
 
 export class NominalRateParameter extends Parameter {
-    private _process: any;
+    private _configuration: ConfigurationManager;
 
-    public constructor(process: any) {
+    public constructor(configuration: ConfigurationManager) {
         super(
             "General.Benchmarking.NominalRate",
             "Rate for nominal benchmarking in TPS", 
             "1"
         );
-        this._process = process;
+        this._configuration = configuration;
     }
 
     public get value(): string {
-        return SimpleTypeConverter.doubleToString(this._process.nominalRate); 
+        return SimpleTypeConverter.doubleToString(this._configuration.nominalRate); 
     }
     
     public set value(value: string) {
-        this._process.nominalRate = SimpleTypeConverter.stringToDouble(value, 1);
+        this._configuration.nominalRate = SimpleTypeConverter.stringToDouble(value, 1);
     }
 }

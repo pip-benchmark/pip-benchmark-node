@@ -5,13 +5,13 @@ const ExecutionState_1 = require("../ExecutionState");
 const ExecutionStrategy_1 = require("./ExecutionStrategy");
 const ProportionalExecutionStrategy_1 = require("./ProportionalExecutionStrategy");
 class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy {
-    constructor(process, benchmarks) {
-        super(process, benchmarks);
+    constructor(configuration, benchmarks) {
+        super(configuration, benchmarks);
         this._running = false;
         this._results = [];
     }
     start(callback) {
-        if (this.process().duration() <= 0)
+        if (this._configuration.duration <= 0)
             throw new Error("Duration was not set");
         this.notifyResultUpdate(ExecutionState_1.ExecutionState.Starting);
         // Start control thread
@@ -36,14 +36,14 @@ class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy 
         return this._results;
     }
     execute(callback) {
-        async.eachSeries(this.benchmarks, (benchmark, callback) => {
+        async.eachSeries(this._benchmarks, (benchmark, callback) => {
             // Skip if benchmarking was interrupted
             if (!this._running) {
                 callback();
                 return;
             }
             // Start embedded strategy
-            this._current = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this.process, [benchmark], true);
+            this._current = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this._configuration, [benchmark], true);
             this._current.start();
             this._timeout = setTimeout(() => {
                 // Populate results
@@ -54,7 +54,7 @@ class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy 
                     this._current = null;
                     callback();
                 });
-            }, this.process.delay * 1000);
+            }, this._configuration.duration * 1000);
         }, (err) => {
             this.stop(callback);
         });

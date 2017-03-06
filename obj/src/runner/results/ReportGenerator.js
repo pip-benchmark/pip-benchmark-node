@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require('lodash');
 var fs = require('fs');
 var util = require('util');
-const MeasurementType_1 = require("../MeasurementType");
+const MeasurementType_1 = require("../config/MeasurementType");
 class ReportGenerator {
     constructor(runner) {
         this._runner = runner;

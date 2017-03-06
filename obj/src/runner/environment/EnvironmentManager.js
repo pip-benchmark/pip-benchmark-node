@@ -1,14 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var async = require('async');
+const ConfigurationManager_1 = require("../config/ConfigurationManager");
 const BenchmarkProcess_1 = require("../execution/BenchmarkProcess");
 const EnvironmentProperties_1 = require("./EnvironmentProperties");
 const BenchmarkSuiteInstance_1 = require("../benchmarks/BenchmarkSuiteInstance");
 const StandardBenchmarkSuite_1 = require("./StandardBenchmarkSuite");
 const SystemInfo_1 = require("./SystemInfo");
 class EnvironmentManager extends BenchmarkProcess_1.BenchmarkProcess {
-    constructor(runner) {
-        super(runner);
+    constructor() {
+        let configuration = new ConfigurationManager_1.ConfigurationManager();
+        configuration.duration = EnvironmentManager.Duration;
+        super(configuration);
         try {
             this.load();
         }
@@ -89,7 +92,6 @@ class EnvironmentManager extends BenchmarkProcess_1.BenchmarkProcess {
         let instance = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
         instance.unselectAll();
         instance.selectByName(suite.cpuBenchmark.name);
-        super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {
             let result = super.results[0].performanceMeasurement.averageValue;
             callback(null, result);
@@ -100,7 +102,6 @@ class EnvironmentManager extends BenchmarkProcess_1.BenchmarkProcess {
         let instance = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
         instance.unselectAll();
         instance.selectByName(suite.diskBenchmark.name);
-        super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {
             let result = super.results[0].performanceMeasurement.averageValue;
             callback(null, result);
@@ -111,7 +112,6 @@ class EnvironmentManager extends BenchmarkProcess_1.BenchmarkProcess {
         let instance = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
         instance.unselectAll();
         instance.selectByName(suite.videoBenchmark.name);
-        super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {
             let result = super.results[0].performanceMeasurement.averageValue;
             callback(null, result);

@@ -4,11 +4,10 @@ import { BenchmarkSuiteInstance } from './benchmarks/BenchmarkSuiteInstance';
 import { BenchmarkInstance } from './benchmarks/BenchmarkInstance';
 import { ResultCallback } from './ResultCallback';
 import { MessageCallback } from './MessageCallback';
-import { ExecutionState } from './ExecutionState';
-import { ExecutionType } from './ExecutionType';
-import { MeasurementType } from './MeasurementType';
 import { BenchmarkResult } from './BenchmarkResult';
+import { ExecutionState } from './ExecutionState';
 
+import { ConfigurationManager } from './config/ConfigurationManager';
 import { BenchmarksManager } from './benchmarks/BenchmarksManager';
 import { ParametersManager } from './parameters/ParametersManager';
 import { BenchmarkProcess } from './execution/BenchmarkProcess';
@@ -16,8 +15,9 @@ import { ReportGenerator } from './results/ReportGenerator';
 import { EnvironmentManager } from './environment/EnvironmentManager';
 
 export class BenchmarkRunner {
-    private _benchmarks: BenchmarksManager;
+    private _configuration: ConfigurationManager;
     private _parameters: ParametersManager;
+    private _benchmarks: BenchmarksManager;
     private _process: BenchmarkProcess;
     private _reportGenerator: ReportGenerator;
     private _environment: EnvironmentManager;
@@ -27,11 +27,16 @@ export class BenchmarkRunner {
     private _errorReportedListeners: MessageCallback[] = [];
 
     public constructor() {
-        this._benchmarks = new BenchmarksManager(this);
-        this._process = new BenchmarkProcess(this);
-        this._parameters = new ParametersManager(this);
+        this._configuration = new ConfigurationManager();
+        this._parameters = new ParametersManager(this._configuration);
+        this._benchmarks = new BenchmarksManager(this._configuration, this._parameters);
+        this._process = new BenchmarkProcess(this._configuration);
         this._reportGenerator = new ReportGenerator(this);
-        this._environment = new EnvironmentManager(this);
+        this._environment = new EnvironmentManager();
+    }
+
+    public get configuration(): ConfigurationManager {
+        return this._configuration;
     }
 
     public get parameters(): ParametersManager {
@@ -52,46 +57,6 @@ export class BenchmarkRunner {
 
     public get environment(): EnvironmentManager {
         return this._environment;
-    }
-
-    public get measurementType(): MeasurementType {
-        return this._process.measurementType; 
-    }
-
-    public set measurementType(value: MeasurementType) {
-        this._process.measurementType = value;
-    }
-
-    public get nominalRate(): number {
-        return this._process.nominalRate; 
-    }
-
-    public set nominalRate(value: number) {
-        this._process.nominalRate = value;
-    }
-
-    public get executionType(): ExecutionType {
-        return this._process.executionType; 
-    }
-
-    public set executionType(value: ExecutionType) {
-        this._process.executionType = value;
-    }
-
-    public get duration(): number {
-        return this._process.duration; 
-    }
-
-    public set duration(value: number) {
-        this._process.duration = value;
-    }
-
-    public get forceContinue(): boolean {
-        return this._process.forceContinue;
-    }
-
-    public set forceContinue(value: boolean) {
-        this._process.forceContinue = value;
     }
 
     public get results(): BenchmarkResult[] {

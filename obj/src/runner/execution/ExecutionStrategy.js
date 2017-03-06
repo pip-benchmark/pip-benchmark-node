@@ -7,10 +7,10 @@ const TransactionMeter_1 = require("./TransactionMeter");
 const CpuLoadMeter_1 = require("./CpuLoadMeter");
 const MemoryUsageMeter_1 = require("./MemoryUsageMeter");
 class ExecutionStrategy {
-    constructor(process, benchmarks) {
+    constructor(configuration, benchmarks) {
         this._transactionCounter = 0;
         this._currentResult = null;
-        this._process = process;
+        this._configuration = configuration;
         this._benchmarks = benchmarks;
         this._suites = this.getAllSuitesFromBenchmarks(benchmarks);
         this._cpuLoadMeter = new CpuLoadMeter_1.CpuLoadMeter();
@@ -26,15 +26,6 @@ class ExecutionStrategy {
                 suites.push(suite);
         }
         return suites;
-    }
-    get process() {
-        return this._process;
-    }
-    get benchmarks() {
-        return this._benchmarks;
-    }
-    get suites() {
-        return this._suites;
     }
     get currentResult() {
         return this._currentResult;
@@ -68,15 +59,15 @@ class ExecutionStrategy {
         }
     }
     sendMessage(message) {
-        this._process.notifyMessageSent(message);
+        //this._process.notifyMessageSent(message);
     }
     reportError(errorMessage) {
         if (this._currentResult.errors.length < ExecutionStrategy.MaxErrorCount)
             this._currentResult.errors.push(errorMessage);
-        this._process.notifyErrorReported(errorMessage);
+        //this._process.notifyErrorReported(errorMessage);
     }
     notifyResultUpdate(status) {
-        this._process.notifyResultUpdate(status, this._currentResult);
+        //this._process.notifyResultUpdate(status, this._currentResult);
     }
 }
 ExecutionStrategy.MaxErrorCount = 1000;

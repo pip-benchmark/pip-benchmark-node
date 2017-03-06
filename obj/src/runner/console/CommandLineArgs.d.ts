@@ -1,5 +1,5 @@
-import { MeasurementType } from '../MeasurementType';
-import { ExecutionType } from '../ExecutionType';
+import { MeasurementType } from '../config/MeasurementType';
+import { ExecutionType } from '../config/ExecutionType';
 export declare class CommandLineArgs {
     constructor(args: string[]);
     private processArguments(args);

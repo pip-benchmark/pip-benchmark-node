@@ -1,26 +1,26 @@
 import { Parameter } from '../../Parameter';
-import { SimpleTypeConverter } from '../../SimpleTypeConverter';
-import { MeasurementType } from '../MeasurementType';
+import { MeasurementType } from '../config/MeasurementType';
+import { ConfigurationManager } from '../config/ConfigurationManager';
 
 export class MeasurementTypeParameter extends Parameter {
-    private _process: any;
+    private _configuration: ConfigurationManager;
 
-    public constructor(process: any) {
+    public constructor(configuration: ConfigurationManager) {
         super(
             "General.Benchmarking.MeasurementType",
             "Performance type: peak or nominal", 
             "Peak"
         );
-        this._process = process;
+        this._configuration = configuration;
     }
 
     public get value(): string {
-         return this._process.measurementType == MeasurementType.Peak ? "Peak" : "Nominal"; 
+         return this._configuration.measurementType == MeasurementType.Peak ? "Peak" : "Nominal"; 
    }
     
     public set value(value: string) {
         value = value.toLowerCase();
-        this._process.measurementType = value.startsWith("p")
+        this._configuration.measurementType = value.startsWith("p")
             ? MeasurementType.Peak : MeasurementType.Nominal;
     }
 }

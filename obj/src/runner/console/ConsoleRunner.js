@@ -66,10 +66,10 @@ class ConsoleRunner {
                 },
                 (callback) => {
                     // Configure benchmarking
-                    this._runner.measurementType = this._args.measurementType;
-                    this._runner.nominalRate = this._args.nominalRate;
-                    this._runner.executionType = this._args.executionType;
-                    this._runner.duration = this._args.duration;
+                    this._runner.configuration.measurementType = this._args.measurementType;
+                    this._runner.configuration.nominalRate = this._args.nominalRate;
+                    this._runner.configuration.executionType = this._args.executionType;
+                    this._runner.configuration.duration = this._args.duration;
                     // Perform benchmarking
                     this._runner.run(() => {
                         if (this._runner.results.length > 0)

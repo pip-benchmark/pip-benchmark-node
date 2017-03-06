@@ -1,6 +1,7 @@
 var _ = require('lodash');
 
 import { Parameter } from '../../Parameter';
+import { ConfigurationManager } from '../config/ConfigurationManager';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { MeasurementTypeParameter } from './MeasurementTypeParameter';
@@ -10,21 +11,20 @@ import { DurationParameter } from './DurationParameter';
 import { BenchmarkSelectedParameter } from './BenchmarkSelectedParameter';
 import { BenchmarkProportionParameter } from './BenchmarkProportionParameter';
 import { BenchmarkSuiteParameter } from './BenchmarkSuiteParameter';
-import { ParametersCallback } from './ParametersCallback';
 import { Properties } from '../utilities/Properties';
 
 export class ParametersManager {
-    private _runner: any;
+    private _configuration: ConfigurationManager;
+    private _execution: any;
     private _parameters: Parameter[] = [];
-    private _changeListeners: ParametersCallback[] = [];
 
-    public constructor(runner: any) {
-        this._runner = runner;
+    public constructor(configuration: ConfigurationManager) {
+        this._configuration = configuration;
 
-        this._parameters.push(new MeasurementTypeParameter(runner.process));
-        this._parameters.push(new NominalRateParameter(runner.process));
-        this._parameters.push(new ExecutionTypeParameter(runner.process));
-        this._parameters.push(new DurationParameter(runner.process));
+        this._parameters.push(new MeasurementTypeParameter(configuration));
+        this._parameters.push(new NominalRateParameter(configuration));
+        this._parameters.push(new ExecutionTypeParameter(configuration));
+        this._parameters.push(new DurationParameter(configuration));
     }
  
     public get userDefined(): Parameter[] {
@@ -54,7 +54,7 @@ export class ParametersManager {
                 parameter.value = properties[parameter.name];
         });
 
-        this.notifyChanged();
+        this._configuration.notifyChanged();
     }
 
     public saveToFile(fileName: string): void {
@@ -82,7 +82,7 @@ export class ParametersManager {
             this._parameters.push(suiteParameter);
         });
 
-        this.notifyChanged();
+        this._configuration.notifyChanged();
     }
 
     public removeSuite(suite: BenchmarkSuiteInstance): void {
@@ -92,7 +92,7 @@ export class ParametersManager {
             return parameter.name.startsWith(parameterNamePrefix);
         });
 
-        this.notifyChanged();
+        this._configuration.notifyChanged();
     }
 
     public setToDefault(): void {
@@ -100,6 +100,8 @@ export class ParametersManager {
             if (parameter instanceof BenchmarkSuiteParameter)
                 parameter.value = parameter.defaultValue;
         });
+
+        this._configuration.notifyChanged();
     }
 
     public set(parameters: any) {
@@ -107,28 +109,8 @@ export class ParametersManager {
             if (parameters.hasOwnProperty(parameter.name))
                 parameter.value = parameters[parameter.name];
         });
+
+        this._configuration.notifyChanged();
     }
  
-    public addChangeListener(listener: ParametersCallback): void {
-        this._changeListeners.push(listener);
-    }
-
-    public removeChangeListener(listener: ParametersCallback): void {
-        for (let index = this._changeListeners.length - 1; index >= 0; index--) {
-            if (this._changeListeners[index] == listener)
-                this._changeListeners = this._changeListeners.splice(index, 1);
-        }
-    }
-
-    public notifyChanged(): void {
-        for (let index = 0; index < this._changeListeners.length; index++) {
-            try {
-                let listener = this._changeListeners[index];
-                listener();
-            } catch (ex) {
-                // Ignore and send a message to the next listener.
-            }
-        }
-    }
-
 }

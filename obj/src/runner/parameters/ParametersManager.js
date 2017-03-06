@@ -10,14 +10,13 @@ const BenchmarkProportionParameter_1 = require("./BenchmarkProportionParameter")
 const BenchmarkSuiteParameter_1 = require("./BenchmarkSuiteParameter");
 const Properties_1 = require("../utilities/Properties");
 class ParametersManager {
-    constructor(runner) {
+    constructor(configuration) {
         this._parameters = [];
-        this._changeListeners = [];
-        this._runner = runner;
-        this._parameters.push(new MeasurementTypeParameter_1.MeasurementTypeParameter(runner.process));
-        this._parameters.push(new NominalRateParameter_1.NominalRateParameter(runner.process));
-        this._parameters.push(new ExecutionTypeParameter_1.ExecutionTypeParameter(runner.process));
-        this._parameters.push(new DurationParameter_1.DurationParameter(runner.process));
+        this._configuration = configuration;
+        this._parameters.push(new MeasurementTypeParameter_1.MeasurementTypeParameter(configuration));
+        this._parameters.push(new NominalRateParameter_1.NominalRateParameter(configuration));
+        this._parameters.push(new ExecutionTypeParameter_1.ExecutionTypeParameter(configuration));
+        this._parameters.push(new DurationParameter_1.DurationParameter(configuration));
     }
     get userDefined() {
         let parameters = [];
@@ -40,7 +39,7 @@ class ParametersManager {
             if (properties.hasOwnProperty(parameter.name))
                 parameter.value = properties[parameter.name];
         });
-        this.notifyChanged();
+        this._configuration.notifyChanged();
     }
     saveToFile(fileName) {
         let properties = new Properties_1.Properties();
@@ -61,46 +60,28 @@ class ParametersManager {
             let suiteParameter = new BenchmarkSuiteParameter_1.BenchmarkSuiteParameter(suite, parameter);
             this._parameters.push(suiteParameter);
         });
-        this.notifyChanged();
+        this._configuration.notifyChanged();
     }
     removeSuite(suite) {
         let parameterNamePrefix = suite.name + ".";
         this._parameters = _.remove(this._parameters, (parameter) => {
             return parameter.name.startsWith(parameterNamePrefix);
         });
-        this.notifyChanged();
+        this._configuration.notifyChanged();
     }
     setToDefault() {
         _.each(this._parameters, (parameter) => {
             if (parameter instanceof BenchmarkSuiteParameter_1.BenchmarkSuiteParameter)
                 parameter.value = parameter.defaultValue;
         });
+        this._configuration.notifyChanged();
     }
     set(parameters) {
         _.each(this._parameters, (parameter) => {
             if (parameters.hasOwnProperty(parameter.name))
                 parameter.value = parameters[parameter.name];
         });
-    }
-    addChangeListener(listener) {
-        this._changeListeners.push(listener);
-    }
-    removeChangeListener(listener) {
-        for (let index = this._changeListeners.length - 1; index >= 0; index--) {
-            if (this._changeListeners[index] == listener)
-                this._changeListeners = this._changeListeners.splice(index, 1);
-        }
-    }
-    notifyChanged() {
-        for (let index = 0; index < this._changeListeners.length; index++) {
-            try {
-                let listener = this._changeListeners[index];
-                listener();
-            }
-            catch (ex) {
-                // Ignore and send a message to the next listener.
-            }
-        }
+        this._configuration.notifyChanged();
     }
 }
 exports.ParametersManager = ParametersManager;

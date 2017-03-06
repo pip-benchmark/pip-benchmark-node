@@ -4,7 +4,7 @@ export declare class EnvironmentManager extends BenchmarkProcess {
     private _cpuMeasurement;
     private _videoMeasurement;
     private _diskMeasurement;
-    constructor(runner: any);
+    constructor();
     readonly systemInfo: any;
     readonly cpuMeasurement: number;
     readonly videoMeasurement: number;

@@ -1,22 +1,20 @@
+import { ConfigurationManager } from '../config/ConfigurationManager';
 import { ExecutionState } from '../ExecutionState';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
 import { BenchmarkResult } from '../BenchmarkResult';
 export declare abstract class ExecutionStrategy {
     private static readonly MaxErrorCount;
-    private _process;
-    private _benchmarks;
-    private _suites;
+    protected _configuration: ConfigurationManager;
+    protected _benchmarks: BenchmarkInstance[];
+    protected _suites: BenchmarkSuiteInstance[];
     private _transactionCounter;
     private _currentResult;
     private _transactionMeter;
     private _cpuLoadMeter;
     private _memoryUsageMeter;
-    protected constructor(process: any, benchmarks: BenchmarkInstance[]);
+    protected constructor(configuration: ConfigurationManager, benchmarks: BenchmarkInstance[]);
     private getAllSuitesFromBenchmarks(benchmarks);
-    readonly process: any;
-    readonly benchmarks: BenchmarkInstance[];
-    readonly suites: BenchmarkSuiteInstance[];
     protected readonly currentResult: BenchmarkResult;
     abstract start(callback?: () => void): void;
     abstract stop(callback?: () => void): void;

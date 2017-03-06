@@ -5,13 +5,17 @@ import { BenchmarkSuite } from '../../BenchmarkSuite';
 import { Benchmark } from '../../Benchmark';
 import { BenchmarkSuiteInstance } from './BenchmarkSuiteInstance';
 import { BenchmarkInstance } from './BenchmarkInstance';
+import { ConfigurationManager } from '../config/ConfigurationManager';
+import { ParametersManager } from '../parameters/ParametersManager';
 
 export class BenchmarksManager {
-	private _runner: any;
+    private _configuration: ConfigurationManager;
+    private _parameters: ParametersManager;
     private _suites: BenchmarkSuiteInstance[] = [];
 
-    public constructor(runner: any) {
-        this._runner = runner;
+    public constructor(configuration: ConfigurationManager, parameters: ParametersManager) {
+        this._configuration = configuration;
+        this._parameters = parameters;
     }
  
     public get suites(): BenchmarkSuiteInstance[] {
@@ -146,14 +150,11 @@ export class BenchmarksManager {
         if (!(suite instanceof BenchmarkSuiteInstance))
             throw Error('Incorrect suite type');
 
-        this._runner.process.stop();
         this._suites.push(suite);
-        this._runner.parameters.addSuite(suite);
+        this._parameters.addSuite(suite);
     }
 
     public addSuitesFromModule(moduleName: string): void {
-        this._runner.process.stop();
-
         if (moduleName.startsWith('.'))
             moduleName = path.resolve(moduleName);
 
@@ -169,7 +170,7 @@ export class BenchmarksManager {
                     if (suite instanceof BenchmarkSuite) {
                         suite = new BenchmarkSuiteInstance(suite);
                         this._suites.push(suite);
-                        this._runner.parameters.addSuite(suite);
+                        this._parameters.addSuite(suite);
                     }
                 } catch (ex) {
                     // Ignore
@@ -189,10 +190,9 @@ export class BenchmarksManager {
     }
 
     public removeSuiteByName(suiteName: string): void {
-        this._runner.process.stop();
         let suite = this.findSuite(suiteName);
         if (suite != null) {
-            this._runner.parameters.removeSuite(suite);
+            this._parameters.removeSuite(suite);
 
             this._suites = _.remove(this._suites, (s) => { return s == suite; })
         }
@@ -205,18 +205,15 @@ export class BenchmarksManager {
         if (!(suite instanceof BenchmarkSuiteInstance))
             throw new Error('Wrong suite type');
 
-        this._runner.process.stop();
-        this._runner.parameters.removeSuite(suite);
+        this._parameters.removeSuite(suite);
 
         this._suites = _.remove(this._suites, (s) => s == suite);
     }
 
     public clear(): void {
-        this._runner.process.stop();
-
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
-            this._runner.parameters.removeSuite(suite);
+            this._parameters.removeSuite(suite);
         }
         
         this._suites = [];

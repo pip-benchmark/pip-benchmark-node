@@ -5,9 +5,10 @@ var path = require('path');
 const BenchmarkSuite_1 = require("../../BenchmarkSuite");
 const BenchmarkSuiteInstance_1 = require("./BenchmarkSuiteInstance");
 class BenchmarksManager {
-    constructor(runner) {
+    constructor(configuration, parameters) {
         this._suites = [];
-        this._runner = runner;
+        this._configuration = configuration;
+        this._parameters = parameters;
     }
     get suites() {
         return this._suites;
@@ -123,12 +124,10 @@ class BenchmarksManager {
             suite = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
         if (!(suite instanceof BenchmarkSuiteInstance_1.BenchmarkSuiteInstance))
             throw Error('Incorrect suite type');
-        this._runner.process.stop();
         this._suites.push(suite);
-        this._runner.parameters.addSuite(suite);
+        this._parameters.addSuite(suite);
     }
     addSuitesFromModule(moduleName) {
-        this._runner.process.stop();
         if (moduleName.startsWith('.'))
             moduleName = path.resolve(moduleName);
         let suites = require(moduleName);
@@ -142,7 +141,7 @@ class BenchmarksManager {
                     if (suite instanceof BenchmarkSuite_1.BenchmarkSuite) {
                         suite = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
                         this._suites.push(suite);
-                        this._runner.parameters.addSuite(suite);
+                        this._parameters.addSuite(suite);
                     }
                 }
                 catch (ex) {
@@ -161,10 +160,9 @@ class BenchmarksManager {
         return null;
     }
     removeSuiteByName(suiteName) {
-        this._runner.process.stop();
         let suite = this.findSuite(suiteName);
         if (suite != null) {
-            this._runner.parameters.removeSuite(suite);
+            this._parameters.removeSuite(suite);
             this._suites = _.remove(this._suites, (s) => { return s == suite; });
         }
     }
@@ -173,15 +171,13 @@ class BenchmarksManager {
             suite = _.find(this._suites, (s) => { return s.suite == suite; });
         if (!(suite instanceof BenchmarkSuiteInstance_1.BenchmarkSuiteInstance))
             throw new Error('Wrong suite type');
-        this._runner.process.stop();
-        this._runner.parameters.removeSuite(suite);
+        this._parameters.removeSuite(suite);
         this._suites = _.remove(this._suites, (s) => s == suite);
     }
     clear() {
-        this._runner.process.stop();
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
-            this._runner.parameters.removeSuite(suite);
+            this._parameters.removeSuite(suite);
         }
         this._suites = [];
     }

@@ -1,11 +1,11 @@
 import { Parameter } from '../../Parameter';
+import { ConfigurationManager } from '../config/ConfigurationManager';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
-import { ParametersCallback } from './ParametersCallback';
 export declare class ParametersManager {
-    private _runner;
+    private _configuration;
+    private _execution;
     private _parameters;
-    private _changeListeners;
-    constructor(runner: any);
+    constructor(configuration: ConfigurationManager);
     readonly userDefined: Parameter[];
     readonly all: Parameter[];
     loadFromFile(path: string): void;
@@ -14,7 +14,4 @@ export declare class ParametersManager {
     removeSuite(suite: BenchmarkSuiteInstance): void;
     setToDefault(): void;
     set(parameters: any): void;
-    addChangeListener(listener: ParametersCallback): void;
-    removeChangeListener(listener: ParametersCallback): void;
-    notifyChanged(): void;
 }

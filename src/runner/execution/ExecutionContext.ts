@@ -28,6 +28,6 @@ export class ExecutionContext implements IExecutionContext {
     }
 
     public stop(): void {
-        this._strategy.process.stop();
+        this._strategy.stop();
     }
 }

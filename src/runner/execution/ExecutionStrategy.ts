@@ -1,5 +1,6 @@
 var _ = require('lodash');
 
+import { ConfigurationManager } from '../config/ConfigurationManager';
 import { ExecutionState } from '../ExecutionState';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
@@ -12,9 +13,9 @@ import { MemoryUsageMeter } from './MemoryUsageMeter';
 export abstract class ExecutionStrategy {
     private static readonly MaxErrorCount = 1000;
 
-    private _process: any;
-    private _benchmarks: BenchmarkInstance[];
-    private _suites: BenchmarkSuiteInstance[];
+    protected _configuration: ConfigurationManager;
+    protected _benchmarks: BenchmarkInstance[];
+    protected _suites: BenchmarkSuiteInstance[];
 
     private _transactionCounter: number = 0;
 
@@ -24,8 +25,8 @@ export abstract class ExecutionStrategy {
     private _cpuLoadMeter: CpuLoadMeter;
     private _memoryUsageMeter: MemoryUsageMeter;
 
-    protected constructor(process: any, benchmarks: BenchmarkInstance[]) {
-        this._process = process;
+    protected constructor(configuration: ConfigurationManager, benchmarks: BenchmarkInstance[]) {
+        this._configuration = configuration;
         this._benchmarks = benchmarks;
         this._suites = this.getAllSuitesFromBenchmarks(benchmarks);
 
@@ -43,18 +44,6 @@ export abstract class ExecutionStrategy {
                 suites.push(suite);
         }
         return suites;
-    }
-
-    public get process(): any {
-        return this._process;
-    }
-
-    public get benchmarks(): BenchmarkInstance[] {
-        return this._benchmarks;
-    }
-
-    public get suites(): BenchmarkSuiteInstance[] {
-        return this._suites;
     }
 
     protected get currentResult(): BenchmarkResult {
@@ -100,17 +89,17 @@ export abstract class ExecutionStrategy {
     }
 
     public sendMessage(message: string): void {
-        this._process.notifyMessageSent(message);
+        //this._process.notifyMessageSent(message);
     }
 
     public reportError(errorMessage: string): void {
         if (this._currentResult.errors.length < ExecutionStrategy.MaxErrorCount)
             this._currentResult.errors.push(errorMessage);
         
-        this._process.notifyErrorReported(errorMessage);
+        //this._process.notifyErrorReported(errorMessage);
     }
         
     protected notifyResultUpdate(status: ExecutionState): void {
-        this._process.notifyResultUpdate(status, this._currentResult);
+        //this._process.notifyResultUpdate(status, this._currentResult);
     }
 }

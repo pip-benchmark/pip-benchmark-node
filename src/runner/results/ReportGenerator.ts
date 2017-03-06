@@ -2,7 +2,7 @@ var _ = require('lodash');
 var fs = require('fs');
 var util = require('util');
 
-import { MeasurementType } from '../MeasurementType';
+import { MeasurementType } from '../config/MeasurementType';
 
 export class ReportGenerator {
     private static readonly SeparatorLine = "***************************************************************\r\n";

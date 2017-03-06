@@ -1,5 +1,6 @@
 var async = require('async');
 
+import { ConfigurationManager } from '../config/ConfigurationManager';
 import { BenchmarkProcess } from '../execution/BenchmarkProcess';
 import { EnvironmentProperties } from './EnvironmentProperties';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
@@ -13,8 +14,11 @@ export class EnvironmentManager extends BenchmarkProcess {
     private _videoMeasurement: number;
     private _diskMeasurement: number;
 
-    public constructor(runner: any) {
-        super(runner);
+    public constructor() {
+        let configuration = new ConfigurationManager();
+        configuration.duration = EnvironmentManager.Duration;
+
+        super(configuration);
         
         try {
         	this.load();
@@ -103,7 +107,6 @@ export class EnvironmentManager extends BenchmarkProcess {
         instance.unselectAll();
         instance.selectByName(suite.cpuBenchmark.name);
 
-        super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {
             let result = super.results[0].performanceMeasurement.averageValue;
             callback(null, result);
@@ -117,7 +120,6 @@ export class EnvironmentManager extends BenchmarkProcess {
         instance.unselectAll();
         instance.selectByName(suite.diskBenchmark.name);
 
-        super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {
             let result = super.results[0].performanceMeasurement.averageValue;
             callback(null, result);
@@ -131,7 +133,6 @@ export class EnvironmentManager extends BenchmarkProcess {
         instance.unselectAll();
         instance.selectByName(suite.videoBenchmark.name);
 
-        super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {
             let result = super.results[0].performanceMeasurement.averageValue;
             callback(null, result);

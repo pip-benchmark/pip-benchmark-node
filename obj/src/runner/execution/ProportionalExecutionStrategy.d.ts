@@ -1,3 +1,4 @@
+import { ConfigurationManager } from '../config/ConfigurationManager';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { BenchmarkResult } from '../BenchmarkResult';
 import { ExecutionStrategy } from './ExecutionStrategy';
@@ -10,7 +11,7 @@ export declare class ProportionalExecutionStrategy extends ExecutionStrategy {
     private _benchmarkCount;
     private _onlyBenchmark;
     private _timeout;
-    constructor(process: any, benchmarks: BenchmarkInstance[], embedded?: boolean);
+    constructor(configuration: ConfigurationManager, benchmarks: BenchmarkInstance[], embedded?: boolean);
     start(callback?: () => void): void;
     stop(callback?: () => void): void;
     getResults(): BenchmarkResult[];

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const MeasurementType_1 = require("../MeasurementType");
-const ExecutionType_1 = require("../ExecutionType");
+const MeasurementType_1 = require("../config/MeasurementType");
+const ExecutionType_1 = require("../config/ExecutionType");
 const SimpleTypeConverter_1 = require("../../SimpleTypeConverter");
 class CommandLineArgs {
     constructor(args) {

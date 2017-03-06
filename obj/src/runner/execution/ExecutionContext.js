@@ -18,7 +18,7 @@ class ExecutionContext {
         this._strategy.reportError(errorMessage);
     }
     stop() {
-        this._strategy.process.stop();
+        this._strategy.stop();
     }
 }
 exports.ExecutionContext = ExecutionContext;

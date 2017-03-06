@@ -1,6 +1,6 @@
 var async = require('async');
 
-import { MeasurementType } from '../MeasurementType';
+import { ConfigurationManager } from '../config/ConfigurationManager';
 import { ExecutionState } from '../ExecutionState';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
@@ -16,12 +16,12 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
     private _results: BenchmarkResult[] = [];
     private _timeout: any;
 
-    public constructor(process: any, benchmarks: BenchmarkInstance[]) {
-        super(process, benchmarks);
+    public constructor(configuration: ConfigurationManager, benchmarks: BenchmarkInstance[]) {
+        super(configuration, benchmarks);
     }
 
     public start(callback?: () => void): void {
-        if (this.process().duration() <= 0)
+        if (this._configuration.duration <= 0)
             throw new Error("Duration was not set");
 
         this.notifyResultUpdate(ExecutionState.Starting);
@@ -55,7 +55,7 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
 
     private execute(callback?: () => void) {
         async.eachSeries(
-            this.benchmarks,
+            this._benchmarks,
             (benchmark, callback) => {
                 // Skip if benchmarking was interrupted
                 if (!this._running) {
@@ -64,7 +64,7 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
                 }
 
                 // Start embedded strategy
-                this._current = new ProportionalExecutionStrategy(this.process, [benchmark], true);
+                this._current = new ProportionalExecutionStrategy(this._configuration, [benchmark], true);
                 this._current.start();
 
                 this._timeout = setTimeout(
@@ -80,7 +80,7 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
                             callback();
                         });
                     }, 
-                    this.process.delay * 1000
+                    this._configuration.duration * 1000
                 );
             },
             (err) => {

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var async = require('async');
-const MeasurementType_1 = require("../MeasurementType");
+const MeasurementType_1 = require("../config/MeasurementType");
 const ExecutionState_1 = require("../ExecutionState");
 const ExecutionContext_1 = require("./ExecutionContext");
 const ExecutionStrategy_1 = require("./ExecutionStrategy");
 class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy {
-    constructor(process, benchmarks, embedded) {
-        super(process, benchmarks);
+    constructor(configuration, benchmarks, embedded) {
+        super(configuration, benchmarks);
         this._embedded = false;
         this._running = false;
         this._ticksPerTransaction = 0;
@@ -16,7 +16,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
     start(callback) {
         this._running = true;
         // Initialize and start
-        async.each(this.suites, (suite, callback) => {
+        async.each(this._suites, (suite, callback) => {
             let context = new ExecutionContext_1.ExecutionContext(this, suite);
             suite.setUp(context, callback);
         }, (err) => {
@@ -42,7 +42,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
             if (!this._embedded)
                 this.notifyResultUpdate(ExecutionState_1.ExecutionState.Completed);
             // Deinitialize tests
-            async.each(this.suites, (suite, callback) => {
+            async.each(this._suites, (suite, callback) => {
                 suite.tearDown(callback);
             }, (err) => {
                 if (callback != null)
@@ -58,13 +58,13 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
     }
     calculateProportionRanges() {
         let totalProportion = 0;
-        for (let index = 0; index < this.benchmarks.length; index++) {
-            let benchmark = this.benchmarks[index];
+        for (let index = 0; index < this._benchmarks.length; index++) {
+            let benchmark = this._benchmarks[index];
             totalProportion += !benchmark.passive ? benchmark.proportion : 0;
         }
         let startProportionRange = 0;
-        for (let index = 0; index < this.benchmarks.length; index++) {
-            let benchmark = this.benchmarks[index];
+        for (let index = 0; index < this._benchmarks.length; index++) {
+            let benchmark = this._benchmarks[index];
             if (benchmark.passive) {
                 benchmark.startRange = 0;
                 benchmark.endRange = 0;
@@ -82,7 +82,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
             return null;
         let proportion = Math.random();
         for (let index = 0; index < this._benchmarkCount; index++) {
-            let thisBenchmark = this.benchmarks[index];
+            let thisBenchmark = this._benchmarks[index];
             if (thisBenchmark.withinRange(proportion))
                 return thisBenchmark;
         }
@@ -105,7 +105,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
                 // Execute active benchmark
                 benchmark.execute((err) => {
                     // Process force continue
-                    if (err != null && this.process.forceContinue) {
+                    if (err != null && this._configuration.forceContinue) {
                         this.reportError('' + err);
                         err = null;
                     }
@@ -114,7 +114,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
                     if (err == null)
                         this.reportProgress(1, now);
                     // Introduce delay to keep nominal rate
-                    if (err == null && this.process.measurementType == MeasurementType_1.MeasurementType.Nominal) {
+                    if (err == null && this._configuration.measurementType == MeasurementType_1.MeasurementType.Nominal) {
                         let delay = this._ticksPerTransaction - (now - this._lastExecutedTime);
                         this._lastExecutedTime = now;
                         if (delay > 0)
@@ -131,7 +131,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
         }
         catch (ex) {
             // Process force continue
-            if (this.process.forceContinue) {
+            if (this._configuration.forceContinue) {
                 this.reportError('' + ex);
                 callback(null);
             }
@@ -143,13 +143,13 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
     execute(callback) {
         this.calculateProportionRanges();
         this.reset();
-        if (this.process.measurementType == MeasurementType_1.MeasurementType.Nominal)
-            this._ticksPerTransaction = 1000.0 / this.process.nominalRate;
+        if (this._configuration.measurementType == MeasurementType_1.MeasurementType.Nominal)
+            this._ticksPerTransaction = 1000.0 / this._configuration.nominalRate;
         this._lastExecutedTime = Date.now();
-        let duration = this.process.duration > 0 ? this.process.duration : 365 * 24 * 36000;
+        let duration = this._configuration.duration > 0 ? this._configuration.duration : 365 * 24 * 36000;
         this._stopTime = Date.now() + duration * 1000;
-        this._benchmarkCount = this.benchmarks.length;
-        this._onlyBenchmark = this._benchmarkCount == 1 ? this.benchmarks[0] : null;
+        this._benchmarkCount = this._benchmarks.length;
+        this._onlyBenchmark = this._benchmarkCount == 1 ? this._benchmarks[0] : null;
         // Execute benchmarks
         async.whilst(() => {
             return this._running && this._lastExecutedTime < this._stopTime;
