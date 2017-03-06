@@ -92,7 +92,7 @@ export class ConsoleRunner {
                     this._runner.configuration.duration = this._args.duration;
 
                     // Perform benchmarking
-                    this._runner.run(() => {
+                    this._runner.run((err) => {
                         if (this._runner.results.all.length > 0)
                             console.log(this._runner.results.all[0].performanceMeasurement.averageValue.toFixed(2));
 
@@ -102,7 +102,7 @@ export class ConsoleRunner {
 
                         console.log(this._runner.report.generate());
 
-                        callback();
+                        callback(err);
                     });
                 }
             ], (err) => {

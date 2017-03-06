@@ -39,7 +39,7 @@ export class Properties {
         let content = '';
         for (let index = 0; index < this.lines.length; index++) {
             let line = this.lines[index];
-            content = line.line + os.EOL;
+            content += line.line + os.EOL;
         }
 
         fs.writeFileSync(file, content, { encoding: 'UTF-8' });
@@ -59,6 +59,7 @@ export class Properties {
         // Update existing values and create missing lines
         for (let prop in this) {
             if (!this.hasOwnProperty(prop)) continue;
+            if (prop == 'lines') continue;
 
             let line = this.findLine(prop);
             if (line != null) {
@@ -72,7 +73,7 @@ export class Properties {
         // Remove lines mismatched with listed keys
         for (let index = this.lines.length - 1; index >= 0; index--) {
             let line = this.lines[index];
-            if (line.key != null && this[line.key] == null) {
+            if (line.key != null && !this.hasOwnProperty(line.key)) {
                 this.lines = this.lines.splice(index, 1);
             }
         }

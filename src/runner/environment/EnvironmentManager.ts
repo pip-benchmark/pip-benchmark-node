@@ -2,13 +2,13 @@ var async = require('async');
 
 import { ConfigurationManager } from '../config/ConfigurationManager';
 import { ResultsManager } from '../results/ResultsManager';
-import { BenchmarkProcess } from '../execution/BenchmarkProcess';
+import { ExecutionManager } from '../execution/ExecutionManager';
 import { EnvironmentProperties } from './EnvironmentProperties';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
 import { StandardBenchmarkSuite } from './StandardBenchmarkSuite';
 import { SystemInfo } from './SystemInfo';
 
-export class EnvironmentManager extends BenchmarkProcess {
+export class EnvironmentManager extends ExecutionManager {
     private static readonly Duration = 5;
 
     private _cpuMeasurement: number;
@@ -110,9 +110,10 @@ export class EnvironmentManager extends BenchmarkProcess {
         instance.unselectAll();
         instance.selectByName(suite.cpuBenchmark.name);
 
-        super.run([instance], () => {
-            let result = super._results.all[0].performanceMeasurement.averageValue;
-            callback(null, result);
+        this.run(instance.selected, (err) => {
+            let result = this._results.all.length > 0 
+                ? this._results.all[0].performanceMeasurement.averageValue : 0;
+            callback(err, result);
         });
     }
 
@@ -123,9 +124,10 @@ export class EnvironmentManager extends BenchmarkProcess {
         instance.unselectAll();
         instance.selectByName(suite.diskBenchmark.name);
 
-        super.run([instance], () => {
-            let result = super._results.all[0].performanceMeasurement.averageValue;
-            callback(null, result);
+        this.run(instance.selected, (err) => {
+            let result = this._results.all.length > 0 
+                ? this._results.all[0].performanceMeasurement.averageValue : 0;
+            callback(err, result);
         });
     }
 
@@ -136,9 +138,10 @@ export class EnvironmentManager extends BenchmarkProcess {
         instance.unselectAll();
         instance.selectByName(suite.videoBenchmark.name);
 
-        super.run([instance], () => {
-            let result = super._results.all[0].performanceMeasurement.averageValue;
-            callback(null, result);
+        this.run(instance.selected, (err) => {
+            let result = this._results.all.length > 0 
+                ? this._results.all[0].performanceMeasurement.averageValue : 0;
+            callback(err, result);
         });
     }
     

@@ -25,11 +25,11 @@ class ResultsManager {
                 this._updatedListeners = this._updatedListeners.splice(index, 1);
         }
     }
-    notifyUpdated(status, result) {
+    notifyUpdated(result) {
         for (let index = 0; index < this._updatedListeners.length; index++) {
             try {
                 let listener = this._updatedListeners[index];
-                listener(status, result);
+                listener(result);
             }
             catch (ex) {
                 // Ignore and send a message to the next listener.
@@ -65,14 +65,14 @@ class ResultsManager {
                 this._errorListeners = this._errorListeners.splice(index, 1);
         }
     }
-    notifyError(message) {
+    notifyError(error) {
         for (let index = 0; index < this._errorListeners.length; index++) {
             try {
                 let listener = this._errorListeners[index];
-                listener(message);
+                listener(error);
             }
             catch (ex) {
-                // Ignore and send a message to the next listener.
+                // Ignore and send an error to the next listener.
             }
         }
     }

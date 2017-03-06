@@ -7,5 +7,5 @@ export declare class BenchmarkResult {
     performanceMeasurement: Measurement;
     cpuLoadMeasurement: Measurement;
     memoryUsageMeasurement: Measurement;
-    errors: string[];
+    errors: any[];
 }

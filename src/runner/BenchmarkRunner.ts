@@ -1,17 +1,8 @@
-import { Parameter } from '../Parameter';
-import { BenchmarkSuite } from '../BenchmarkSuite';
-import { BenchmarkSuiteInstance } from './benchmarks/BenchmarkSuiteInstance';
-import { BenchmarkInstance } from './benchmarks/BenchmarkInstance';
-import { ResultCallback } from './results/ResultCallback';
-import { MessageCallback } from './results/MessageCallback';
-import { BenchmarkResult } from './results/BenchmarkResult';
-import { ExecutionState } from './results/ExecutionState';
-
 import { ConfigurationManager } from './config/ConfigurationManager';
 import { ResultsManager } from './results/ResultsManager';
 import { BenchmarksManager } from './benchmarks/BenchmarksManager';
 import { ParametersManager } from './parameters/ParametersManager';
-import { BenchmarkProcess } from './execution/BenchmarkProcess';
+import { ExecutionManager } from './execution/ExecutionManager';
 import { ReportGenerator } from './reports/ReportGenerator';
 import { EnvironmentManager } from './environment/EnvironmentManager';
 
@@ -20,7 +11,7 @@ export class BenchmarkRunner {
     private _results: ResultsManager;
     private _parameters: ParametersManager;
     private _benchmarks: BenchmarksManager;
-    private _process: BenchmarkProcess;
+    private _execution: ExecutionManager;
     private _report: ReportGenerator;
     private _environment: EnvironmentManager;
 
@@ -29,7 +20,7 @@ export class BenchmarkRunner {
         this._results = new ResultsManager();
         this._parameters = new ParametersManager(this._configuration);
         this._benchmarks = new BenchmarksManager(this._configuration, this._parameters);
-        this._process = new BenchmarkProcess(this._configuration, this._results);
+        this._execution = new ExecutionManager(this._configuration, this._results);
         this._environment = new EnvironmentManager();
         this._report = new ReportGenerator(this._configuration, this._results, 
             this._parameters, this._benchmarks, this._environment);
@@ -47,8 +38,8 @@ export class BenchmarkRunner {
         return this._parameters;
     }
 
-    public get process(): BenchmarkProcess {
-        return this._process;
+    public get execution(): ExecutionManager {
+        return this._execution;
     }
 
     public get benchmarks(): BenchmarksManager {
@@ -64,18 +55,18 @@ export class BenchmarkRunner {
     }
 
     public get running(): boolean {
-        return this._process.running;
+        return this._execution.running;
     }
 
     public start(): void {
-        this._process.start(this._benchmarks.suites);
+        this._execution.start(this._benchmarks.selected);
     }
 
     public stop(): void {
-        this._process.stop();
+        this._execution.stop();
     }
 
-    public run(callback: () => void): void {
-        this._process.run(this._benchmarks.suites, callback);
+    public run(callback: (err: any) => void): void {
+        this._execution.run(this._benchmarks.selected, callback);
     }
 }

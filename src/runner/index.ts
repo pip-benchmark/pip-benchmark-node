@@ -1,4 +1,3 @@
-// export { BenchmarkException } from './BenchmarkException';
 // export { ExecutionState } from './ExecutionState';
 // export { ExecutionType } from './ExecutionType';
 // export { MeasurementType } from './MeasurementType';

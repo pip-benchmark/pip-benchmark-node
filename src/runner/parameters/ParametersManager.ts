@@ -59,10 +59,9 @@ export class ParametersManager {
 
     public saveToFile(fileName: string): void {
         let properties = new Properties();
-        for (let index = 0; index < this._parameters.length; index++) {
-            let parameter = this._parameters[index];
+        _.each(_.parameters, (parameter) => {
             properties[parameter.name] = parameter.value;
-        }
+        });
         properties.saveToFile(fileName);
     }
 

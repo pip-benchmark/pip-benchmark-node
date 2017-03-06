@@ -8,5 +8,5 @@ export class BenchmarkResult {
     public performanceMeasurement = new Measurement(0, 0, 0, 0);
     public cpuLoadMeasurement = new Measurement(0, 0, 0, 0);
     public memoryUsageMeasurement = new Measurement(0, 0, 0, 0);
-    public errors: string[] = [];
+    public errors: any[] = [];
 }

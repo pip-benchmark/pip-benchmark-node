@@ -8,10 +8,9 @@ class BenchmarkSuiteInstance {
     constructor(suite) {
         this._benchmarks = [];
         this._suite = suite;
-        for (let index = 0; index < suite.benchmarks.length; index++) {
-            let benchmark = suite.benchmarks[index];
-            this._benchmarks.push(new BenchmarkInstance_1.BenchmarkInstance(this, benchmark));
-        }
+        this._benchmarks = _.map(suite.benchmarks, (benchmark) => {
+            return new BenchmarkInstance_1.BenchmarkInstance(this, benchmark);
+        });
     }
     get suite() {
         return this._suite;
@@ -36,6 +35,11 @@ class BenchmarkSuiteInstance {
     }
     get benchmarks() {
         return this._benchmarks;
+    }
+    get selected() {
+        return _.filter(this._benchmarks, (benchmark) => {
+            return benchmark.selected;
+        });
     }
     selectAll() {
         _.each(this._benchmarks, (benchmark) => {

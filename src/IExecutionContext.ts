@@ -4,7 +4,7 @@ export interface IExecutionContext {
     incrementCounter(increment?: number): void;
     
     sendMessage(message: string): void;
-    reportError(errorMessage: string): void;
+    reportError(error: any): void;
     
     stop(): void;
 }

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class ExecutionContext {
-    constructor(strategy, results, suite) {
-        this._strategy = strategy;
-        this._results = results;
+    constructor(suite, aggregator, stopCallback) {
+        this._aggregator = aggregator;
         this._suite = suite;
+        this._stopCallback = stopCallback;
     }
     get parameters() {
         return this._suite.suite.parameters;
     }
     incrementCounter(increment) {
-        this._strategy.reportProgress(increment || 1);
+        this._aggregator.incrementCounter(increment || 1);
     }
     sendMessage(message) {
-        this._results.notifyMessage(message);
+        this._aggregator.sendMessage(message);
     }
-    reportError(errorMessage) {
-        this._results.notifyError(errorMessage);
+    reportError(error) {
+        this._aggregator.reportError(error);
     }
     stop() {
-        this._strategy.stop();
+        this._stopCallback();
     }
 }
 exports.ExecutionContext = ExecutionContext;

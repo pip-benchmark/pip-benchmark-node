@@ -18,7 +18,6 @@ export declare class BenchmarksManager {
     addSuiteFromClass(suiteClassName: string): void;
     addSuite(suite: any): void;
     addSuitesFromModule(moduleName: string): void;
-    private findSuite(suiteName);
     removeSuiteByName(suiteName: string): void;
     removeSuite(suite: any): void;
     clear(): void;

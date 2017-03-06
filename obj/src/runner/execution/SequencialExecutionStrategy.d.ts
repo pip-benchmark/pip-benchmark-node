@@ -7,7 +7,7 @@ export declare class SequencialExecutionStrategy extends ExecutionStrategy {
     private _current;
     private _timeout;
     constructor(configuration: ConfigurationManager, results: ResultsManager, benchmarks: BenchmarkInstance[]);
-    start(callback?: () => void): void;
-    stop(callback?: () => void): void;
+    start(callback?: (err: any) => void): void;
+    stop(callback?: (err: any) => void): void;
     private execute(callback?);
 }

@@ -4,7 +4,7 @@ const ConfigurationManager_1 = require("./config/ConfigurationManager");
 const ResultsManager_1 = require("./results/ResultsManager");
 const BenchmarksManager_1 = require("./benchmarks/BenchmarksManager");
 const ParametersManager_1 = require("./parameters/ParametersManager");
-const BenchmarkProcess_1 = require("./execution/BenchmarkProcess");
+const ExecutionManager_1 = require("./execution/ExecutionManager");
 const ReportGenerator_1 = require("./reports/ReportGenerator");
 const EnvironmentManager_1 = require("./environment/EnvironmentManager");
 class BenchmarkRunner {
@@ -13,7 +13,7 @@ class BenchmarkRunner {
         this._results = new ResultsManager_1.ResultsManager();
         this._parameters = new ParametersManager_1.ParametersManager(this._configuration);
         this._benchmarks = new BenchmarksManager_1.BenchmarksManager(this._configuration, this._parameters);
-        this._process = new BenchmarkProcess_1.BenchmarkProcess(this._configuration, this._results);
+        this._execution = new ExecutionManager_1.ExecutionManager(this._configuration, this._results);
         this._environment = new EnvironmentManager_1.EnvironmentManager();
         this._report = new ReportGenerator_1.ReportGenerator(this._configuration, this._results, this._parameters, this._benchmarks, this._environment);
     }
@@ -26,8 +26,8 @@ class BenchmarkRunner {
     get parameters() {
         return this._parameters;
     }
-    get process() {
-        return this._process;
+    get execution() {
+        return this._execution;
     }
     get benchmarks() {
         return this._benchmarks;
@@ -39,16 +39,16 @@ class BenchmarkRunner {
         return this._environment;
     }
     get running() {
-        return this._process.running;
+        return this._execution.running;
     }
     start() {
-        this._process.start(this._benchmarks.suites);
+        this._execution.start(this._benchmarks.selected);
     }
     stop() {
-        this._process.stop();
+        this._execution.stop();
     }
     run(callback) {
-        this._process.run(this._benchmarks.suites, callback);
+        this._execution.run(this._benchmarks.selected, callback);
     }
 }
 exports.BenchmarkRunner = BenchmarkRunner;

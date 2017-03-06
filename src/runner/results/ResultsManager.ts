@@ -1,14 +1,14 @@
 import { ResultCallback } from './ResultCallback';
 import { MessageCallback } from './MessageCallback';
+import { ErrorCallback } from './ErrorCallback';
 import { BenchmarkResult } from './BenchmarkResult';
-import { ExecutionState } from './ExecutionState';
 
 export class ResultsManager {
     private _results: BenchmarkResult[] = [];
 
     private _updatedListeners: ResultCallback[] = [];
     private _messageListeners: MessageCallback[] = [];
-    private _errorListeners: MessageCallback[] = [];
+    private _errorListeners: ErrorCallback[] = [];
 
     public constructor() {}
 
@@ -35,11 +35,11 @@ export class ResultsManager {
         }
     }
 
-    public notifyUpdated(status: ExecutionState, result: BenchmarkResult): void {
+    public notifyUpdated(result: BenchmarkResult): void {
         for (let index = 0; index < this._updatedListeners.length; index++) {
             try {
                 let listener = this._updatedListeners[index];
-                listener(status, result);
+                listener(result);
             } catch (ex) {
                 // Ignore and send a message to the next listener.
             }
@@ -68,24 +68,24 @@ export class ResultsManager {
         }
     }
 
-    public addErrorListener(listener: MessageCallback): void {
+    public addErrorListener(listener: ErrorCallback): void {
         this._errorListeners.push(listener);
     }
 
-    public removeErrorListener(listener: MessageCallback): void {
+    public removeErrorListener(listener: ErrorCallback): void {
         for (let index = this._errorListeners.length - 1; index >= 0; index--) {
             if (this._errorListeners[index] == listener)
                 this._errorListeners = this._errorListeners.splice(index, 1);
         }
     }
 
-    public notifyError(message: string): void {
+    public notifyError(error: any): void {
         for (let index = 0; index < this._errorListeners.length; index++) {
             try {
                 let listener = this._errorListeners[index];
-                listener(message);
+                listener(error);
             } catch (ex) {
-                // Ignore and send a message to the next listener.
+                // Ignore and send an error to the next listener.
             }
         }
     }

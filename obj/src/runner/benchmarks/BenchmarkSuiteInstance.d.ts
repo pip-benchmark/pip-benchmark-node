@@ -11,6 +11,7 @@ export declare class BenchmarkSuiteInstance {
     readonly description: string;
     readonly parameters: Parameter[];
     readonly benchmarks: BenchmarkInstance[];
+    readonly selected: BenchmarkInstance[];
     selectAll(): void;
     selectByName(benchmarkName: string): void;
     unselectAll(): void;

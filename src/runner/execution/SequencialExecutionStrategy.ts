@@ -2,7 +2,7 @@ var async = require('async');
 
 import { ConfigurationManager } from '../config/ConfigurationManager';
 import { ResultsManager } from '../results/ResultsManager';
-import { ExecutionState } from '../results/ExecutionState';
+import { ExecutionState } from './ExecutionState';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
 import { BenchmarkResult } from '../results/BenchmarkResult';
@@ -20,18 +20,14 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
         super(configuration, results, benchmarks);
     }
 
-    public start(callback?: () => void): void {
+    public start(callback?: (err: any) => void): void {
         if (this._configuration.duration <= 0)
             throw new Error("Duration was not set");
 
-        this._results.notifyUpdated(ExecutionState.Starting, this._currentResult);
-
-        // Start control thread
-        //setTimeout(() => { this.execute(); }, 0);
         this.execute(callback);
     }
 
-    public stop(callback?: () => void): void {
+    public stop(callback?: (err: any) => void): void {
         if (this._timeout != null) {
             clearTimeout(this._timeout);
             this._timeout = null;
@@ -40,16 +36,17 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
         if (this._running) {
             this._running = false;
 
-            if (this._current != null)
-                this._current.stop();
-
-            this._results.notifyUpdated(ExecutionState.Completed, this._currentResult);
+            if (this._current != null) {
+                this._current.stop(callback);
+            } else {
+                if (callback) callback(null);
+            }
+        } else {
+            if (callback) callback(null);
         }
-
-        if (callback) callback();
     }
 
-    private execute(callback?: () => void) {
+    private execute(callback?: (err: any) => void) {
         async.eachSeries(
             this._benchmarks,
             (benchmark, callback) => {
@@ -60,15 +57,15 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
                 }
 
                 // Start embedded strategy
-                this._current = new ProportionalExecutionStrategy(this._configuration, this._results, [benchmark], true);
+                this._current = new ProportionalExecutionStrategy(this._configuration, this._results, [benchmark]);
                 this._current.start();
 
+                // Wait for specified duration and stop embedded strategy
                 this._timeout = setTimeout(
                     () => {
-                        this._current.stop(() => {
+                        this._current.stop((err) => {
                             this._current = null;
-                            
-                            callback();
+                            callback(err);
                         });
                     }, 
                     this._configuration.duration * 1000

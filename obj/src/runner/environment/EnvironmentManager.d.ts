@@ -1,5 +1,5 @@
-import { BenchmarkProcess } from '../execution/BenchmarkProcess';
-export declare class EnvironmentManager extends BenchmarkProcess {
+import { ExecutionManager } from '../execution/ExecutionManager';
+export declare class EnvironmentManager extends ExecutionManager {
     private static readonly Duration;
     private _cpuMeasurement;
     private _videoMeasurement;

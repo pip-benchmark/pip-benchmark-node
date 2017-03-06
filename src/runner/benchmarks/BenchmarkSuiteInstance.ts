@@ -13,10 +13,9 @@ export class BenchmarkSuiteInstance {
     public constructor(suite: BenchmarkSuite) {
         this._suite = suite;
         
-        for (let index = 0; index < suite.benchmarks.length; index++) {
-            let benchmark = suite.benchmarks[index];
-            this._benchmarks.push(new BenchmarkInstance(this, benchmark));
-        }
+        this._benchmarks = _.map(suite.benchmarks, (benchmark) => {
+            return new BenchmarkInstance(this, benchmark);
+        });
     }
 
     public get suite(): BenchmarkSuite {
@@ -46,6 +45,12 @@ export class BenchmarkSuiteInstance {
 
     public get benchmarks(): BenchmarkInstance[] {
         return this._benchmarks;
+    }
+
+    public get selected(): BenchmarkInstance[] {
+        return _.filter(this._benchmarks, (benchmark) => {
+            return benchmark.selected;
+        });
     }
 
     public selectAll(): void {

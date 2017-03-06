@@ -1,5 +1,5 @@
 export enum ExecutionState {
-    Starting,
+    Initial,
     Running,
     Completed
 }

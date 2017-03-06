@@ -1,7 +1,7 @@
 import { ResultCallback } from './ResultCallback';
 import { MessageCallback } from './MessageCallback';
+import { ErrorCallback } from './ErrorCallback';
 import { BenchmarkResult } from './BenchmarkResult';
-import { ExecutionState } from './ExecutionState';
 export declare class ResultsManager {
     private _results;
     private _updatedListeners;
@@ -13,11 +13,11 @@ export declare class ResultsManager {
     clear(): void;
     addUpdatedListener(listener: ResultCallback): void;
     removeUpdatedListener(listener: ResultCallback): void;
-    notifyUpdated(status: ExecutionState, result: BenchmarkResult): void;
+    notifyUpdated(result: BenchmarkResult): void;
     addMessageListener(listener: MessageCallback): void;
     removeMessageListener(listener: MessageCallback): void;
     notifyMessage(message: string): void;
-    addErrorListener(listener: MessageCallback): void;
-    removeErrorListener(listener: MessageCallback): void;
-    notifyError(message: string): void;
+    addErrorListener(listener: ErrorCallback): void;
+    removeErrorListener(listener: ErrorCallback): void;
+    notifyError(error: any): void;
 }

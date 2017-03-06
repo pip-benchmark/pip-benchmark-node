@@ -1,17 +1,19 @@
 import { IExecutionContext } from '../../IExecutionContext';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
 import { ExecutionStrategy } from './ExecutionStrategy';
-import { ResultsManager } from '../results/ResultsManager';
+import { ResultAggregator } from './ResultAggregator';
 
 export class ExecutionContext implements IExecutionContext {
-    private _strategy: ExecutionStrategy;
-    private _results: ResultsManager;
     private _suite: BenchmarkSuiteInstance;
+    private _aggregator: ResultAggregator;
+    private _stopCallback: () => void;
 
-    public constructor(strategy: ExecutionStrategy, results: ResultsManager, suite: BenchmarkSuiteInstance) {
-        this._strategy = strategy;
-        this._results = results;
+    public constructor(suite: BenchmarkSuiteInstance, 
+        aggregator: ResultAggregator, stopCallback: () => void) {
+
+        this._aggregator = aggregator;
         this._suite = suite;
+        this._stopCallback = stopCallback;
     }
     
     public get parameters(): any {
@@ -19,18 +21,18 @@ export class ExecutionContext implements IExecutionContext {
     }
 
     public incrementCounter(increment?: number): void {
-        this._strategy.reportProgress(increment || 1);
+        this._aggregator.incrementCounter(increment || 1);
     }
 
     public sendMessage(message: string): void {
-        this._results.notifyMessage(message);
+        this._aggregator.sendMessage(message);
     }
 
-    public reportError(errorMessage: string): void {
-        this._results.notifyError(errorMessage);
+    public reportError(error: any): void {
+        this._aggregator.reportError(error);
     }
 
     public stop(): void {
-        this._strategy.stop();
+        this._stopCallback();
     }
 }

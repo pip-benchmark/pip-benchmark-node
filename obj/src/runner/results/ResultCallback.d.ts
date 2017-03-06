@@ -1,3 +1,2 @@
-import { ExecutionState } from './ExecutionState';
 import { BenchmarkResult } from './BenchmarkResult';
-export declare type ResultCallback = (status: ExecutionState, result: BenchmarkResult) => void;
+export declare type ResultCallback = (result: BenchmarkResult) => void;

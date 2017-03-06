@@ -43,10 +43,9 @@ class ParametersManager {
     }
     saveToFile(fileName) {
         let properties = new Properties_1.Properties();
-        for (let index = 0; index < this._parameters.length; index++) {
-            let parameter = this._parameters[index];
+        _.each(_.parameters, (parameter) => {
             properties[parameter.name] = parameter.value;
-        }
+        });
         properties.saveToFile(fileName);
     }
     addSuite(suite) {
