@@ -1,4 +1,4 @@
-import { Properties } from '../utilities/Properties';
+import { Properties } from '../../utilities/Properties';
 export declare class EnvironmentProperties extends Properties {
     private getFilePath();
     cpuBenchmark: number;

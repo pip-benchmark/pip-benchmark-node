@@ -1,6 +1,6 @@
 let assert = require('chai').assert;
 
-import { PropertyFileLine } from '../../../src/runner/utilities/PropertyFileLine';
+import { PropertyFileLine } from '../../src/utilities/PropertyFileLine';
 
 suite('PropertyFileLine', ()=> {
 

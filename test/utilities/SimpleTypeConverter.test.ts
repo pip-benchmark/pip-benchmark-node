@@ -1,6 +1,6 @@
 let assert = require('chai').assert;
 
-import { SimpleTypeConverter } from '../src/SimpleTypeConverter';
+import { SimpleTypeConverter } from '../../src/utilities/SimpleTypeConverter';
 
 suite('SimpleTypeConverter', ()=> {
 

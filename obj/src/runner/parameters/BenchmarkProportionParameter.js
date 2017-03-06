@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var util = require('util');
 const Parameter_1 = require("../../Parameter");
-const SimpleTypeConverter_1 = require("../../SimpleTypeConverter");
+const SimpleTypeConverter_1 = require("../../utilities/SimpleTypeConverter");
 class BenchmarkProportionParameter extends Parameter_1.Parameter {
     constructor(benchmark) {
         super(util.format("%s.%s.Proportion", benchmark.suite.name, benchmark.name), util.format("Sets execution proportion for benchmark %s in suite %s", benchmark.name, benchmark.suite.name), "100");

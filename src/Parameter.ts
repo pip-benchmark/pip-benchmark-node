@@ -1,4 +1,4 @@
-import { SimpleTypeConverter } from './SimpleTypeConverter';
+import { SimpleTypeConverter } from './utilities/SimpleTypeConverter';
 
 export class Parameter {
     private _name: string;

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Parameter_1 = require("../../Parameter");
-const SimpleTypeConverter_1 = require("../../SimpleTypeConverter");
+const SimpleTypeConverter_1 = require("../../utilities/SimpleTypeConverter");
 class NominalRateParameter extends Parameter_1.Parameter {
     constructor(configuration) {
         super("General.Benchmarking.NominalRate", "Rate for nominal benchmarking in TPS", "1");

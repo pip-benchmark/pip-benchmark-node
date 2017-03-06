@@ -1,7 +1,7 @@
 var util = require('util');
 
 import { Parameter } from '../../Parameter';
-import { SimpleTypeConverter } from '../../SimpleTypeConverter';
+import { SimpleTypeConverter } from '../../utilities/SimpleTypeConverter';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 
 export class BenchmarkSelectedParameter extends Parameter {

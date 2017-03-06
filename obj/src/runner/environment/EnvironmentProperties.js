@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var path = require('path');
-const Properties_1 = require("../utilities/Properties");
+const Properties_1 = require("../../utilities/Properties");
 class EnvironmentProperties extends Properties_1.Properties {
     getFilePath() {
         return "BenchmarkEnvironment.properties";

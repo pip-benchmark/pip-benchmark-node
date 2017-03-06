@@ -8,7 +8,7 @@ const DurationParameter_1 = require("./DurationParameter");
 const BenchmarkSelectedParameter_1 = require("./BenchmarkSelectedParameter");
 const BenchmarkProportionParameter_1 = require("./BenchmarkProportionParameter");
 const BenchmarkSuiteParameter_1 = require("./BenchmarkSuiteParameter");
-const Properties_1 = require("../utilities/Properties");
+const Properties_1 = require("../../utilities/Properties");
 class ParametersManager {
     constructor(configuration) {
         this._parameters = [];

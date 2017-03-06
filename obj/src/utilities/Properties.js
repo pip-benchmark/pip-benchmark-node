@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require('fs');
 var os = require('os');
 const PropertyFileLine_1 = require("./PropertyFileLine");
-const SimpleTypeConverter_1 = require("../../SimpleTypeConverter");
+const SimpleTypeConverter_1 = require("./SimpleTypeConverter");
 class Properties {
     constructor() {
         this.lines = [];

@@ -1,5 +1,5 @@
 import { Parameter } from '../../Parameter';
-import { SimpleTypeConverter } from '../../SimpleTypeConverter';
+import { SimpleTypeConverter } from '../../utilities/SimpleTypeConverter';
 import { ConfigurationManager } from '../config/ConfigurationManager';
 
 export class DurationParameter extends Parameter {

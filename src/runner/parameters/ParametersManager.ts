@@ -11,7 +11,7 @@ import { DurationParameter } from './DurationParameter';
 import { BenchmarkSelectedParameter } from './BenchmarkSelectedParameter';
 import { BenchmarkProportionParameter } from './BenchmarkProportionParameter';
 import { BenchmarkSuiteParameter } from './BenchmarkSuiteParameter';
-import { Properties } from '../utilities/Properties';
+import { Properties } from '../../utilities/Properties';
 
 export class ParametersManager {
     private _configuration: ConfigurationManager;

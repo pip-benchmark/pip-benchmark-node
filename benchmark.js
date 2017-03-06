@@ -1,3 +1,3 @@
-var ConsoleRunner = require('./obj/src/runner/console/ConsoleRunner').ConsoleRunner;
+var ConsoleRunner = require('./obj/src/console/ConsoleRunner').ConsoleRunner;
 
 ConsoleRunner.run();

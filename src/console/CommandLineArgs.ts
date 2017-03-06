@@ -1,6 +1,6 @@
-import { MeasurementType } from '../config/MeasurementType';
-import { ExecutionType } from '../config/ExecutionType';
-import { SimpleTypeConverter } from '../../SimpleTypeConverter';
+import { MeasurementType } from '../runner/config/MeasurementType';
+import { ExecutionType } from '../runner/config/ExecutionType';
+import { SimpleTypeConverter } from '../utilities/SimpleTypeConverter';
 
 export class CommandLineArgs {
 

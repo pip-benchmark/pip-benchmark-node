@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const SimpleTypeConverter_1 = require("./SimpleTypeConverter");
+const SimpleTypeConverter_1 = require("./utilities/SimpleTypeConverter");
 class Parameter {
     constructor(name, description, defaultValue) {
         this._name = name;

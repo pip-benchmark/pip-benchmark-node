@@ -2,7 +2,7 @@ var fs = require('fs');
 var os = require('os');
 
 import { PropertyFileLine } from './PropertyFileLine';
-import { SimpleTypeConverter } from '../../SimpleTypeConverter';
+import { SimpleTypeConverter } from './SimpleTypeConverter';
 
 export class Properties {
     public lines: PropertyFileLine[] = [];

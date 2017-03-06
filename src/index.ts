@@ -1,5 +1,3 @@
-export { SimpleTypeConverter } from './SimpleTypeConverter';
-export { RandomDataGenerator } from './RandomDataGenerator';
 export { Parameter } from './Parameter';
 export { IExecutionContext } from './IExecutionContext';
 export { Benchmark } from './Benchmark';

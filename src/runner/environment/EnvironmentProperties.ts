@@ -1,6 +1,6 @@
 var path = require('path');
 
-import { Properties } from '../utilities/Properties';
+import { Properties } from '../../utilities/Properties';
 
 export class EnvironmentProperties extends Properties {
 
