@@ -39,7 +39,7 @@ class BenchmarkMeter {
         this._averageValue = value;
     }
     reset() {
-        this._lastMeasuredTime = new Date().getTime();
+        this._lastMeasuredTime = Date.now();
         this._currentValue = this.performMeasurement();
         this._minValue = Number.MAX_VALUE;
         this._maxValue = Number.MIN_VALUE;
@@ -56,7 +56,7 @@ class BenchmarkMeter {
     }
     measure() {
         this._currentValue = this.performMeasurement();
-        this._lastMeasuredTime = new Date().getTime();
+        this._lastMeasuredTime = Date.now();
         this.calculateAggregates();
         return this._currentValue;
     }

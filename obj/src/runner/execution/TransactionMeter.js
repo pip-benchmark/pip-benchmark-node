@@ -4,10 +4,6 @@ const BenchmarkMeter_1 = require("./BenchmarkMeter");
 class TransactionMeter extends BenchmarkMeter_1.BenchmarkMeter {
     constructor() {
         super();
-        this._lastMeasuredTicks = 0;
-    }
-    getLastMeasuredTicks() {
-        return this._lastMeasuredTicks;
     }
     incrementTransactionCounter() {
         this._transactionCounter++;
@@ -16,10 +12,10 @@ class TransactionMeter extends BenchmarkMeter_1.BenchmarkMeter {
         this._transactionCounter = value;
     }
     performMeasurement() {
-        let currentTicks = new Date().getTime();
-        let durationInMsecs = currentTicks - this._lastMeasuredTicks;
+        let currentTime = Date.now();
+        let durationInMsecs = currentTime - this._lastMeasuredTime;
         let result = this._transactionCounter * 1000 / durationInMsecs;
-        this._lastMeasuredTicks = currentTicks;
+        this._lastMeasuredTime = currentTime;
         this._transactionCounter = 0;
         return result;
     }

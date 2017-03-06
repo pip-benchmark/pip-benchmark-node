@@ -14,7 +14,7 @@ class ConsoleEventPrinter {
         }
         else if (status == ExecutionState_1.ExecutionState.Running) {
             if (result != null) {
-                let output = util.format("%s Performance: %.2f %.2f>%.2f>%.2f CPU Load: %.2f %.2f>%.2f>%.2f Errors: %d\n", new Date().toISOString(), result.performanceMeasurement.currentValue, result.performanceMeasurement.minValue, result.performanceMeasurement.averageValue, result.performanceMeasurement.maxValue, result.cpuLoadMeasurement.currentValue, result.cpuLoadMeasurement.minValue, result.cpuLoadMeasurement.averageValue, result.cpuLoadMeasurement.maxValue, result.errors.length);
+                let output = util.format("%s Performance: %d %d>%d>%d CPU Load: %d %d>%d>%d Errors: %d", new Date().toISOString(), result.performanceMeasurement.currentValue.toFixed(2), result.performanceMeasurement.minValue.toFixed(2), result.performanceMeasurement.averageValue.toFixed(2), result.performanceMeasurement.maxValue.toFixed(2), result.cpuLoadMeasurement.currentValue.toFixed(2), result.cpuLoadMeasurement.minValue.toFixed(2), result.cpuLoadMeasurement.averageValue.toFixed(2), result.cpuLoadMeasurement.maxValue.toFixed(2), result.errors.length);
                 console.log(output);
             }
         }
@@ -26,7 +26,7 @@ class ConsoleEventPrinter {
         console.log(message);
     }
     static onErrorReported(message) {
-        console.error("Error: " + message);
+        console.error(message);
     }
 }
 exports.ConsoleEventPrinter = ConsoleEventPrinter;

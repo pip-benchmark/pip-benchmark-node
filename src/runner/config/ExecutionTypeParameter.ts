@@ -7,18 +7,18 @@ export class ExecutionTypeParameter extends Parameter {
 
     public constructor(process: any) {
         super(
-    		"General.Benchmarking.ExecutionType",
-        	"Execution type: proportional or sequencial",
-        	"Proportional"
+            "General.Benchmarking.ExecutionType",
+            "Execution type: proportional or sequencial",
+            "Proportional"
         );
         this._process = process;
     }
 
     public get value(): string {
         return this._process.getExecutionType() == ExecutionType.Proportional 
-        	? "Proportional" : "Sequencial"; 
+            ? "Proportional" : "Sequencial"; 
     }
-    
+
     public set value(value: string) {
         value = value.toLowerCase();
         this._process.executionType = value.startsWith("p")

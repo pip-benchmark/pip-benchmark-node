@@ -7,8 +7,8 @@ export class BenchmarkInstance {
     private _benchmark: Benchmark;
     private _selected: boolean = false;
     private _proportion: number = 100;
-    private _startExecutionTrigger: number;
-    private _endExecutionTrigger: number;
+    private _startProportionRange: number;
+    private _endProportionRange: number;
 
     public constructor(suite: any, benchmark: Benchmark) {
         this._suite = suite;
@@ -55,24 +55,25 @@ export class BenchmarkInstance {
         this._proportion = Math.max(0, Math.min(10000, value));
     }
 
-    public get startExecutionTrigger(): number {
-        return this._startExecutionTrigger;
+    public get startProportionRange(): number {
+        return this._startProportionRange;
     }
     
-    public set startExecutionTrigger(value: number) {
-        this._startExecutionTrigger = value;
+    public set startProportionRange(value: number) {
+        this._startProportionRange = value;
     }
     
-    public get endExecutionTrigger(): number {
-        return this._endExecutionTrigger;
+    public get endProportionRange(): number {
+        return this._endProportionRange;
     }
     
-    public set endExecutionTrigger(value: number) {
-        this._endExecutionTrigger = value;
+    public set endProportionRange(value: number) {
+        this._endProportionRange = value;
     }
 
-    public isTriggered(trigger: number): boolean {
-    	return trigger >= this._startExecutionTrigger && trigger < this._endExecutionTrigger;
+    public withinProportionRange(proportion: number): boolean {
+    	return proportion >= this._startProportionRange 
+            && proportion < this._endProportionRange;
     }
     
     public setUp(context: IExecutionContext, callback: (err: any) => void): void {

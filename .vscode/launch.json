@@ -4,6 +4,18 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
+		{
+			"name": "Run benchmark",
+			"type": "node",
+			"request": "launch",
+			"stopOnEntry": false,
+			"program": "${workspaceRoot}/benchmark.js",
+			"args": ["-a", "./obj/src/standardbenchmarks", "-b", "Utility.Empty"],
+			"cwd": "${workspaceRoot}",
+			"sourceMaps": true,
+			"outDir": "${workspaceRoot}/obj"
+		},
 		{
 			// Name of configuration; appears in the launch configuration drop down menu.
 			"name": "Run mocha",

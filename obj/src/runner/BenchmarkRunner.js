@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const BenchmarkSuiteManager_1 = require("./BenchmarkSuiteManager");
 const ConfigurationManager_1 = require("./config/ConfigurationManager");
+const BenchmarkProcess_1 = require("./execution/BenchmarkProcess");
 class BenchmarkRunner {
     constructor() {
-        // private _process: BenchmarkProcess;
         // private _reportGenerator: ReportGenerator;
         // private _environmentState: EnvironmentState;
         this._resultUpdatedListeners = [];
@@ -12,7 +12,7 @@ class BenchmarkRunner {
         this._messageSentListeners = [];
         this._errorReportedListeners = [];
         this._suiteManager = new BenchmarkSuiteManager_1.BenchmarkSuiteManager(this);
-        // this._process = new BenchmarkProcess(this);
+        this._process = new BenchmarkProcess_1.BenchmarkProcess(this);
         this._configurationManager = new ConfigurationManager_1.ConfigurationManager(this);
         // this._reportGenerator = new ReportGenerator(this);
         // this._environmentState = new EnvironmentState(this);
@@ -20,9 +20,9 @@ class BenchmarkRunner {
     get configurationManager() {
         return this._configurationManager;
     }
-    // public get process(): BenchmarkProcess {
-    //     return this._process;
-    // }
+    get process() {
+        return this._process;
+    }
     get suiteManager() {
         return this._suiteManager;
     }
@@ -77,45 +77,39 @@ class BenchmarkRunner {
     setConfiguration(parameters) {
         this._configurationManager.setConfiguration(parameters);
     }
-    // public int getNumberOfThreads() {
-    //     return getProcess().getNumberOfThreads(); 
-    // }
-    // public void setNumberOfThreads(int value) {
-    //     getProcess().setNumberOfThreads(value);
-    // }
-    // public MeasurementType getMeasurementType() {
-    //     return getProcess().getMeasurementType(); 
-    // }
-    // public void setMeasurementType(MeasurementType value) {
-    //     getProcess().setMeasurementType(value);
-    // }
-    // public double getNominalRate() {
-    //     return getProcess().getNominalRate(); 
-    // }
-    // public void setNominalRate(double value) {
-    //     getProcess().setNominalRate(value);
-    // }
-    // public ExecutionType getExecutionType() {
-    //     return getProcess().getExecutionType(); 
-    // }
-    // public void setExecutionType(ExecutionType value) {
-    //     getProcess().setExecutionType(value);
-    // }
-    // public int getDuration() {
-    //     return getProcess().getDuration(); 
-    // }
-    // public void setDuration(int value) {
-    //     getProcess().setDuration(value);
-    // }
-    // public boolean isForceContinue() {
-    //     return getProcess().isForceContinue();
-    // }
-    // public void setForceContinue(boolean value) {
-    //     getProcess().setForceContinue(value);
-    // }
-    // public List<BenchmarkResult> getResults() {
-    //     return getProcess().getResults();
-    // }
+    get measurementType() {
+        return this._process.measurementType;
+    }
+    set measurementType(value) {
+        this._process.measurementType = value;
+    }
+    get nominalRate() {
+        return this._process.nominalRate;
+    }
+    set nominalRate(value) {
+        this._process.nominalRate = value;
+    }
+    get executionType() {
+        return this._process.executionType;
+    }
+    set executionType(value) {
+        this._process.executionType = value;
+    }
+    get duration() {
+        return this._process.duration;
+    }
+    set duration(value) {
+        this._process.duration = value;
+    }
+    get forceContinue() {
+        return this._process.forceContinue;
+    }
+    set forceContinue(value) {
+        this._process.forceContinue = value;
+    }
+    get results() {
+        return this._process.results;
+    }
     addConfigurationUpdatedListener(listener) {
         this._configurationUpdatedListeners.push(listener);
     }
@@ -195,6 +189,15 @@ class BenchmarkRunner {
                 // Ignore and send a message to the next listener.
             }
         }
+    }
+    get running() {
+        return this._process.running;
+    }
+    start() {
+        this._process.start(this._suiteManager.suites);
+    }
+    stop() {
+        this._process.stop();
     }
 }
 exports.BenchmarkRunner = BenchmarkRunner;

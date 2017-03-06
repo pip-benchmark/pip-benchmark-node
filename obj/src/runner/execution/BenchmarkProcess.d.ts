@@ -1,0 +1,30 @@
+import { BenchmarkSuiteInstance } from '../BenchmarkSuiteInstance';
+import { MeasurementType } from '../MeasurementType';
+import { ExecutionType } from '../ExecutionType';
+import { ExecutionState } from '../ExecutionState';
+import { BenchmarkResult } from '../BenchmarkResult';
+export declare class BenchmarkProcess {
+    private _runner;
+    private _strategy;
+    private _suites;
+    private _measurementType;
+    private _nominalRate;
+    private _executionType;
+    private _duration;
+    private _forceContinue;
+    private _results;
+    constructor(runner: any);
+    readonly runner: any;
+    readonly running: boolean;
+    measurementType: MeasurementType;
+    nominalRate: number;
+    executionType: ExecutionType;
+    duration: number;
+    forceContinue: boolean;
+    readonly results: BenchmarkResult[];
+    start(suites: BenchmarkSuiteInstance[]): void;
+    stop(): void;
+    notifyResultUpdate(status: ExecutionState, result: BenchmarkResult): void;
+    notifyMessageSent(message: string): void;
+    notifyErrorReported(errorMessage: string): void;
+}

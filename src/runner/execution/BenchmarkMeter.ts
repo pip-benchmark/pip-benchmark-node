@@ -1,7 +1,7 @@
 import { Measurement } from '../Measurement';
 
 export abstract class BenchmarkMeter {
-    private _lastMeasuredTime: number;
+    protected _lastMeasuredTime: number;
     private _currentValue:  number;
     private _minValue: number;
     private _maxValue: number;
@@ -59,7 +59,7 @@ export abstract class BenchmarkMeter {
     }
 
     public reset(): void {
-        this._lastMeasuredTime = new Date().getTime();
+        this._lastMeasuredTime = Date.now();
         this._currentValue = this.performMeasurement();
         this._minValue = Number.MAX_VALUE;
         this._maxValue = Number.MIN_VALUE;
@@ -78,7 +78,7 @@ export abstract class BenchmarkMeter {
 
     public measure(): number {
         this._currentValue = this.performMeasurement();
-        this._lastMeasuredTime = new Date().getTime();
+        this._lastMeasuredTime = Date.now();
         this.calculateAggregates();
         return this._currentValue;
     }

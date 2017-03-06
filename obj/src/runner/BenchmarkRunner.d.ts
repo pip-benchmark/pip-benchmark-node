@@ -5,18 +5,23 @@ import { ResultCallback } from './ResultCallback';
 import { MessageCallback } from './MessageCallback';
 import { ConfigurationCallback } from './ConfigurationCallback';
 import { ExecutionState } from './ExecutionState';
+import { ExecutionType } from './ExecutionType';
+import { MeasurementType } from './MeasurementType';
 import { BenchmarkResult } from './BenchmarkResult';
 import { BenchmarkSuiteManager } from './BenchmarkSuiteManager';
 import { ConfigurationManager } from './config/ConfigurationManager';
+import { BenchmarkProcess } from './execution/BenchmarkProcess';
 export declare class BenchmarkRunner {
     private _suiteManager;
     private _configurationManager;
+    private _process;
     private _resultUpdatedListeners;
     private _configurationUpdatedListeners;
     private _messageSentListeners;
     private _errorReportedListeners;
     constructor();
     readonly configurationManager: ConfigurationManager;
+    readonly process: BenchmarkProcess;
     readonly suiteManager: BenchmarkSuiteManager;
     readonly suiteInstances: BenchmarkSuiteInstance[];
     addSuiteFromClass(className: string): void;
@@ -33,6 +38,12 @@ export declare class BenchmarkRunner {
     saveConfigurationToFile(fileName: string): void;
     setConfigurationToDefault(): void;
     setConfiguration(parameters: any): void;
+    measurementType: MeasurementType;
+    nominalRate: number;
+    executionType: ExecutionType;
+    duration: number;
+    forceContinue: boolean;
+    readonly results: BenchmarkResult[];
     addConfigurationUpdatedListener(listener: ConfigurationCallback): void;
     removeConfigurationUpdatedListener(listener: ConfigurationCallback): void;
     notifyConfigurationUpdated(): void;
@@ -45,4 +56,7 @@ export declare class BenchmarkRunner {
     addErrorReportedListener(listener: MessageCallback): void;
     removeErrorReportedListener(listener: MessageCallback): void;
     notifyErrorReported(message: string): void;
+    readonly running: boolean;
+    start(): void;
+    stop(): void;
 }

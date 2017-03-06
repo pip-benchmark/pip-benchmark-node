@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var _ = require('lodash');
 const BenchmarkRunner_1 = require("../BenchmarkRunner");
 const CommandLineArgs_1 = require("./CommandLineArgs");
 const ConsoleEventPrinter_1 = require("./ConsoleEventPrinter");
@@ -12,7 +13,7 @@ class ConsoleRunner {
         this.executeBatchMode();
     }
     stop() {
-        //this._runner.stop();
+        this._runner.stop();
     }
     executeBatchMode() {
         try {
@@ -20,25 +21,25 @@ class ConsoleRunner {
                 this.printHelp();
                 return;
             }
-            // // Load modules
-            // for (String library : args.getLibraries()) 
-            //     runner.loadSuitesFromLibrary(library);
-            // // Load test suites classes
-            // for (String className : args.getClasses())
-            //     runner.addSuiteFromClass(className);
+            // Load modules
+            _.each(this._args.modules, (module) => {
+                this._runner.loadSuitesFromModule(module);
+            });
+            // Load test suites classes
+            _.each(this._args.classes, (clazz) => {
+                this._runner.addSuiteFromClass(clazz);
+            });
             // Load configuration
             if (this._args.configurationFile != null)
                 this._runner.loadConfigurationFromFile(this._args.configurationFile);
-            // // Set parameters
-            // if (args.getParameters().size() > 0)
-            //     runner.setConfiguration(args.getParameters());
-            // // Select benchmarks
-            // if (args.getBenchmarks().size() == 0)
-            //     runner.selectAllBenchmarks();
-            // else {
-            //     for (String benchmarkName : args.getBenchmarks())
-            //         runner.selectBenchmarks(benchmarkName);
-            // }
+            // Set parameters
+            if (!_.isEmpty(this._args.parameters))
+                this._runner.setConfiguration(this._args.parameters);
+            // Select benchmarks
+            if (this._args.benchmarks.length == 0)
+                this._runner.selectAllBenchmarks();
+            else
+                this._runner.selectBenchmarksByName(...this._args.benchmarks);
             if (this._args.showParameters) {
                 this.printParameters();
                 return;
@@ -54,17 +55,13 @@ class ConsoleRunner {
             //     System.out.printf("CPU: %.2f, Video: %.2f, Disk: %.2f\n",
             //         runner.getCpuBenchmark(), runner.getVideoBenchmark(), runner.getDiskBenchmark());
             // }
-            // // Configure benchmarking
-            // runner.setMeasurementType(args.getMeasurementType());
-            // runner.setNominalRate(args.getNominalRate());
-            // runner.setExecutionType(args.getExecutionType());
-            // runner.setDuration((int)args.getDuration());
-            // // Perform benchmarking
-            // runner.start();
-            // if (runner.getExecutionType() == ExecutionType.Proportional) {
-            //     Thread.sleep((int)args.getDuration());
-            //     runner.stop();
-            // }
+            // Configure benchmarking
+            this._runner.measurementType = this._args.measurementType;
+            this._runner.nominalRate = this._args.nominalRate;
+            this._runner.executionType = this._args.executionType;
+            this._runner.duration = this._args.duration;
+            // Perform benchmarking
+            this._runner.start();
             // if (runner.getResults().size() > 0)
             //     System.out.printf("%f", runner.getResults().get(0).getPerformanceMeasurement().getAverageValue());
             // // Generate report
@@ -83,7 +80,7 @@ class ConsoleRunner {
             // }
         }
         catch (ex) {
-            console.error("Error: " + ex);
+            console.error(ex);
         }
     }
     printHelp() {
@@ -108,11 +105,12 @@ class ConsoleRunner {
         console.log("Pip.Benchmark Console Runner. (c) Conceptual Vision Consulting LLC 2017");
         console.log();
         console.log("Loaded Benchmarks:");
-        // for (BenchmarkSuiteInstance suite : runner.getSuiteInstances()) {
-        //     for (BenchmarkInstance benchmark : suite.getBenchmarks()) {
-        //         System.out.printf("%s - %s\n", benchmark.getFullName(), benchmark.getDescription());
-        //     }
-        // }
+        let suites = this._runner.suiteManager.suites;
+        _.each(suites, (suite) => {
+            _.each(suite.benchmarks, (benchmark) => {
+                console.log(benchmark.fullName + ' - ' + benchmark.description);
+            });
+        });
     }
     printParameters() {
         console.log("Pip.Benchmark Console Runner. (c) Conceptual Vision Consulting LLC 2017");
@@ -128,9 +126,6 @@ class ConsoleRunner {
         }
     }
     configurationUpdated() { }
-    /// <summary>
-    /// The main entry point for the application.
-    /// </summary>
     static run(args) {
         let runner = new ConsoleRunner();
         // Log uncaught exceptions

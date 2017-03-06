@@ -7,14 +7,13 @@ class CpuLoadMeter extends BenchmarkMeter_1.BenchmarkMeter {
         super();
     }
     reset() {
-        this._lastTime = null;
         this._lastTotalIdle = null;
         this._lastTotal = null;
         super.reset();
     }
     performMeasurement() {
         // Initialize current values
-        let currentTime = new Date().getTime();
+        let currentTime = Date.now();
         let currentTotalIdle = 0;
         let currentTotal = 0;
         // Calculate current values
@@ -30,8 +29,8 @@ class CpuLoadMeter extends BenchmarkMeter_1.BenchmarkMeter {
         currentTotalIdle = currentTotalIdle / cpuCount;
         // Calculate CPU usage
         let result = 0;
-        if (this._lastTime != null) {
-            let elapsed = currentTime - this._lastTime;
+        if (this._lastMeasuredTime != null) {
+            let elapsed = currentTime - this._lastMeasuredTime;
             // Calculate only for 100 ms or more
             if (elapsed > 100) {
                 let totalDifference = currentTotal - this._lastTotal;
@@ -40,7 +39,7 @@ class CpuLoadMeter extends BenchmarkMeter_1.BenchmarkMeter {
             }
         }
         // Save current values as last values
-        this._lastTime = currentTime;
+        this._lastMeasuredTime = currentTime;
         this._lastTotalIdle = currentTotalIdle;
         this._lastTotal = currentTotal;
         return result;

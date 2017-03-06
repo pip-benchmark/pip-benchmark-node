@@ -10,7 +10,7 @@ class CommandLineArgs {
         this.benchmarks = [];
         this.parameters = {};
         this.reportFile = "BenchmarkReport.txt";
-        this.duration = 30000;
+        this.duration = 60;
         this.showHelp = false;
         this.showBenchmarks = false;
         this.showParameters = false;
@@ -50,7 +50,7 @@ class CommandLineArgs {
                 this.reportFile = args[++index];
             }
             else if ((arg == "-d" || arg == "--duration") && moreArgs) {
-                this.duration = SimpleTypeConverter_1.SimpleTypeConverter.stringToLong(args[++index], 30000);
+                this.duration = SimpleTypeConverter_1.SimpleTypeConverter.stringToLong(args[++index], 60);
             }
             else if ((arg == "-m" || arg == "--measure") && moreArgs) {
                 this.measurementType = args[++index].toLowerCase() == "nominal"

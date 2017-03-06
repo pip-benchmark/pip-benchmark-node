@@ -6,15 +6,18 @@ import { ResultCallback } from './ResultCallback';
 import { MessageCallback } from './MessageCallback';
 import { ConfigurationCallback } from './ConfigurationCallback';
 import { ExecutionState } from './ExecutionState';
+import { ExecutionType } from './ExecutionType';
+import { MeasurementType } from './MeasurementType';
 import { BenchmarkResult } from './BenchmarkResult';
 
 import { BenchmarkSuiteManager } from './BenchmarkSuiteManager';
 import { ConfigurationManager } from './config/ConfigurationManager';
+import { BenchmarkProcess } from './execution/BenchmarkProcess';
 
 export class BenchmarkRunner {
     private _suiteManager: BenchmarkSuiteManager;
     private _configurationManager: ConfigurationManager;
-    // private _process: BenchmarkProcess;
+    private _process: BenchmarkProcess;
     // private _reportGenerator: ReportGenerator;
     // private _environmentState: EnvironmentState;
 
@@ -25,7 +28,7 @@ export class BenchmarkRunner {
 
     public constructor() {
         this._suiteManager = new BenchmarkSuiteManager(this);
-        // this._process = new BenchmarkProcess(this);
+        this._process = new BenchmarkProcess(this);
         this._configurationManager = new ConfigurationManager(this);
         // this._reportGenerator = new ReportGenerator(this);
         // this._environmentState = new EnvironmentState(this);
@@ -35,9 +38,9 @@ export class BenchmarkRunner {
         return this._configurationManager;
     }
 
-    // public get process(): BenchmarkProcess {
-    //     return this._process;
-    // }
+    public get process(): BenchmarkProcess {
+        return this._process;
+    }
 
     public get suiteManager(): BenchmarkSuiteManager {
         return this._suiteManager;
@@ -111,57 +114,49 @@ export class BenchmarkRunner {
         this._configurationManager.setConfiguration(parameters);
     }
 
-    // public int getNumberOfThreads() {
-    //     return getProcess().getNumberOfThreads(); 
-    // }
+    public get measurementType(): MeasurementType {
+        return this._process.measurementType; 
+    }
 
-    // public void setNumberOfThreads(int value) {
-    //     getProcess().setNumberOfThreads(value);
-    // }
+    public set measurementType(value: MeasurementType) {
+        this._process.measurementType = value;
+    }
 
-    // public MeasurementType getMeasurementType() {
-    //     return getProcess().getMeasurementType(); 
-    // }
+    public get nominalRate(): number {
+        return this._process.nominalRate; 
+    }
 
-    // public void setMeasurementType(MeasurementType value) {
-    //     getProcess().setMeasurementType(value);
-    // }
+    public set nominalRate(value: number) {
+        this._process.nominalRate = value;
+    }
 
-    // public double getNominalRate() {
-    //     return getProcess().getNominalRate(); 
-    // }
+    public get executionType(): ExecutionType {
+        return this._process.executionType; 
+    }
 
-    // public void setNominalRate(double value) {
-    //     getProcess().setNominalRate(value);
-    // }
+    public set executionType(value: ExecutionType) {
+        this._process.executionType = value;
+    }
 
-    // public ExecutionType getExecutionType() {
-    //     return getProcess().getExecutionType(); 
-    // }
+    public get duration(): number {
+        return this._process.duration; 
+    }
 
-    // public void setExecutionType(ExecutionType value) {
-    //     getProcess().setExecutionType(value);
-    // }
+    public set duration(value: number) {
+        this._process.duration = value;
+    }
 
-    // public int getDuration() {
-    //     return getProcess().getDuration(); 
-    // }
+    public get forceContinue(): boolean {
+        return this._process.forceContinue;
+    }
 
-    // public void setDuration(int value) {
-    //     getProcess().setDuration(value);
-    // }
+    public set forceContinue(value: boolean) {
+        this._process.forceContinue = value;
+    }
 
-    // public boolean isForceContinue() {
-    //     return getProcess().isForceContinue();
-    // }
-
-    // public void setForceContinue(boolean value) {
-    //     getProcess().setForceContinue(value);
-    // }
-
-    // public List<BenchmarkResult> getResults() {
-    //     return getProcess().getResults();
-    // }
+    public get results(): BenchmarkResult[] {
+        return this._process.results;
+    }
 
     public addConfigurationUpdatedListener(listener: ConfigurationCallback): void {
         this._configurationUpdatedListeners.push(listener);
@@ -251,17 +246,17 @@ export class BenchmarkRunner {
         }
     }
 
-    // public boolean isRunning() {
-    //     return getProcess().isRunning();
-    // }
+    public get running(): boolean {
+        return this._process.running;
+    }
 
-    // public void start() {
-    //     getProcess().start(getSuiteManager().getSuites());
-    // }
+    public start(): void {
+        this._process.start(this._suiteManager.suites);
+    }
 
-    // public void stop() {
-    //     getProcess().stop();
-    // }
+    public stop(): void {
+        this._process.stop();
+    }
 
     // public String generateReport() {
     //     return getReportGenerator().generateReport();

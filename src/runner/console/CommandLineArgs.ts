@@ -33,7 +33,7 @@ export class CommandLineArgs {
             } else if ((arg == "-r" || arg == "--report") && moreArgs) {
                 this.reportFile = args[++index];
             } else if ((arg == "-d" || arg == "--duration") && moreArgs) {
-                this.duration = SimpleTypeConverter.stringToLong(args[++index], 30000);
+                this.duration = SimpleTypeConverter.stringToLong(args[++index], 60);
             } else if ((arg == "-m" || arg == "--measure") && moreArgs) {
                 this.measurementType = args[++index].toLowerCase() == "nominal"
                     ? MeasurementType.Nominal : MeasurementType.Peak;
@@ -61,7 +61,7 @@ export class CommandLineArgs {
     public parameters: any = {};
     public configurationFile: string;
     public reportFile: string = "BenchmarkReport.txt";
-    public duration: number = 30000;
+    public duration: number = 60;
     public showHelp: boolean = false;
     public showBenchmarks: boolean = false;
     public showParameters: boolean = false;

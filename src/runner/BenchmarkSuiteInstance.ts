@@ -110,7 +110,7 @@ export class BenchmarkSuiteInstance {
                 this._benchmarks,
                 (benchmark, callback) => {
                     if (benchmark.selected)
-                        benchmark.tearDown(context, callback);
+                        benchmark.tearDown(callback);
                     else
                         callback();
                 }, 

@@ -85,7 +85,7 @@ class BenchmarkSuiteInstance {
             }
             async.each(this._benchmarks, (benchmark, callback) => {
                 if (benchmark.selected)
-                    benchmark.tearDown(context, callback);
+                    benchmark.tearDown(callback);
                 else
                     callback();
             }, (err) => {

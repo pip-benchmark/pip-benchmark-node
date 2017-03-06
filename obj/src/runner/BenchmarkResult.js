@@ -4,7 +4,7 @@ const Measurement_1 = require("./Measurement");
 class BenchmarkResult {
     constructor() {
         this.benchmarks = [];
-        this.startTime = new Date().getTime();
+        this.startTime = Date.now();
         this.elapsedTime = 0;
         this.performanceMeasurement = new Measurement_1.Measurement(0, 0, 0, 0);
         this.cpuLoadMeasurement = new Measurement_1.Measurement(0, 0, 0, 0);

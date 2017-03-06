@@ -3,7 +3,6 @@ var os = require('os');
 import { BenchmarkMeter } from './BenchmarkMeter';
 
 export class CpuLoadMeter extends BenchmarkMeter {
-    private _lastTime: number;
     private _lastTotalIdle: number;
     private _lastTotal: number;
 
@@ -12,7 +11,6 @@ export class CpuLoadMeter extends BenchmarkMeter {
     }
 
     public reset(): void {
-        this._lastTime = null;
         this._lastTotalIdle = null;
         this._lastTotal = null;
 
@@ -21,7 +19,7 @@ export class CpuLoadMeter extends BenchmarkMeter {
 
     protected performMeasurement(): number {
         // Initialize current values
-        let currentTime = new Date().getTime();
+        let currentTime = Date.now();
         let currentTotalIdle = 0;
         let currentTotal = 0;
 
@@ -39,8 +37,8 @@ export class CpuLoadMeter extends BenchmarkMeter {
 
         // Calculate CPU usage
         let result = 0;
-        if (this._lastTime != null) {
-            let elapsed = currentTime - this._lastTime;
+        if (this._lastMeasuredTime != null) {
+            let elapsed = currentTime - this._lastMeasuredTime;
             // Calculate only for 100 ms or more
             if (elapsed > 100) {
                 let totalDifference = currentTotal - this._lastTotal;
@@ -50,7 +48,7 @@ export class CpuLoadMeter extends BenchmarkMeter {
         }
 
         // Save current values as last values
-        this._lastTime = currentTime;
+        this._lastMeasuredTime = currentTime;
         this._lastTotalIdle = currentTotalIdle;
         this._lastTotal = currentTotal;
 

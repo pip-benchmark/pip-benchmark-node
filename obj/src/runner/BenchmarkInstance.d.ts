@@ -5,8 +5,8 @@ export declare class BenchmarkInstance {
     private _benchmark;
     private _selected;
     private _proportion;
-    private _startExecutionTrigger;
-    private _endExecutionTrigger;
+    private _startProportionRange;
+    private _endProportionRange;
     constructor(suite: any, benchmark: Benchmark);
     readonly suite: any;
     readonly benchmark: Benchmark;
@@ -16,9 +16,9 @@ export declare class BenchmarkInstance {
     selected: boolean;
     readonly passive: boolean;
     proportion: number;
-    startExecutionTrigger: number;
-    endExecutionTrigger: number;
-    isTriggered(trigger: number): boolean;
+    startProportionRange: number;
+    endProportionRange: number;
+    withinProportionRange(proportion: number): boolean;
     setUp(context: IExecutionContext, callback: (err: any) => void): void;
     execute(callback: (err: any) => void): void;
     tearDown(callback: (err: any) => void): void;

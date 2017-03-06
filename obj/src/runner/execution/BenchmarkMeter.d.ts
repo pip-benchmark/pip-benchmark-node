@@ -1,6 +1,6 @@
 import { Measurement } from '../Measurement';
 export declare abstract class BenchmarkMeter {
-    private _lastMeasuredTime;
+    protected _lastMeasuredTime: number;
     private _currentValue;
     private _minValue;
     private _maxValue;

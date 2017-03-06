@@ -38,20 +38,21 @@ class BenchmarkInstance {
     set proportion(value) {
         this._proportion = Math.max(0, Math.min(10000, value));
     }
-    get startExecutionTrigger() {
-        return this._startExecutionTrigger;
+    get startProportionRange() {
+        return this._startProportionRange;
     }
-    set startExecutionTrigger(value) {
-        this._startExecutionTrigger = value;
+    set startProportionRange(value) {
+        this._startProportionRange = value;
     }
-    get endExecutionTrigger() {
-        return this._endExecutionTrigger;
+    get endProportionRange() {
+        return this._endProportionRange;
     }
-    set endExecutionTrigger(value) {
-        this._endExecutionTrigger = value;
+    set endProportionRange(value) {
+        this._endProportionRange = value;
     }
-    isTriggered(trigger) {
-        return trigger >= this._startExecutionTrigger && trigger < this._endExecutionTrigger;
+    withinProportionRange(proportion) {
+        return proportion >= this._startProportionRange
+            && proportion < this._endProportionRange;
     }
     setUp(context, callback) {
         this._benchmark.context = context;
