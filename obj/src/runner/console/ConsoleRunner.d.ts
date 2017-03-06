@@ -8,6 +8,5 @@ export declare class ConsoleRunner {
     printHelp(): void;
     private printBenchmarks();
     private printParameters();
-    configurationUpdated(): void;
     static run(args: string[]): void;
 }

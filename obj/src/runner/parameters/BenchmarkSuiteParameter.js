@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var util = require('util');
 const Parameter_1 = require("../../Parameter");
-class IndirectSuiteParameter extends Parameter_1.Parameter {
+class BenchmarkSuiteParameter extends Parameter_1.Parameter {
     constructor(suite, originalParameter) {
         super(util.format("%s.%s", suite.name, originalParameter.name), originalParameter.description, originalParameter.defaultValue);
         this._originalParameter = originalParameter;
@@ -14,5 +14,5 @@ class IndirectSuiteParameter extends Parameter_1.Parameter {
         this._originalParameter.value = value;
     }
 }
-exports.IndirectSuiteParameter = IndirectSuiteParameter;
-//# sourceMappingURL=IndirectSuiteParameter.js.map
+exports.BenchmarkSuiteParameter = BenchmarkSuiteParameter;
+//# sourceMappingURL=BenchmarkSuiteParameter.js.map

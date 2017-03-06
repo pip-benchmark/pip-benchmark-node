@@ -1,6 +1,6 @@
 let assert = require('chai').assert;
 
-import { Properties } from '../../../src/runner/config/Properties';
+import { Properties } from '../../../src/runner/utilities/Properties';
 
 suite('Properties', ()=> {
 

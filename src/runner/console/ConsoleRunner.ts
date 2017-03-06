@@ -44,11 +44,11 @@ export class ConsoleRunner {
             
             // Load configuration
             if ( this._args.configurationFile != null)
-                this._runner.loadConfigurationFromFile(this._args.configurationFile);
+                this._runner.parameters.loadFromFile(this._args.configurationFile);
 
             // Set parameters
             if (!_.isEmpty(this._args.parameters))
-                this._runner.setConfiguration(this._args.parameters);
+                this._runner.parameters.set(this._args.parameters);
 
             // Select benchmarks
             if (this._args.benchmarks.length == 0)
@@ -151,7 +151,7 @@ export class ConsoleRunner {
         console.log();
         console.log("Configuration Parameters:");
 
-        let parameters = this._runner.configuration;
+        let parameters = this._runner.parameters.userDefined;
         for (let index = 0; index < parameters.length; index++) {
             let parameter = parameters[index];
             let defaultValue = parameter.defaultValue;
@@ -160,8 +160,6 @@ export class ConsoleRunner {
             console.log('' + parameter.name + ' - ' + parameter.description + defaultValue);
         }
     }
-
-    public configurationUpdated(): void { }
         
     public static run(args: string[]): void {
         let runner = new ConsoleRunner();

@@ -4,40 +4,38 @@ import { BenchmarkSuiteInstance } from './BenchmarkSuiteInstance';
 import { BenchmarkInstance } from './BenchmarkInstance';
 import { ResultCallback } from './ResultCallback';
 import { MessageCallback } from './MessageCallback';
-import { ConfigurationCallback } from './ConfigurationCallback';
 import { ExecutionState } from './ExecutionState';
 import { ExecutionType } from './ExecutionType';
 import { MeasurementType } from './MeasurementType';
 import { BenchmarkResult } from './BenchmarkResult';
 
 import { BenchmarkSuiteManager } from './BenchmarkSuiteManager';
-import { ConfigurationManager } from './config/ConfigurationManager';
+import { ParametersManager } from './parameters/ParametersManager';
 import { BenchmarkProcess } from './execution/BenchmarkProcess';
 import { ReportGenerator } from './report/ReportGenerator';
 import { EnvironmentState } from './environment/EnvironmentState';
 
 export class BenchmarkRunner {
     private _suiteManager: BenchmarkSuiteManager;
-    private _configurationManager: ConfigurationManager;
+    private _parameters: ParametersManager;
     private _process: BenchmarkProcess;
     private _reportGenerator: ReportGenerator;
     private _environmentState: EnvironmentState;
 
     private _resultUpdatedListeners: ResultCallback[] = [];
-    private _configurationUpdatedListeners: ConfigurationCallback[] = [];
     private _messageSentListeners: MessageCallback[] = [];
     private _errorReportedListeners: MessageCallback[] = [];
 
     public constructor() {
         this._suiteManager = new BenchmarkSuiteManager(this);
         this._process = new BenchmarkProcess(this);
-        this._configurationManager = new ConfigurationManager(this);
+        this._parameters = new ParametersManager(this);
         this._reportGenerator = new ReportGenerator(this);
         this._environmentState = new EnvironmentState(this);
     }
 
-    public get configurationManager(): ConfigurationManager {
-        return this._configurationManager;
+    public get parameters(): ParametersManager {
+        return this._parameters;
     }
 
     public get process(): BenchmarkProcess {
@@ -96,26 +94,6 @@ export class BenchmarkRunner {
         this._suiteManager.selectBenchmarks(benchmarks);
     }
 
-    public get configuration(): Parameter[] {
-        return this._configurationManager.getFilteredParameters();
-    }
-
-    public loadConfigurationFromFile(fileName: string): void {
-        this._configurationManager.loadConfigurationFromFile(fileName);
-    }
-
-    public saveConfigurationToFile(fileName: string): void {
-        this._configurationManager.saveConfigurationToFile(fileName);
-    }
-
-    public setConfigurationToDefault(): void {
-        this._configurationManager.setConfigurationToDefault();
-    }
-
-    public setConfiguration(parameters: any): void {
-        this._configurationManager.setConfiguration(parameters);
-    }
-
     public get measurementType(): MeasurementType {
         return this._process.measurementType; 
     }
@@ -158,28 +136,6 @@ export class BenchmarkRunner {
 
     public get results(): BenchmarkResult[] {
         return this._process.results;
-    }
-
-    public addConfigurationUpdatedListener(listener: ConfigurationCallback): void {
-        this._configurationUpdatedListeners.push(listener);
-    }
-
-    public removeConfigurationUpdatedListener(listener: ConfigurationCallback): void {
-        for (let index = this._configurationUpdatedListeners.length - 1; index >= 0; index--) {
-            if (this._configurationUpdatedListeners[index] == listener)
-                this._configurationUpdatedListeners = this._configurationUpdatedListeners.splice(index, 1);
-        }
-    }
-
-    public notifyConfigurationUpdated(): void {
-        for (let index = 0; index < this._configurationUpdatedListeners.length; index++) {
-            try {
-                let listener = this._configurationUpdatedListeners[index];
-                listener();
-            } catch (ex) {
-                // Ignore and send a message to the next listener.
-            }
-        }
     }
 
     public addResultUpdatedListener(listener: ResultCallback): void {

@@ -23,7 +23,7 @@ class ReportGenerator {
         }
         output += this.generateSystemInformation();
         output += this.generateSystemBenchmark();
-        output += this.generateConfigurationParameters();
+        output += this.generateParameters();
         return output;
     }
     generateHeader() {
@@ -200,11 +200,11 @@ class ReportGenerator {
         output += ReportGenerator.NewLine;
         return output;
     }
-    generateConfigurationParameters() {
+    generateParameters() {
         let output = '';
         output += "Parameters:";
         output += ReportGenerator.NewLine;
-        _.each(this._runner.configurationManager.getAllParameters(), (parameter) => {
+        _.each(this._runner.parameters.all, (parameter) => {
             output += util.format("  %s=%s", parameter.name, parameter.value);
             output += ReportGenerator.NewLine;
         });

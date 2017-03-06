@@ -9,9 +9,6 @@ class BenchmarkSuiteManager {
         this._suites = [];
         this._runner = runner;
     }
-    get runner() {
-        return this._runner;
-    }
     get suites() {
         return this._suites;
     }
@@ -126,12 +123,12 @@ class BenchmarkSuiteManager {
             suite = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
         if (!(suite instanceof BenchmarkSuiteInstance_1.BenchmarkSuiteInstance))
             throw Error('Incorrect suite type');
-        this.runner.process.stop();
+        this._runner.process.stop();
         this._suites.push(suite);
-        this.runner.configurationManager.createParametersForSuite(suite);
+        this._runner.parameters.addSuite(suite);
     }
     loadSuitesFromModule(moduleName) {
-        this.runner.process.stop();
+        this._runner.process.stop();
         if (moduleName.startsWith('.'))
             moduleName = path.resolve(moduleName);
         let suites = require(moduleName);
@@ -145,7 +142,7 @@ class BenchmarkSuiteManager {
                     if (suite instanceof BenchmarkSuite_1.BenchmarkSuite) {
                         suite = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
                         this._suites.push(suite);
-                        this.runner.configurationManager.createParametersForSuite(suite);
+                        this._runner.parameters.addSuite(suite);
                     }
                 }
                 catch (ex) {
@@ -164,10 +161,10 @@ class BenchmarkSuiteManager {
         return null;
     }
     removeSuiteByName(suiteName) {
-        this.runner.process.stop();
+        this._runner.process.stop();
         let suite = this.findSuite(suiteName);
         if (suite != null) {
-            this.runner.configurationManager.removeParametersForSuite(suite);
+            this._runner.parameters.removeSuite(suite);
             this._suites = _.remove(this._suites, (s) => { return s == suite; });
         }
     }
@@ -176,15 +173,15 @@ class BenchmarkSuiteManager {
             suite = _.find(this._suites, (s) => { return s.suite == suite; });
         if (!(suite instanceof BenchmarkSuiteInstance_1.BenchmarkSuiteInstance))
             throw new Error('Wrong suite type');
-        this.runner.process.stop();
-        this.runner.configurationManager.removeParametersForSuite(suite);
+        this._runner.process.stop();
+        this._runner.parameters.removeSuite(suite);
         this._suites = _.remove(this._suites, (s) => s == suite);
     }
     removeAllSuites() {
-        this.runner.process.stop();
+        this._runner.process.stop();
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
-            this.runner.configurationManager.removeParametersForSuite(suite);
+            this._runner.parameters.removeSuite(suite);
         }
         this._suites = [];
     }

@@ -13,10 +13,6 @@ export class BenchmarkSuiteManager {
     public constructor(runner: any) {
         this._runner = runner;
     }
-
-    public get runner(): any {
-        return this._runner;
-    }
  
     public get suites(): BenchmarkSuiteInstance[] {
         return this._suites;
@@ -150,13 +146,13 @@ export class BenchmarkSuiteManager {
         if (!(suite instanceof BenchmarkSuiteInstance))
             throw Error('Incorrect suite type');
 
-        this.runner.process.stop();
+        this._runner.process.stop();
         this._suites.push(suite);
-        this.runner.configurationManager.createParametersForSuite(suite);
+        this._runner.parameters.addSuite(suite);
     }
 
     public loadSuitesFromModule(moduleName: string): void {
-        this.runner.process.stop();
+        this._runner.process.stop();
 
         if (moduleName.startsWith('.'))
             moduleName = path.resolve(moduleName);
@@ -173,7 +169,7 @@ export class BenchmarkSuiteManager {
                     if (suite instanceof BenchmarkSuite) {
                         suite = new BenchmarkSuiteInstance(suite);
                         this._suites.push(suite);
-                        this.runner.configurationManager.createParametersForSuite(suite);
+                        this._runner.parameters.addSuite(suite);
                     }
                 } catch (ex) {
                     // Ignore
@@ -193,10 +189,10 @@ export class BenchmarkSuiteManager {
     }
 
     public removeSuiteByName(suiteName: string): void {
-        this.runner.process.stop();
+        this._runner.process.stop();
         let suite = this.findSuite(suiteName);
         if (suite != null) {
-            this.runner.configurationManager.removeParametersForSuite(suite);
+            this._runner.parameters.removeSuite(suite);
 
             this._suites = _.remove(this._suites, (s) => { return s == suite; })
         }
@@ -209,18 +205,18 @@ export class BenchmarkSuiteManager {
         if (!(suite instanceof BenchmarkSuiteInstance))
             throw new Error('Wrong suite type');
 
-        this.runner.process.stop();
-        this.runner.configurationManager.removeParametersForSuite(suite);
+        this._runner.process.stop();
+        this._runner.parameters.removeSuite(suite);
 
         this._suites = _.remove(this._suites, (s) => s == suite);
     }
 
     public removeAllSuites(): void {
-        this.runner.process.stop();
+        this._runner.process.stop();
 
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
-            this.runner.configurationManager.removeParametersForSuite(suite);
+            this._runner.parameters.removeSuite(suite);
         }
         
         this._suites = [];

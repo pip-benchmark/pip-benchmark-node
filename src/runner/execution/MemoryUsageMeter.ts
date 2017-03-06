@@ -9,7 +9,7 @@ export class MemoryUsageMeter extends BenchmarkMeter {
     }
 
     protected performMeasurement(): number {
-        return os.totalmem() - os.freemem();
+        return (os.totalmem() - os.freemem()) / 1024 / 1024;
     }
 
 }

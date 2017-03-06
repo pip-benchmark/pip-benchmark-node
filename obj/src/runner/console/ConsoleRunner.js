@@ -33,10 +33,10 @@ class ConsoleRunner {
             });
             // Load configuration
             if (this._args.configurationFile != null)
-                this._runner.loadConfigurationFromFile(this._args.configurationFile);
+                this._runner.parameters.loadFromFile(this._args.configurationFile);
             // Set parameters
             if (!_.isEmpty(this._args.parameters))
-                this._runner.setConfiguration(this._args.parameters);
+                this._runner.parameters.set(this._args.parameters);
             // Select benchmarks
             if (this._args.benchmarks.length == 0)
                 this._runner.selectAllBenchmarks();
@@ -122,7 +122,7 @@ class ConsoleRunner {
         console.log("Pip.Benchmark Console Runner. (c) Conceptual Vision Consulting LLC 2017");
         console.log();
         console.log("Configuration Parameters:");
-        let parameters = this._runner.configuration;
+        let parameters = this._runner.parameters.userDefined;
         for (let index = 0; index < parameters.length; index++) {
             let parameter = parameters[index];
             let defaultValue = parameter.defaultValue;
@@ -131,7 +131,6 @@ class ConsoleRunner {
             console.log('' + parameter.name + ' - ' + parameter.description + defaultValue);
         }
     }
-    configurationUpdated() { }
     static run(args) {
         let runner = new ConsoleRunner();
         // Log uncaught exceptions

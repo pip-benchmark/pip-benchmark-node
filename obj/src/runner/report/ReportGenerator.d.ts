@@ -13,7 +13,7 @@ export declare class ReportGenerator {
     private generateSingleResult();
     private generateSystemInformation();
     private generateSystemBenchmark();
-    private generateConfigurationParameters();
+    private generateParameters();
     saveReportToFile(fileName: string): void;
     private formatNumber(value);
     private formatDate(date);

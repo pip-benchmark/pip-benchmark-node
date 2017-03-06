@@ -6,7 +6,6 @@ export { Measurement } from './Measurement';
 export { BenchmarkInstance } from './BenchmarkInstance';
 export { BenchmarkSuiteInstance } from './BenchmarkSuiteInstance';
 export { BenchmarkResult } from './BenchmarkResult';
-export { ConfigurationCallback } from './ConfigurationCallback';
 export { MessageCallback } from './MessageCallback';
 export { ResultCallback } from './ResultCallback';
 export { BenchmarkRunner } from './BenchmarkRunner';

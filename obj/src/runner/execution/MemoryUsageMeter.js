@@ -7,7 +7,7 @@ class MemoryUsageMeter extends BenchmarkMeter_1.BenchmarkMeter {
         super();
     }
     performMeasurement() {
-        return os.totalmem() - os.freemem();
+        return (os.totalmem() - os.freemem()) / 1024 / 1024;
     }
 }
 exports.MemoryUsageMeter = MemoryUsageMeter;

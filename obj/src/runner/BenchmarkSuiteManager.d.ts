@@ -4,7 +4,6 @@ export declare class BenchmarkSuiteManager {
     private _runner;
     private _suites;
     constructor(runner: any);
-    readonly runner: any;
     readonly suites: BenchmarkSuiteInstance[];
     getSelectedBenchmarks(): BenchmarkInstance[];
     selectAllBenchmarks(): void;

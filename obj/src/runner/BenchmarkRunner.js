@@ -1,24 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const BenchmarkSuiteManager_1 = require("./BenchmarkSuiteManager");
-const ConfigurationManager_1 = require("./config/ConfigurationManager");
+const ParametersManager_1 = require("./parameters/ParametersManager");
 const BenchmarkProcess_1 = require("./execution/BenchmarkProcess");
 const ReportGenerator_1 = require("./report/ReportGenerator");
 const EnvironmentState_1 = require("./environment/EnvironmentState");
 class BenchmarkRunner {
     constructor() {
         this._resultUpdatedListeners = [];
-        this._configurationUpdatedListeners = [];
         this._messageSentListeners = [];
         this._errorReportedListeners = [];
         this._suiteManager = new BenchmarkSuiteManager_1.BenchmarkSuiteManager(this);
         this._process = new BenchmarkProcess_1.BenchmarkProcess(this);
-        this._configurationManager = new ConfigurationManager_1.ConfigurationManager(this);
+        this._parameters = new ParametersManager_1.ParametersManager(this);
         this._reportGenerator = new ReportGenerator_1.ReportGenerator(this);
         this._environmentState = new EnvironmentState_1.EnvironmentState(this);
     }
-    get configurationManager() {
-        return this._configurationManager;
+    get parameters() {
+        return this._parameters;
     }
     get process() {
         return this._process;
@@ -62,21 +61,6 @@ class BenchmarkRunner {
     selectBenchmarks(...benchmarks) {
         this._suiteManager.selectBenchmarks(benchmarks);
     }
-    get configuration() {
-        return this._configurationManager.getFilteredParameters();
-    }
-    loadConfigurationFromFile(fileName) {
-        this._configurationManager.loadConfigurationFromFile(fileName);
-    }
-    saveConfigurationToFile(fileName) {
-        this._configurationManager.saveConfigurationToFile(fileName);
-    }
-    setConfigurationToDefault() {
-        this._configurationManager.setConfigurationToDefault();
-    }
-    setConfiguration(parameters) {
-        this._configurationManager.setConfiguration(parameters);
-    }
     get measurementType() {
         return this._process.measurementType;
     }
@@ -109,26 +93,6 @@ class BenchmarkRunner {
     }
     get results() {
         return this._process.results;
-    }
-    addConfigurationUpdatedListener(listener) {
-        this._configurationUpdatedListeners.push(listener);
-    }
-    removeConfigurationUpdatedListener(listener) {
-        for (let index = this._configurationUpdatedListeners.length - 1; index >= 0; index--) {
-            if (this._configurationUpdatedListeners[index] == listener)
-                this._configurationUpdatedListeners = this._configurationUpdatedListeners.splice(index, 1);
-        }
-    }
-    notifyConfigurationUpdated() {
-        for (let index = 0; index < this._configurationUpdatedListeners.length; index++) {
-            try {
-                let listener = this._configurationUpdatedListeners[index];
-                listener();
-            }
-            catch (ex) {
-                // Ignore and send a message to the next listener.
-            }
-        }
     }
     addResultUpdatedListener(listener) {
         this._resultUpdatedListeners.push(listener);

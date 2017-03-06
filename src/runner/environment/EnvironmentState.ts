@@ -1,7 +1,7 @@
 var async = require('async');
 
 import { BenchmarkProcess } from '../execution/BenchmarkProcess';
-import { BenchmarkingProperties } from '../config/BenchmarkingProperties';
+import { EnvironmentProperties } from './EnvironmentProperties';
 import { BenchmarkSuiteInstance } from '../BenchmarkSuiteInstance';
 import { StandardBenchmarkSuite } from './StandardBenchmarkSuite';
 import { SystemInformation } from './SystemInformation';
@@ -70,12 +70,15 @@ export class EnvironmentState extends BenchmarkProcess {
             }
         ], (err) => {
             this.stop();
+
+            this.saveSystemBenchmarks();
+
             if (callback) callback(err);
         });
     }
 
     private loadSystemBenchmarks(): void {
-        let properties = new BenchmarkingProperties();
+        let properties = new EnvironmentProperties();
         properties.load();
 
         this._cpuBenchmark = properties.getAsDouble("System.CpuBenchmark", 0);
@@ -84,7 +87,7 @@ export class EnvironmentState extends BenchmarkProcess {
     }
 
     private saveSystemBenchmarks(): void {
-        let properties = new BenchmarkingProperties();
+        let properties = new EnvironmentProperties();
 
         properties.setAsDouble("System.CpuBenchmark", this._cpuBenchmark);
         properties.setAsDouble("System.VideoBenchmark", this._videoBenchmark);

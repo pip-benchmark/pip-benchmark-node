@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var async = require('async');
 const BenchmarkProcess_1 = require("../execution/BenchmarkProcess");
-const BenchmarkingProperties_1 = require("../config/BenchmarkingProperties");
+const EnvironmentProperties_1 = require("./EnvironmentProperties");
 const BenchmarkSuiteInstance_1 = require("../BenchmarkSuiteInstance");
 const StandardBenchmarkSuite_1 = require("./StandardBenchmarkSuite");
 const SystemInformation_1 = require("./SystemInformation");
@@ -65,19 +65,20 @@ class EnvironmentState extends BenchmarkProcess_1.BenchmarkProcess {
             }
         ], (err) => {
             this.stop();
+            this.saveSystemBenchmarks();
             if (callback)
                 callback(err);
         });
     }
     loadSystemBenchmarks() {
-        let properties = new BenchmarkingProperties_1.BenchmarkingProperties();
+        let properties = new EnvironmentProperties_1.EnvironmentProperties();
         properties.load();
         this._cpuBenchmark = properties.getAsDouble("System.CpuBenchmark", 0);
         this._videoBenchmark = properties.getAsDouble("System.VideoBenchmark", 0);
         this._diskBenchmark = properties.getAsDouble("System.DiskBenchmark", 0);
     }
     saveSystemBenchmarks() {
-        let properties = new BenchmarkingProperties_1.BenchmarkingProperties();
+        let properties = new EnvironmentProperties_1.EnvironmentProperties();
         properties.setAsDouble("System.CpuBenchmark", this._cpuBenchmark);
         properties.setAsDouble("System.VideoBenchmark", this._videoBenchmark);
         properties.setAsDouble("System.DiskBenchmark", this._diskBenchmark);

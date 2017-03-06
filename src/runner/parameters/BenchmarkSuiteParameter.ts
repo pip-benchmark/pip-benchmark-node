@@ -3,7 +3,7 @@ var util = require('util');
 import { Parameter } from '../../Parameter';
 import { BenchmarkSuiteInstance } from '../BenchmarkSuiteInstance';
 
-export class IndirectSuiteParameter extends Parameter {
+export class BenchmarkSuiteParameter extends Parameter {
     private _originalParameter: Parameter;
 
     public constructor(suite: BenchmarkSuiteInstance, originalParameter: Parameter) {

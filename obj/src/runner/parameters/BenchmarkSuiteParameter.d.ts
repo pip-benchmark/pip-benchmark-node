@@ -1,6 +1,6 @@
 import { Parameter } from '../../Parameter';
 import { BenchmarkSuiteInstance } from '../BenchmarkSuiteInstance';
-export declare class IndirectSuiteParameter extends Parameter {
+export declare class BenchmarkSuiteParameter extends Parameter {
     private _originalParameter;
     constructor(suite: BenchmarkSuiteInstance, originalParameter: Parameter);
     value: string;
