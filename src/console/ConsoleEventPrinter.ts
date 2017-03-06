@@ -7,9 +7,9 @@ import { ExecutionState } from '../runner/results/ExecutionState';
 export class ConsoleEventPrinter {
 
     public static attach(runner: BenchmarkRunner): void {
-        runner.addErrorReportedListener(ConsoleEventPrinter.onErrorReported);
-        runner.addMessageSentListener(ConsoleEventPrinter.onMessageSent);
-        runner.addResultUpdatedListener(ConsoleEventPrinter.onResultUpdated);
+        runner.results.addErrorListener(ConsoleEventPrinter.onErrorReported);
+        runner.results.addMessageListener(ConsoleEventPrinter.onMessageSent);
+        runner.results.addUpdatedListener(ConsoleEventPrinter.onResultUpdated);
     }
 
     public static onResultUpdated(status: ExecutionState, result: BenchmarkResult): void {

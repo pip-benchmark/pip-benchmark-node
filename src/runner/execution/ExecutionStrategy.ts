@@ -1,6 +1,7 @@
 var _ = require('lodash');
 
 import { ConfigurationManager } from '../config/ConfigurationManager';
+import { ResultsManager } from '../results/ResultsManager';
 import { ExecutionState } from '../results/ExecutionState';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
@@ -14,19 +15,21 @@ export abstract class ExecutionStrategy {
     private static readonly MaxErrorCount = 1000;
 
     protected _configuration: ConfigurationManager;
+    protected _results: ResultsManager;
     protected _benchmarks: BenchmarkInstance[];
     protected _suites: BenchmarkSuiteInstance[];
 
     private _transactionCounter: number = 0;
 
-    private _currentResult: BenchmarkResult = null;
+    protected _currentResult: BenchmarkResult = null;
 
     private _transactionMeter: TransactionMeter;
     private _cpuLoadMeter: CpuLoadMeter;
     private _memoryUsageMeter: MemoryUsageMeter;
 
-    protected constructor(configuration: ConfigurationManager, benchmarks: BenchmarkInstance[]) {
+    protected constructor(configuration: ConfigurationManager, results: ResultsManager, benchmarks: BenchmarkInstance[]) {
         this._configuration = configuration;
+        this._results = results;
         this._benchmarks = benchmarks;
         this._suites = this.getAllSuitesFromBenchmarks(benchmarks);
 
@@ -52,16 +55,15 @@ export abstract class ExecutionStrategy {
 
     public abstract start(callback?: () => void): void;
     public abstract stop(callback?: () => void): void;
-    public abstract getResults(): BenchmarkResult[];
     
-    protected reset(): void {
+    protected clear(): void {
         this._currentResult = new BenchmarkResult();
         this._currentResult.startTime = Date.now();
 
         this._transactionCounter = 0;
-        this._transactionMeter.reset();
-        this._cpuLoadMeter.reset();
-        this._memoryUsageMeter.reset();
+        this._transactionMeter.clear();
+        this._cpuLoadMeter.clear();
+        this._memoryUsageMeter.clear();
     }
 
     public reportProgress(increment: number, now?: number): void {
@@ -84,22 +86,7 @@ export abstract class ExecutionStrategy {
             this._currentResult.cpuLoadMeasurement = this._cpuLoadMeter.measurement;
             this._currentResult.memoryUsageMeasurement = this._memoryUsageMeter.measurement;
 
-            this.notifyResultUpdate(ExecutionState.Running);
+            this._results.notifyUpdated(ExecutionState.Running, this._currentResult);
         }
-    }
-
-    public sendMessage(message: string): void {
-        //this._process.notifyMessageSent(message);
-    }
-
-    public reportError(errorMessage: string): void {
-        if (this._currentResult.errors.length < ExecutionStrategy.MaxErrorCount)
-            this._currentResult.errors.push(errorMessage);
-        
-        //this._process.notifyErrorReported(errorMessage);
-    }
-        
-    protected notifyResultUpdate(status: ExecutionState): void {
-        //this._process.notifyResultUpdate(status, this._currentResult);
     }
 }

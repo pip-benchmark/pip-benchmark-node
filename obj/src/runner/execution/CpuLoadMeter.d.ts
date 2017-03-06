@@ -3,6 +3,6 @@ export declare class CpuLoadMeter extends BenchmarkMeter {
     private _lastTotalIdle;
     private _lastTotal;
     constructor();
-    reset(): void;
+    clear(): void;
     protected performMeasurement(): number;
 }

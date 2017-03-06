@@ -1,6 +1,7 @@
 var _ = require('lodash');
 
 import { ConfigurationManager } from '../config/ConfigurationManager';
+import { ResultsManager } from '../results/ResultsManager';
 import { ExecutionType } from '../config/ExecutionType';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
@@ -13,22 +14,19 @@ import { ProportionalExecutionStrategy } from './ProportionalExecutionStrategy';
 import { SequencialExecutionStrategy } from './SequencialExecutionStrategy';
 
 export class BenchmarkProcess {
-	private _configuration: ConfigurationManager;
+	protected _configuration: ConfigurationManager;
+    protected _results: ResultsManager;
+    
     private _strategy: ExecutionStrategy = null;
     private _suites: BenchmarkSuiteInstance[];
 
-    private _results: BenchmarkResult[] = [];
-
-    public constructor(configuration: ConfigurationManager) {
+    public constructor(configuration: ConfigurationManager, results: ResultsManager) {
         this._configuration = configuration;
+        this._results = results;
     }
     
     public get running(): boolean {
         return this._strategy != null;
-    }
-
-    public get results(): BenchmarkResult[] {
-        return this._results;
     }
 
     public start(suites: BenchmarkSuiteInstance[]): void {
@@ -56,12 +54,12 @@ export class BenchmarkProcess {
 
         // Create requested test strategy
         if (this._configuration.executionType == ExecutionType.Sequential)
-            this._strategy = new SequencialExecutionStrategy(this._configuration, selectedBenchmarks);
+            this._strategy = new SequencialExecutionStrategy(this._configuration, this._results, selectedBenchmarks);
         else
-            this._strategy = new ProportionalExecutionStrategy(this._configuration, selectedBenchmarks);
+            this._strategy = new ProportionalExecutionStrategy(this._configuration, this._results, selectedBenchmarks);
 
         // Initialize parameters and start 
-        this._results = [];
+        this._results.clear();
         this._strategy.start(() => {
             this.stop();
             if (callback) callback();
@@ -70,25 +68,9 @@ export class BenchmarkProcess {
 
     public stop(): void {
         if (this._strategy != null) {
-            // Stop strategy
             this._strategy.stop();
-
-            // Fill results
-            this._results = this._strategy.getResults();
-            
             this._strategy = null;
         }
     }
 
-    public notifyResultUpdate(status: ExecutionState, result: BenchmarkResult): void {
-        //this._runner.notifyResultUpdated(status, result);
-    }
-
-    public notifyMessageSent(message: string): void {
-        //this._runner.notifyMessageSent(message);
-    }
-
-    public notifyErrorReported(errorMessage: string): void {
-        //this._runner.notifyErrorReported(errorMessage);
-    }
 }

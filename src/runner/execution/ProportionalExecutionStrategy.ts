@@ -2,6 +2,7 @@ var async = require('async');
 
 import { MeasurementType } from '../config/MeasurementType';
 import { ConfigurationManager } from '../config/ConfigurationManager';
+import { ResultsManager } from '../results/ResultsManager';
 import { ExecutionState } from '../results/ExecutionState';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
@@ -20,8 +21,8 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
     private _onlyBenchmark: BenchmarkInstance;
     private _timeout: any;
     
-    public constructor(configuration: ConfigurationManager, benchmarks: BenchmarkInstance[], embedded?: boolean) {
-        super(configuration, benchmarks);
+    public constructor(configuration: ConfigurationManager, results: ResultsManager, benchmarks: BenchmarkInstance[], embedded?: boolean) {
+        super(configuration, results, benchmarks);
         this._embedded = !!embedded;
     }
 
@@ -32,18 +33,18 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
         async.each(
             this._suites, 
             (suite, callback) => {
-                let context = new ExecutionContext(this, suite);
+                let context = new ExecutionContext(this, this._results, suite);
                 suite.setUp(context, callback);
             },
             (err) => {
                 // Abort if initialization failed
                 if (err) {
-                    this.reportError('' + err);
+                    this._results.notifyError('' + err);
                     return;
                 }
 
                 if (!this._embedded)
-                    this.notifyResultUpdate(ExecutionState.Starting);
+                    this._results.notifyUpdated(ExecutionState.Starting, this._currentResult);
                 
                 this.execute(callback);
             }
@@ -61,8 +62,11 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
         if (this._running) {
             this._running = false;
             
+            // Add result
+            this._results.add(this._currentResult);
+
             if (!this._embedded)
-                this.notifyResultUpdate(ExecutionState.Completed);
+                this._results.notifyUpdated(ExecutionState.Completed, this._currentResult);
 
             // Deinitialize tests
             async.each(
@@ -75,15 +79,6 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
                 }
             );
         }
-    }
-
-    public getResults(): BenchmarkResult[] {
-        let results: BenchmarkResult[] = [];
-
-        if (this.currentResult != null)
-            results.push(this.currentResult);
-
-        return results;
     }
 
     private calculateProportionRanges(): void {
@@ -141,7 +136,7 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
                 benchmark.execute((err) => {
                     // Process force continue
                     if (err != null && this._configuration.forceContinue) {
-                        this.reportError('' + err);
+                        this._results.notifyError('' + err);
                         err = null;
                     }
 
@@ -166,7 +161,7 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
         } catch (ex) {
             // Process force continue
             if (this._configuration.forceContinue) {
-                this.reportError('' + ex);
+                this._results.notifyError('' + ex);
                 callback(null);
             } else {
                 callback(ex);
@@ -176,7 +171,7 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
 
     private execute(callback?: () => void): void {
         this.calculateProportionRanges();
-        this.reset();
+        this.clear();
 
         if (this._configuration.measurementType == MeasurementType.Nominal)
             this._ticksPerTransaction = 1000.0 / this._configuration.nominalRate;

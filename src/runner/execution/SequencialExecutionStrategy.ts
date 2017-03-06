@@ -1,6 +1,7 @@
 var async = require('async');
 
 import { ConfigurationManager } from '../config/ConfigurationManager';
+import { ResultsManager } from '../results/ResultsManager';
 import { ExecutionState } from '../results/ExecutionState';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
@@ -13,18 +14,17 @@ import { ProportionalExecutionStrategy } from './ProportionalExecutionStrategy';
 export class SequencialExecutionStrategy extends ExecutionStrategy {
     private _running: boolean = false;
     private _current: ProportionalExecutionStrategy;
-    private _results: BenchmarkResult[] = [];
     private _timeout: any;
 
-    public constructor(configuration: ConfigurationManager, benchmarks: BenchmarkInstance[]) {
-        super(configuration, benchmarks);
+    public constructor(configuration: ConfigurationManager, results: ResultsManager, benchmarks: BenchmarkInstance[]) {
+        super(configuration, results, benchmarks);
     }
 
     public start(callback?: () => void): void {
         if (this._configuration.duration <= 0)
             throw new Error("Duration was not set");
 
-        this.notifyResultUpdate(ExecutionState.Starting);
+        this._results.notifyUpdated(ExecutionState.Starting, this._currentResult);
 
         // Start control thread
         //setTimeout(() => { this.execute(); }, 0);
@@ -43,14 +43,10 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
             if (this._current != null)
                 this._current.stop();
 
-            this.notifyResultUpdate(ExecutionState.Completed);
+            this._results.notifyUpdated(ExecutionState.Completed, this._currentResult);
         }
 
         if (callback) callback();
-    }
-
-    public getResults(): BenchmarkResult[] {
-        return this._results;
     }
 
     private execute(callback?: () => void) {
@@ -64,16 +60,11 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
                 }
 
                 // Start embedded strategy
-                this._current = new ProportionalExecutionStrategy(this._configuration, [benchmark], true);
+                this._current = new ProportionalExecutionStrategy(this._configuration, this._results, [benchmark], true);
                 this._current.start();
 
                 this._timeout = setTimeout(
                     () => {
-                        // Populate results
-                        let results = this._current.getResults();
-                        if (results.length > 0)
-                            this._results.push(results[0]);
-
                         this._current.stop(() => {
                             this._current = null;
                             

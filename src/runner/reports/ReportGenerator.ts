@@ -2,6 +2,11 @@ var _ = require('lodash');
 var fs = require('fs');
 var util = require('util');
 
+import { ConfigurationManager } from '../config/ConfigurationManager';
+import { ResultsManager } from '../results/ResultsManager';
+import { ParametersManager } from '../parameters/ParametersManager';
+import { BenchmarksManager } from '../benchmarks/BenchmarksManager';
+import { EnvironmentManager } from '../environment/EnvironmentManager';
 import { MeasurementType } from '../config/MeasurementType';
 import { Formatter } from '../../utilities/Formatter';
 
@@ -9,14 +14,21 @@ export class ReportGenerator {
     private static readonly SeparatorLine = "***************************************************************\r\n";
     private static readonly NewLine = "\r\n";
     
-    private _runner: any;
+    private _configuration: ConfigurationManager;
+    private _results: ResultsManager;
+    private _parameters: ParametersManager;
+    private _benchmarks: BenchmarksManager;
+    private _environment: EnvironmentManager;
     
-    public constructor(runner: any) {
-        this._runner = runner;
-    }
-
-    public get runner(): any {
-        return this._runner;
+    public constructor(configuration: ConfigurationManager, 
+        results: ResultsManager, parameters: ParametersManager, 
+        benchmarks: BenchmarksManager, environment: EnvironmentManager) {
+            
+        this._configuration = configuration;
+        this._results = results;
+        this._parameters = parameters;
+        this._benchmarks = benchmarks;
+        this._environment = environment;
     }
     
     public generate(): string {
@@ -24,11 +36,10 @@ export class ReportGenerator {
         output += this.generateHeader();
         output += this.generateBenchmarkList();
 
-        if (this._runner.process.results.length > 1) {
+        if (this._results.all.length > 1)
             output += this.generateMultipleResults();
-        } else {
+        else
             output += this.generateSingleResult();
-        }
         
         output += this.generateSystemInfo();
         output += this.generateSystemBenchmark();
@@ -63,7 +74,7 @@ export class ReportGenerator {
         output += "Executed Benchmarks:";
         output += ReportGenerator.NewLine;
         let index = 0;
-        _.each(this._runner.benchmarks.selected, (benchmark) => {
+        _.each(this._benchmarks.selected, (benchmark) => {
             index++;
             output += util.format("  %d. %s.%s [%d%%]",
                 index, benchmark.suite.name, benchmark.name, benchmark.proportion
@@ -79,7 +90,7 @@ export class ReportGenerator {
         output += "Benchmarking Results:";
         output += ReportGenerator.NewLine;
 
-        let results = this._runner.process.results;
+        let results = this._results.all;
         let resultTable: string[][] = [];
         for (let index = 0; index < results.length + 2; index++) {
             resultTable.push(new Array('', '', '', ''));
@@ -94,7 +105,7 @@ export class ReportGenerator {
         let columnSizes: number[] = [ 9, 17, 12, 17 ];
 
         for (let index = 0; index < results.length; index++) {
-            resultTable[index + 1][0] = results[index].benchmarks[0].fullName();
+            resultTable[index + 1][0] = results[index].benchmarks[0].fullName;
             columnSizes[0] = Math.max(resultTable[index + 1][0].length, columnSizes[0]);
 
             resultTable[index + 1][1] = Formatter.formatNumber(
@@ -110,7 +121,7 @@ export class ReportGenerator {
             columnSizes[3] = Math.max(resultTable[index + 1][3].length, columnSizes[3]);
         }
 
-        for (let rowIndex = 0; rowIndex < results.size() + 1; rowIndex++) {
+        for (let rowIndex = 0; rowIndex < results.length + 1; rowIndex++) {
             // Draw upper line
             if (rowIndex == 0) {
                 output += '+';
@@ -149,18 +160,18 @@ export class ReportGenerator {
     private generateSingleResult(): string {
         let output = '';
 
-        if (this._runner.process.results.length == 0)
+        if (this._results.all.length == 0)
             return output;
 
-        let result = this._runner.process.results[0];
+        let result = this._results.all[0];
 
         output += "Benchmarking Results:";
         output += ReportGenerator.NewLine;
-        if (this._runner.process.measurementType == MeasurementType.Peak) {
+        if (this._configuration.measurementType == MeasurementType.Peak) {
             output += "  Measurement Type: Peak Performance";
         } else {
             output += util.format("  Measurement Type: Nominal Performance at %d tps",
-                this._runner.process.nominalRate);
+                this._configuration.nominalRate);
         }
         output += ReportGenerator.NewLine;
 
@@ -209,8 +220,8 @@ export class ReportGenerator {
         let output = '';
         output += "System Information:";
         output += ReportGenerator.NewLine;
-        for (let prop in this._runner.environment.systemInfo) {
-            let value = this._runner.environment.systemInfo[prop];
+        for (let prop in this._environment.systemInfo) {
+            let value = this._environment.systemInfo[prop];
             output += util.format("  %s: %s", prop, value);
             output += ReportGenerator.NewLine;
         }
@@ -223,13 +234,13 @@ export class ReportGenerator {
         output += "System Benchmarking:";
         output += ReportGenerator.NewLine;
         output += util.format("  CPU Performance (MFLOP/s): %d",
-            Formatter.formatNumber(this._runner.environment.cpuMeasurement));
+            Formatter.formatNumber(this._environment.cpuMeasurement));
         output += ReportGenerator.NewLine;
         output += util.format("  Video Performance (GOP/s): %d",
-            Formatter.formatNumber(this._runner.environment.videoMeasurement));
+            Formatter.formatNumber(this._environment.videoMeasurement));
         output += ReportGenerator.NewLine;
         output += util.format("  Disk Performance (MB/s):   %d",
-            Formatter.formatNumber(this._runner.environment.diskMeasurement));
+            Formatter.formatNumber(this._environment.diskMeasurement));
         output += ReportGenerator.NewLine;
         output += ReportGenerator.NewLine;
         return output;
@@ -239,7 +250,7 @@ export class ReportGenerator {
         let output = '';
         output += "Parameters:";
         output += ReportGenerator.NewLine;
-        _.each(this._runner.parameters.all, (parameter) => {
+        _.each(this._parameters.all, (parameter) => {
             output += util.format("  %s=%s", parameter.name, parameter.value);
             output += ReportGenerator.NewLine;
         });

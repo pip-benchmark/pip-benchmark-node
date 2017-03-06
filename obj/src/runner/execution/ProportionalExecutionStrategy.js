@@ -6,8 +6,8 @@ const ExecutionState_1 = require("../results/ExecutionState");
 const ExecutionContext_1 = require("./ExecutionContext");
 const ExecutionStrategy_1 = require("./ExecutionStrategy");
 class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy {
-    constructor(configuration, benchmarks, embedded) {
-        super(configuration, benchmarks);
+    constructor(configuration, results, benchmarks, embedded) {
+        super(configuration, results, benchmarks);
         this._embedded = false;
         this._running = false;
         this._ticksPerTransaction = 0;
@@ -17,16 +17,16 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
         this._running = true;
         // Initialize and start
         async.each(this._suites, (suite, callback) => {
-            let context = new ExecutionContext_1.ExecutionContext(this, suite);
+            let context = new ExecutionContext_1.ExecutionContext(this, this._results, suite);
             suite.setUp(context, callback);
         }, (err) => {
             // Abort if initialization failed
             if (err) {
-                this.reportError('' + err);
+                this._results.notifyError('' + err);
                 return;
             }
             if (!this._embedded)
-                this.notifyResultUpdate(ExecutionState_1.ExecutionState.Starting);
+                this._results.notifyUpdated(ExecutionState_1.ExecutionState.Starting, this._currentResult);
             this.execute(callback);
         });
     }
@@ -39,8 +39,10 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
         // Stop and cleanup execution
         if (this._running) {
             this._running = false;
+            // Add result
+            this._results.add(this._currentResult);
             if (!this._embedded)
-                this.notifyResultUpdate(ExecutionState_1.ExecutionState.Completed);
+                this._results.notifyUpdated(ExecutionState_1.ExecutionState.Completed, this._currentResult);
             // Deinitialize tests
             async.each(this._suites, (suite, callback) => {
                 suite.tearDown(callback);
@@ -49,12 +51,6 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
                     callback();
             });
         }
-    }
-    getResults() {
-        let results = [];
-        if (this.currentResult != null)
-            results.push(this.currentResult);
-        return results;
     }
     calculateProportionRanges() {
         let totalProportion = 0;
@@ -106,7 +102,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
                 benchmark.execute((err) => {
                     // Process force continue
                     if (err != null && this._configuration.forceContinue) {
-                        this.reportError('' + err);
+                        this._results.notifyError('' + err);
                         err = null;
                     }
                     // Increment counter
@@ -132,7 +128,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
         catch (ex) {
             // Process force continue
             if (this._configuration.forceContinue) {
-                this.reportError('' + ex);
+                this._results.notifyError('' + ex);
                 callback(null);
             }
             else {
@@ -142,7 +138,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
     }
     execute(callback) {
         this.calculateProportionRanges();
-        this.reset();
+        this.clear();
         if (this._configuration.measurementType == MeasurementType_1.MeasurementType.Nominal)
             this._ticksPerTransaction = 1000.0 / this._configuration.nominalRate;
         this._lastExecutedTime = Date.now();

@@ -10,7 +10,7 @@ export abstract class BenchmarkMeter {
     private _numberOfMeasurements: number;
 
     public constructor() {
-        this.reset();
+        this.clear();
     }
 
     public get measurement(): Measurement {
@@ -58,7 +58,7 @@ export abstract class BenchmarkMeter {
         this._averageValue = value;
     }
 
-    public reset(): void {
+    public clear(): void {
         this._lastMeasuredTime = Date.now();
         this._currentValue = this.performMeasurement();
         this._minValue = Number.MAX_VALUE;

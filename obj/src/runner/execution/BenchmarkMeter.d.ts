@@ -14,7 +14,7 @@ export declare abstract class BenchmarkMeter {
     minValue: number;
     maxValue: number;
     averageValue: number;
-    reset(): void;
+    clear(): void;
     protected calculateAggregates(): void;
     measure(): number;
     protected abstract performMeasurement(): number;

@@ -4,9 +4,9 @@ var util = require('util');
 const ExecutionState_1 = require("../runner/results/ExecutionState");
 class ConsoleEventPrinter {
     static attach(runner) {
-        runner.addErrorReportedListener(ConsoleEventPrinter.onErrorReported);
-        runner.addMessageSentListener(ConsoleEventPrinter.onMessageSent);
-        runner.addResultUpdatedListener(ConsoleEventPrinter.onResultUpdated);
+        runner.results.addErrorListener(ConsoleEventPrinter.onErrorReported);
+        runner.results.addMessageListener(ConsoleEventPrinter.onMessageSent);
+        runner.results.addUpdatedListener(ConsoleEventPrinter.onResultUpdated);
     }
     static onResultUpdated(status, result) {
         if (status == ExecutionState_1.ExecutionState.Starting) {

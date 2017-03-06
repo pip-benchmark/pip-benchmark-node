@@ -93,8 +93,8 @@ export class ConsoleRunner {
 
                     // Perform benchmarking
                     this._runner.run(() => {
-                        if (this._runner.results.length > 0)
-                            console.log(this._runner.results[0].performanceMeasurement.averageValue.toFixed(2));
+                        if (this._runner.results.all.length > 0)
+                            console.log(this._runner.results.all[0].performanceMeasurement.averageValue.toFixed(2));
 
                         // Generate report
                         if (this._args.reportFile != null)

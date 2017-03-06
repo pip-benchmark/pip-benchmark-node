@@ -6,10 +6,10 @@ class CpuLoadMeter extends BenchmarkMeter_1.BenchmarkMeter {
     constructor() {
         super();
     }
-    reset() {
+    clear() {
         this._lastTotalIdle = null;
         this._lastTotal = null;
-        super.reset();
+        super.clear();
     }
     performMeasurement() {
         // Initialize current values

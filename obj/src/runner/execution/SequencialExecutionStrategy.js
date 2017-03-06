@@ -5,15 +5,14 @@ const ExecutionState_1 = require("../results/ExecutionState");
 const ExecutionStrategy_1 = require("./ExecutionStrategy");
 const ProportionalExecutionStrategy_1 = require("./ProportionalExecutionStrategy");
 class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy {
-    constructor(configuration, benchmarks) {
-        super(configuration, benchmarks);
+    constructor(configuration, results, benchmarks) {
+        super(configuration, results, benchmarks);
         this._running = false;
-        this._results = [];
     }
     start(callback) {
         if (this._configuration.duration <= 0)
             throw new Error("Duration was not set");
-        this.notifyResultUpdate(ExecutionState_1.ExecutionState.Starting);
+        this._results.notifyUpdated(ExecutionState_1.ExecutionState.Starting, this._currentResult);
         // Start control thread
         //setTimeout(() => { this.execute(); }, 0);
         this.execute(callback);
@@ -27,13 +26,10 @@ class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy 
             this._running = false;
             if (this._current != null)
                 this._current.stop();
-            this.notifyResultUpdate(ExecutionState_1.ExecutionState.Completed);
+            this._results.notifyUpdated(ExecutionState_1.ExecutionState.Completed, this._currentResult);
         }
         if (callback)
             callback();
-    }
-    getResults() {
-        return this._results;
     }
     execute(callback) {
         async.eachSeries(this._benchmarks, (benchmark, callback) => {
@@ -43,13 +39,9 @@ class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy 
                 return;
             }
             // Start embedded strategy
-            this._current = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this._configuration, [benchmark], true);
+            this._current = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this._configuration, this._results, [benchmark], true);
             this._current.start();
             this._timeout = setTimeout(() => {
-                // Populate results
-                let results = this._current.getResults();
-                if (results.length > 0)
-                    this._results.push(results[0]);
                 this._current.stop(() => {
                     this._current = null;
                     callback();

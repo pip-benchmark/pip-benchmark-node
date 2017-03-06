@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class ExecutionContext {
-    constructor(strategy, suite) {
+    constructor(strategy, results, suite) {
         this._strategy = strategy;
+        this._results = results;
         this._suite = suite;
     }
     get parameters() {
@@ -12,10 +13,10 @@ class ExecutionContext {
         this._strategy.reportProgress(increment || 1);
     }
     sendMessage(message) {
-        this._strategy.sendMessage(message);
+        this._results.notifyMessage(message);
     }
     reportError(errorMessage) {
-        this._strategy.reportError(errorMessage);
+        this._results.notifyError(errorMessage);
     }
     stop() {
         this._strategy.stop();

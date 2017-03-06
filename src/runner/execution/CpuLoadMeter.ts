@@ -10,11 +10,11 @@ export class CpuLoadMeter extends BenchmarkMeter {
         super();
     }
 
-    public reset(): void {
+    public clear(): void {
         this._lastTotalIdle = null;
         this._lastTotal = null;
 
-        super.reset();
+        super.clear();
     }
 
     protected performMeasurement(): number {

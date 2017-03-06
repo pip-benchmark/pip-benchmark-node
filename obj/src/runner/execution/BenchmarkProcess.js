@@ -6,16 +6,13 @@ const BenchmarkException_1 = require("../BenchmarkException");
 const ProportionalExecutionStrategy_1 = require("./ProportionalExecutionStrategy");
 const SequencialExecutionStrategy_1 = require("./SequencialExecutionStrategy");
 class BenchmarkProcess {
-    constructor(configuration) {
+    constructor(configuration, results) {
         this._strategy = null;
-        this._results = [];
         this._configuration = configuration;
+        this._results = results;
     }
     get running() {
         return this._strategy != null;
-    }
-    get results() {
-        return this._results;
     }
     start(suites) {
         this.run(suites, () => { });
@@ -37,11 +34,11 @@ class BenchmarkProcess {
             throw new BenchmarkException_1.BenchmarkException("There are no benchmarks to execute");
         // Create requested test strategy
         if (this._configuration.executionType == ExecutionType_1.ExecutionType.Sequential)
-            this._strategy = new SequencialExecutionStrategy_1.SequencialExecutionStrategy(this._configuration, selectedBenchmarks);
+            this._strategy = new SequencialExecutionStrategy_1.SequencialExecutionStrategy(this._configuration, this._results, selectedBenchmarks);
         else
-            this._strategy = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this._configuration, selectedBenchmarks);
+            this._strategy = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this._configuration, this._results, selectedBenchmarks);
         // Initialize parameters and start 
-        this._results = [];
+        this._results.clear();
         this._strategy.start(() => {
             this.stop();
             if (callback)
@@ -50,21 +47,9 @@ class BenchmarkProcess {
     }
     stop() {
         if (this._strategy != null) {
-            // Stop strategy
             this._strategy.stop();
-            // Fill results
-            this._results = this._strategy.getResults();
             this._strategy = null;
         }
-    }
-    notifyResultUpdate(status, result) {
-        //this._runner.notifyResultUpdated(status, result);
-    }
-    notifyMessageSent(message) {
-        //this._runner.notifyMessageSent(message);
-    }
-    notifyErrorReported(errorMessage) {
-        //this._runner.notifyErrorReported(errorMessage);
     }
 }
 exports.BenchmarkProcess = BenchmarkProcess;

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Measurement_1 = require("../results/Measurement");
 class BenchmarkMeter {
     constructor() {
-        this.reset();
+        this.clear();
     }
     get measurement() {
         return new Measurement_1.Measurement(this.currentValue, this.minValue, this.averageValue, this.maxValue);
@@ -38,7 +38,7 @@ class BenchmarkMeter {
     set averageValue(value) {
         this._averageValue = value;
     }
-    reset() {
+    clear() {
         this._lastMeasuredTime = Date.now();
         this._currentValue = this.performMeasurement();
         this._minValue = Number.MAX_VALUE;

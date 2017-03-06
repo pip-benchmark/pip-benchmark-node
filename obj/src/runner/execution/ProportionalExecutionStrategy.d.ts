@@ -1,6 +1,6 @@
 import { ConfigurationManager } from '../config/ConfigurationManager';
+import { ResultsManager } from '../results/ResultsManager';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
-import { BenchmarkResult } from '../results/BenchmarkResult';
 import { ExecutionStrategy } from './ExecutionStrategy';
 export declare class ProportionalExecutionStrategy extends ExecutionStrategy {
     private _embedded;
@@ -11,10 +11,9 @@ export declare class ProportionalExecutionStrategy extends ExecutionStrategy {
     private _benchmarkCount;
     private _onlyBenchmark;
     private _timeout;
-    constructor(configuration: ConfigurationManager, benchmarks: BenchmarkInstance[], embedded?: boolean);
+    constructor(configuration: ConfigurationManager, results: ResultsManager, benchmarks: BenchmarkInstance[], embedded?: boolean);
     start(callback?: () => void): void;
     stop(callback?: () => void): void;
-    getResults(): BenchmarkResult[];
     private calculateProportionRanges();
     private chooseBenchmarkProportionally();
     private executeDelay(delay, callback);
