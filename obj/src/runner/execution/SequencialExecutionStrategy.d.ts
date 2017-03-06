@@ -1,6 +1,6 @@
 import { ConfigurationManager } from '../config/ConfigurationManager';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
-import { BenchmarkResult } from '../BenchmarkResult';
+import { BenchmarkResult } from '../results/BenchmarkResult';
 import { ExecutionStrategy } from './ExecutionStrategy';
 export declare class SequencialExecutionStrategy extends ExecutionStrategy {
     private _running;

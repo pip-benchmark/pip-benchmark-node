@@ -1,5 +1,5 @@
 import { Parameter } from '../../Parameter';
-import { SimpleTypeConverter } from '../../utilities/SimpleTypeConverter';
+import { Converter } from '../../utilities/Converter';
 import { ConfigurationManager } from '../config/ConfigurationManager';
 
 export class NominalRateParameter extends Parameter {
@@ -15,10 +15,10 @@ export class NominalRateParameter extends Parameter {
     }
 
     public get value(): string {
-        return SimpleTypeConverter.doubleToString(this._configuration.nominalRate); 
+        return Converter.doubleToString(this._configuration.nominalRate); 
     }
     
     public set value(value: string) {
-        this._configuration.nominalRate = SimpleTypeConverter.stringToDouble(value, 1);
+        this._configuration.nominalRate = Converter.stringToDouble(value, 1);
     }
 }

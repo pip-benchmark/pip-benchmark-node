@@ -2,16 +2,16 @@ import { Parameter } from '../Parameter';
 import { BenchmarkSuite } from '../BenchmarkSuite';
 import { BenchmarkSuiteInstance } from './benchmarks/BenchmarkSuiteInstance';
 import { BenchmarkInstance } from './benchmarks/BenchmarkInstance';
-import { ResultCallback } from './ResultCallback';
-import { MessageCallback } from './MessageCallback';
-import { BenchmarkResult } from './BenchmarkResult';
-import { ExecutionState } from './ExecutionState';
+import { ResultCallback } from './results/ResultCallback';
+import { MessageCallback } from './results/MessageCallback';
+import { BenchmarkResult } from './results/BenchmarkResult';
+import { ExecutionState } from './results/ExecutionState';
 
 import { ConfigurationManager } from './config/ConfigurationManager';
 import { BenchmarksManager } from './benchmarks/BenchmarksManager';
 import { ParametersManager } from './parameters/ParametersManager';
 import { BenchmarkProcess } from './execution/BenchmarkProcess';
-import { ReportGenerator } from './results/ReportGenerator';
+import { ReportGenerator } from './reports/ReportGenerator';
 import { EnvironmentManager } from './environment/EnvironmentManager';
 
 export class BenchmarkRunner {
@@ -19,7 +19,7 @@ export class BenchmarkRunner {
     private _parameters: ParametersManager;
     private _benchmarks: BenchmarksManager;
     private _process: BenchmarkProcess;
-    private _reportGenerator: ReportGenerator;
+    private _report: ReportGenerator;
     private _environment: EnvironmentManager;
 
     private _resultUpdatedListeners: ResultCallback[] = [];
@@ -31,8 +31,8 @@ export class BenchmarkRunner {
         this._parameters = new ParametersManager(this._configuration);
         this._benchmarks = new BenchmarksManager(this._configuration, this._parameters);
         this._process = new BenchmarkProcess(this._configuration);
-        this._reportGenerator = new ReportGenerator(this);
         this._environment = new EnvironmentManager();
+        this._report = new ReportGenerator(this);
     }
 
     public get configuration(): ConfigurationManager {
@@ -51,8 +51,8 @@ export class BenchmarkRunner {
         return this._benchmarks;
     }
 
-    public get reportGenerator(): ReportGenerator {
-        return this._reportGenerator;
+    public get report(): ReportGenerator {
+        return this._report;
     }
 
     public get environment(): EnvironmentManager {
@@ -143,13 +143,5 @@ export class BenchmarkRunner {
 
     public run(callback: () => void): void {
         this._process.run(this._benchmarks.suites, callback);
-    }
-
-    public generateReport(): string {
-        return this._reportGenerator.generateReport();
-    }
-
-    public saveReportToFile(fileName: string): void {
-        this._reportGenerator.saveReportToFile(fileName);
     }
 }

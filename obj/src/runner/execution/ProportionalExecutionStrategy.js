@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var async = require('async');
 const MeasurementType_1 = require("../config/MeasurementType");
-const ExecutionState_1 = require("../ExecutionState");
+const ExecutionState_1 = require("../results/ExecutionState");
 const ExecutionContext_1 = require("./ExecutionContext");
 const ExecutionStrategy_1 = require("./ExecutionStrategy");
 class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy {

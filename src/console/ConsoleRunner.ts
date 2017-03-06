@@ -98,9 +98,9 @@ export class ConsoleRunner {
 
                         // Generate report
                         if (this._args.reportFile != null)
-                            this._runner.saveReportToFile(this._args.reportFile);
+                            this._runner.report.saveToFile(this._args.reportFile);
 
-                        console.log(this._runner.generateReport());
+                        console.log(this._runner.report.generate());
 
                         callback();
                     });

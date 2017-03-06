@@ -1,4 +1,4 @@
-export declare class RandomDataGenerator {
+export declare class Random {
     private static readonly AllowStringChars;
     constructor();
     randomStringList(minCount: number, maxCount: number, itemSize: number): string[];

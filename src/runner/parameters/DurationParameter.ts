@@ -1,5 +1,5 @@
 import { Parameter } from '../../Parameter';
-import { SimpleTypeConverter } from '../../utilities/SimpleTypeConverter';
+import { Converter } from '../../utilities/Converter';
 import { ConfigurationManager } from '../config/ConfigurationManager';
 
 export class DurationParameter extends Parameter {
@@ -15,10 +15,10 @@ export class DurationParameter extends Parameter {
     }
 
     public get value(): string {
-        return SimpleTypeConverter.integerToString(this._configuration.duration); 
+        return Converter.integerToString(this._configuration.duration); 
     }
     
     public set value(value: string) {
-        this._configuration.duration = SimpleTypeConverter.stringToInteger(value, 60);
+        this._configuration.duration = Converter.stringToInteger(value, 60);
     }
 }

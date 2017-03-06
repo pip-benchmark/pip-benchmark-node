@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class SimpleTypeConverter {
+class Converter {
     static stringToInteger(value, defaultValue) {
-        return SimpleTypeConverter.stringToLong(value, defaultValue);
+        return Converter.stringToLong(value, defaultValue);
     }
     static integerToString(value) {
-        return SimpleTypeConverter.longToString(value);
+        return Converter.longToString(value);
     }
     static stringToLong(value, defaultValue) {
         if (value == null)
@@ -22,10 +22,10 @@ class SimpleTypeConverter {
         return value != null ? value.toString() : null;
     }
     static stringToFloat(value, defaultValue) {
-        return SimpleTypeConverter.stringToDouble(value, defaultValue);
+        return Converter.stringToDouble(value, defaultValue);
     }
     static floatToString(value) {
-        return SimpleTypeConverter.doubleToString(value);
+        return Converter.doubleToString(value);
     }
     static stringToDouble(value, defaultValue) {
         if (value == null)
@@ -58,5 +58,5 @@ class SimpleTypeConverter {
         return value ? "true" : "false";
     }
 }
-exports.SimpleTypeConverter = SimpleTypeConverter;
-//# sourceMappingURL=SimpleTypeConverter.js.map
+exports.Converter = Converter;
+//# sourceMappingURL=Converter.js.map

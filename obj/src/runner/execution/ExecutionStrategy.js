@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require('lodash');
-const ExecutionState_1 = require("../ExecutionState");
-const BenchmarkResult_1 = require("../BenchmarkResult");
+const ExecutionState_1 = require("../results/ExecutionState");
+const BenchmarkResult_1 = require("../results/BenchmarkResult");
 const TransactionMeter_1 = require("./TransactionMeter");
 const CpuLoadMeter_1 = require("./CpuLoadMeter");
 const MemoryUsageMeter_1 = require("./MemoryUsageMeter");

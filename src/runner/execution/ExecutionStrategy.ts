@@ -1,10 +1,10 @@
 var _ = require('lodash');
 
 import { ConfigurationManager } from '../config/ConfigurationManager';
-import { ExecutionState } from '../ExecutionState';
+import { ExecutionState } from '../results/ExecutionState';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
-import { BenchmarkResult } from '../BenchmarkResult';
+import { BenchmarkResult } from '../results/BenchmarkResult';
 
 import { TransactionMeter } from './TransactionMeter';
 import { CpuLoadMeter } from './CpuLoadMeter';

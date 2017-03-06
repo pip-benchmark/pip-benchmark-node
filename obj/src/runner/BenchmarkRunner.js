@@ -4,7 +4,7 @@ const ConfigurationManager_1 = require("./config/ConfigurationManager");
 const BenchmarksManager_1 = require("./benchmarks/BenchmarksManager");
 const ParametersManager_1 = require("./parameters/ParametersManager");
 const BenchmarkProcess_1 = require("./execution/BenchmarkProcess");
-const ReportGenerator_1 = require("./results/ReportGenerator");
+const ReportGenerator_1 = require("./reports/ReportGenerator");
 const EnvironmentManager_1 = require("./environment/EnvironmentManager");
 class BenchmarkRunner {
     constructor() {
@@ -15,8 +15,8 @@ class BenchmarkRunner {
         this._parameters = new ParametersManager_1.ParametersManager(this._configuration);
         this._benchmarks = new BenchmarksManager_1.BenchmarksManager(this._configuration, this._parameters);
         this._process = new BenchmarkProcess_1.BenchmarkProcess(this._configuration);
-        this._reportGenerator = new ReportGenerator_1.ReportGenerator(this);
         this._environment = new EnvironmentManager_1.EnvironmentManager();
+        this._report = new ReportGenerator_1.ReportGenerator(this);
     }
     get configuration() {
         return this._configuration;
@@ -30,8 +30,8 @@ class BenchmarkRunner {
     get benchmarks() {
         return this._benchmarks;
     }
-    get reportGenerator() {
-        return this._reportGenerator;
+    get report() {
+        return this._report;
     }
     get environment() {
         return this._environment;
@@ -110,12 +110,6 @@ class BenchmarkRunner {
     }
     run(callback) {
         this._process.run(this._benchmarks.suites, callback);
-    }
-    generateReport() {
-        return this._reportGenerator.generateReport();
-    }
-    saveReportToFile(fileName) {
-        this._reportGenerator.saveReportToFile(fileName);
     }
 }
 exports.BenchmarkRunner = BenchmarkRunner;

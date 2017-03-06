@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const SimpleTypeConverter_1 = require("./utilities/SimpleTypeConverter");
+const Converter_1 = require("./utilities/Converter");
 class Parameter {
     constructor(name, description, defaultValue) {
         this._name = name;
@@ -30,34 +30,34 @@ class Parameter {
         this.value = value;
     }
     getAsBoolean() {
-        return SimpleTypeConverter_1.SimpleTypeConverter.stringToBoolean(this.value);
+        return Converter_1.Converter.stringToBoolean(this.value);
     }
     setAsBoolean(value) {
-        this.value = SimpleTypeConverter_1.SimpleTypeConverter.booleanToString(value);
+        this.value = Converter_1.Converter.booleanToString(value);
     }
     getAsInteger() {
-        return SimpleTypeConverter_1.SimpleTypeConverter.stringToInteger(this.value, 0);
+        return Converter_1.Converter.stringToInteger(this.value, 0);
     }
     setAsInteger(value) {
-        this.value = SimpleTypeConverter_1.SimpleTypeConverter.integerToString(value);
+        this.value = Converter_1.Converter.integerToString(value);
     }
     getAsLong() {
-        return SimpleTypeConverter_1.SimpleTypeConverter.stringToLong(this.value, 0);
+        return Converter_1.Converter.stringToLong(this.value, 0);
     }
     setAsLong(value) {
-        this.value = SimpleTypeConverter_1.SimpleTypeConverter.longToString(value);
+        this.value = Converter_1.Converter.longToString(value);
     }
     getAsFloat() {
-        return SimpleTypeConverter_1.SimpleTypeConverter.stringToFloat(this.value, 0);
+        return Converter_1.Converter.stringToFloat(this.value, 0);
     }
     setAsFloat(value) {
-        this.value = SimpleTypeConverter_1.SimpleTypeConverter.floatToString(value);
+        this.value = Converter_1.Converter.floatToString(value);
     }
     getAsDouble() {
-        return SimpleTypeConverter_1.SimpleTypeConverter.stringToDouble(this.value, 0);
+        return Converter_1.Converter.stringToDouble(this.value, 0);
     }
     setAsDouble(value) {
-        this.value = SimpleTypeConverter_1.SimpleTypeConverter.doubleToString(value);
+        this.value = Converter_1.Converter.doubleToString(value);
     }
 }
 exports.Parameter = Parameter;

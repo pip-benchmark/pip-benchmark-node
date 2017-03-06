@@ -1,7 +1,7 @@
 var util = require('util');
 
 import { Parameter } from '../../Parameter';
-import { SimpleTypeConverter } from '../../utilities/SimpleTypeConverter';
+import { Converter } from '../../utilities/Converter';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 
 export class BenchmarkSelectedParameter extends Parameter {
@@ -15,10 +15,10 @@ export class BenchmarkSelectedParameter extends Parameter {
     }
 
     public get value(): string {
-        return SimpleTypeConverter.booleanToString(this._benchmark.selected); 
+        return Converter.booleanToString(this._benchmark.selected); 
     }
     
     public set value(value: string) {
-        this._benchmark.selected = SimpleTypeConverter.stringToBoolean(value);
+        this._benchmark.selected = Converter.stringToBoolean(value);
     }
 }

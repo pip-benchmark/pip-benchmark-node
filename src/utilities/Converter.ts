@@ -1,11 +1,11 @@
-export class SimpleTypeConverter {
+export class Converter {
 
     public static stringToInteger(value: string, defaultValue: number): number {
-        return SimpleTypeConverter.stringToLong(value, defaultValue);
+        return Converter.stringToLong(value, defaultValue);
     }
 
     public static integerToString(value: number): string {
-        return SimpleTypeConverter.longToString(value);
+        return Converter.longToString(value);
     }
 
     public static stringToLong(value: string, defaultValue: number): number {
@@ -23,11 +23,11 @@ export class SimpleTypeConverter {
     }
 
     public static stringToFloat(value: string, defaultValue: number): number {
-        return SimpleTypeConverter.stringToDouble(value, defaultValue);
+        return Converter.stringToDouble(value, defaultValue);
     }
 
     public static floatToString(value: number): string {
-        return SimpleTypeConverter.doubleToString(value);
+        return Converter.doubleToString(value);
     }
 
     public static stringToDouble(value: string, defaultValue: number): number {

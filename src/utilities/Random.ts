@@ -1,4 +1,4 @@
-export class RandomDataGenerator {
+export class Random {
     private static readonly AllowStringChars 
     	= "ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz -";
 
@@ -17,8 +17,8 @@ export class RandomDataGenerator {
     public randomString(size: number): string {
         let text = '';
         for (let index = 0; index < size; index++) {
-            text += RandomDataGenerator.AllowStringChars.charAt(
-                this.randomInteger(0, RandomDataGenerator.AllowStringChars.length)
+            text += Random.AllowStringChars.charAt(
+                this.randomInteger(0, Random.AllowStringChars.length)
             );
         }
 

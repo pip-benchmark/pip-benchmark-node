@@ -1,6 +1,6 @@
 import { MeasurementType } from '../runner/config/MeasurementType';
 import { ExecutionType } from '../runner/config/ExecutionType';
-import { SimpleTypeConverter } from '../utilities/SimpleTypeConverter';
+import { Converter } from '../utilities/Converter';
 
 export class CommandLineArgs {
 
@@ -33,7 +33,7 @@ export class CommandLineArgs {
             } else if ((arg == "-r" || arg == "--report") && moreArgs) {
                 this.reportFile = args[++index];
             } else if ((arg == "-d" || arg == "--duration") && moreArgs) {
-                this.duration = SimpleTypeConverter.stringToLong(args[++index], 60);
+                this.duration = Converter.stringToLong(args[++index], 60);
             } else if ((arg == "-m" || arg == "--measure") && moreArgs) {
                 this.measurementType = args[++index].toLowerCase() == "nominal"
                     ? MeasurementType.Nominal : MeasurementType.Peak;
@@ -42,7 +42,7 @@ export class CommandLineArgs {
                 this.executionType = execution == "seq" || execution == "sequential"
                     ? ExecutionType.Sequential : ExecutionType.Proportional;
             } else if ((arg == "-n" || arg == "--nominal") && moreArgs) {
-                this.nominalRate = SimpleTypeConverter.stringToDouble(args[++index], 1);
+                this.nominalRate = Converter.stringToDouble(args[++index], 1);
             } else if (arg == "-h" || arg == "--help") {
                 this.showHelp = true;
             } else if (arg == "-B" || arg == "--show-benchmarks") {

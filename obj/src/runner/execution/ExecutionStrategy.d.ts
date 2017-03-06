@@ -1,8 +1,8 @@
 import { ConfigurationManager } from '../config/ConfigurationManager';
-import { ExecutionState } from '../ExecutionState';
+import { ExecutionState } from '../results/ExecutionState';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
-import { BenchmarkResult } from '../BenchmarkResult';
+import { BenchmarkResult } from '../results/BenchmarkResult';
 export declare abstract class ExecutionStrategy {
     private static readonly MaxErrorCount;
     protected _configuration: ConfigurationManager;

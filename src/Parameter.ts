@@ -1,4 +1,4 @@
-import { SimpleTypeConverter } from './utilities/SimpleTypeConverter';
+import { Converter } from './utilities/Converter';
 
 export class Parameter {
     private _name: string;
@@ -42,42 +42,42 @@ export class Parameter {
     }
 
     public getAsBoolean(): boolean {
-        return SimpleTypeConverter.stringToBoolean(this.value); 
+        return Converter.stringToBoolean(this.value); 
     }
     
     public setAsBoolean(value: boolean): void {
-        this.value = SimpleTypeConverter.booleanToString(value);
+        this.value = Converter.booleanToString(value);
     }
 
     public getAsInteger(): number {
-        return SimpleTypeConverter.stringToInteger(this.value, 0);
+        return Converter.stringToInteger(this.value, 0);
     }
     
     public setAsInteger(value: number): void {
-        this.value = SimpleTypeConverter.integerToString(value);
+        this.value = Converter.integerToString(value);
     }
 
     public getAsLong(): number {
-        return SimpleTypeConverter.stringToLong(this.value, 0); 
+        return Converter.stringToLong(this.value, 0); 
     }
     
     public setAsLong(value: number): void {
-        this.value = SimpleTypeConverter.longToString(value);
+        this.value = Converter.longToString(value);
     }
 
     public getAsFloat(): number {
-        return SimpleTypeConverter.stringToFloat(this.value, 0); 
+        return Converter.stringToFloat(this.value, 0); 
     }
     
     public setAsFloat(value: number): void {
-        this.value = SimpleTypeConverter.floatToString(value);
+        this.value = Converter.floatToString(value);
     }
 
     public getAsDouble(): number {
-        return SimpleTypeConverter.stringToDouble(this.value, 0); 
+        return Converter.stringToDouble(this.value, 0); 
     }
     
     public setAsDouble(value: number): void {
-        this.value = SimpleTypeConverter.doubleToString(value);
+        this.value = Converter.doubleToString(value);
     }
 }

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require('fs');
 var os = require('os');
 const PropertyFileLine_1 = require("./PropertyFileLine");
-const SimpleTypeConverter_1 = require("./SimpleTypeConverter");
+const Converter_1 = require("./Converter");
 class Properties {
     constructor() {
         this.lines = [];
@@ -82,37 +82,37 @@ class Properties {
         let value = this[key];
         if (value == null)
             return defaultValue;
-        return SimpleTypeConverter_1.SimpleTypeConverter.stringToInteger(value, defaultValue);
+        return Converter_1.Converter.stringToInteger(value, defaultValue);
     }
     setAsInteger(key, value) {
-        this[key] = SimpleTypeConverter_1.SimpleTypeConverter.integerToString(value);
+        this[key] = Converter_1.Converter.integerToString(value);
     }
     getAsLong(key, defaultValue) {
         let value = this[key];
         if (value == null)
             return defaultValue;
-        return SimpleTypeConverter_1.SimpleTypeConverter.stringToLong(value, defaultValue);
+        return Converter_1.Converter.stringToLong(value, defaultValue);
     }
     setAsLong(key, value) {
-        this[key] = SimpleTypeConverter_1.SimpleTypeConverter.longToString(value);
+        this[key] = Converter_1.Converter.longToString(value);
     }
     getAsDouble(key, defaultValue) {
         let value = this[key];
         if (value == null)
             return defaultValue;
-        return SimpleTypeConverter_1.SimpleTypeConverter.stringToDouble(value, defaultValue);
+        return Converter_1.Converter.stringToDouble(value, defaultValue);
     }
     setAsDouble(key, value) {
-        this[key] = SimpleTypeConverter_1.SimpleTypeConverter.doubleToString(value);
+        this[key] = Converter_1.Converter.doubleToString(value);
     }
     getAsBoolean(key, defaultValue) {
         let value = this[key];
         if (value == null)
             return defaultValue;
-        return SimpleTypeConverter_1.SimpleTypeConverter.stringToBoolean(value);
+        return Converter_1.Converter.stringToBoolean(value);
     }
     setAsBoolean(key, value) {
-        this[key] = SimpleTypeConverter_1.SimpleTypeConverter.booleanToString(value);
+        this[key] = Converter_1.Converter.booleanToString(value);
     }
 }
 exports.Properties = Properties;

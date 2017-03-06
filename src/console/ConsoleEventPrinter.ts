@@ -1,8 +1,8 @@
 var util = require('util');
 
 import { BenchmarkRunner } from '../runner/BenchmarkRunner';
-import { BenchmarkResult } from '../runner/BenchmarkResult';
-import { ExecutionState } from '../runner/ExecutionState';
+import { BenchmarkResult } from '../runner/results/BenchmarkResult';
+import { ExecutionState } from '../runner/results/ExecutionState';
 
 export class ConsoleEventPrinter {
 

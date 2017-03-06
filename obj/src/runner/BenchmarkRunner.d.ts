@@ -1,19 +1,19 @@
-import { ResultCallback } from './ResultCallback';
-import { MessageCallback } from './MessageCallback';
-import { BenchmarkResult } from './BenchmarkResult';
-import { ExecutionState } from './ExecutionState';
+import { ResultCallback } from './results/ResultCallback';
+import { MessageCallback } from './results/MessageCallback';
+import { BenchmarkResult } from './results/BenchmarkResult';
+import { ExecutionState } from './results/ExecutionState';
 import { ConfigurationManager } from './config/ConfigurationManager';
 import { BenchmarksManager } from './benchmarks/BenchmarksManager';
 import { ParametersManager } from './parameters/ParametersManager';
 import { BenchmarkProcess } from './execution/BenchmarkProcess';
-import { ReportGenerator } from './results/ReportGenerator';
+import { ReportGenerator } from './reports/ReportGenerator';
 import { EnvironmentManager } from './environment/EnvironmentManager';
 export declare class BenchmarkRunner {
     private _configuration;
     private _parameters;
     private _benchmarks;
     private _process;
-    private _reportGenerator;
+    private _report;
     private _environment;
     private _resultUpdatedListeners;
     private _messageSentListeners;
@@ -23,7 +23,7 @@ export declare class BenchmarkRunner {
     readonly parameters: ParametersManager;
     readonly process: BenchmarkProcess;
     readonly benchmarks: BenchmarksManager;
-    readonly reportGenerator: ReportGenerator;
+    readonly report: ReportGenerator;
     readonly environment: EnvironmentManager;
     readonly results: BenchmarkResult[];
     addResultUpdatedListener(listener: ResultCallback): void;
@@ -39,6 +39,4 @@ export declare class BenchmarkRunner {
     start(): void;
     stop(): void;
     run(callback: () => void): void;
-    generateReport(): string;
-    saveReportToFile(fileName: string): void;
 }

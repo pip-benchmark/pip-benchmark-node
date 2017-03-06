@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var async = require('async');
-const ExecutionState_1 = require("../ExecutionState");
+const ExecutionState_1 = require("../results/ExecutionState");
 const ExecutionStrategy_1 = require("./ExecutionStrategy");
 const ProportionalExecutionStrategy_1 = require("./ProportionalExecutionStrategy");
 class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy {

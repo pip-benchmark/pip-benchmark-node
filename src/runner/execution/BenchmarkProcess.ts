@@ -4,9 +4,9 @@ import { ConfigurationManager } from '../config/ConfigurationManager';
 import { ExecutionType } from '../config/ExecutionType';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
-import { ExecutionState } from '../ExecutionState';
+import { ExecutionState } from '../results/ExecutionState';
 import { ExecutionStrategy } from './ExecutionStrategy';
-import { BenchmarkResult } from '../BenchmarkResult';
+import { BenchmarkResult } from '../results/BenchmarkResult';
 import { BenchmarkException } from '../BenchmarkException';
 
 import { ProportionalExecutionStrategy } from './ProportionalExecutionStrategy';

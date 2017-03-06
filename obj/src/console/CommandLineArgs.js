@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const MeasurementType_1 = require("../runner/config/MeasurementType");
 const ExecutionType_1 = require("../runner/config/ExecutionType");
-const SimpleTypeConverter_1 = require("../utilities/SimpleTypeConverter");
+const Converter_1 = require("../utilities/Converter");
 class CommandLineArgs {
     constructor(args) {
         this.modules = [];
@@ -50,7 +50,7 @@ class CommandLineArgs {
                 this.reportFile = args[++index];
             }
             else if ((arg == "-d" || arg == "--duration") && moreArgs) {
-                this.duration = SimpleTypeConverter_1.SimpleTypeConverter.stringToLong(args[++index], 60);
+                this.duration = Converter_1.Converter.stringToLong(args[++index], 60);
             }
             else if ((arg == "-m" || arg == "--measure") && moreArgs) {
                 this.measurementType = args[++index].toLowerCase() == "nominal"
@@ -62,7 +62,7 @@ class CommandLineArgs {
                     ? ExecutionType_1.ExecutionType.Sequential : ExecutionType_1.ExecutionType.Proportional;
             }
             else if ((arg == "-n" || arg == "--nominal") && moreArgs) {
-                this.nominalRate = SimpleTypeConverter_1.SimpleTypeConverter.stringToDouble(args[++index], 1);
+                this.nominalRate = Converter_1.Converter.stringToDouble(args[++index], 1);
             }
             else if (arg == "-h" || arg == "--help") {
                 this.showHelp = true;

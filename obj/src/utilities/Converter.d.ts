@@ -1,4 +1,4 @@
-export declare class SimpleTypeConverter {
+export declare class Converter {
     static stringToInteger(value: string, defaultValue: number): number;
     static integerToString(value: number): string;
     static stringToLong(value: string, defaultValue: number): number;

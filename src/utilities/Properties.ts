@@ -2,7 +2,7 @@ var fs = require('fs');
 var os = require('os');
 
 import { PropertyFileLine } from './PropertyFileLine';
-import { SimpleTypeConverter } from './SimpleTypeConverter';
+import { Converter } from './Converter';
 
 export class Properties {
     public lines: PropertyFileLine[] = [];
@@ -91,41 +91,41 @@ export class Properties {
     public getAsInteger(key: string, defaultValue: number): number {
         let value = this[key];
         if (value == null) return defaultValue;
-        return SimpleTypeConverter.stringToInteger(value, defaultValue);
+        return Converter.stringToInteger(value, defaultValue);
     }
 
     public setAsInteger(key: string, value: number): void {
-        this[key] = SimpleTypeConverter.integerToString(value);
+        this[key] = Converter.integerToString(value);
     }
 
     public getAsLong(key: string, defaultValue: number): number {
         let value = this[key];
         if (value == null) return defaultValue;
-        return SimpleTypeConverter.stringToLong(value, defaultValue);
+        return Converter.stringToLong(value, defaultValue);
     }
 
     public setAsLong(key: string, value: number): void {
-        this[key] = SimpleTypeConverter.longToString(value);
+        this[key] = Converter.longToString(value);
     }
 
     public getAsDouble(key: string, defaultValue: number): number {
         let value = this[key];
         if (value == null) return defaultValue;
-        return SimpleTypeConverter.stringToDouble(value, defaultValue);
+        return Converter.stringToDouble(value, defaultValue);
     }
 
     public setAsDouble(key: string, value: number): void {
-        this[key] = SimpleTypeConverter.doubleToString(value);
+        this[key] = Converter.doubleToString(value);
     }
 
     public getAsBoolean(key: string, defaultValue: boolean): boolean {
         let value = this[key];
         if (value == null) return defaultValue;
-        return SimpleTypeConverter.stringToBoolean(value);
+        return Converter.stringToBoolean(value);
     }
 
     public setAsBoolean(key: string, value: boolean): void {
-        this[key] = SimpleTypeConverter.booleanToString(value);
+        this[key] = Converter.booleanToString(value);
     }
 
 }

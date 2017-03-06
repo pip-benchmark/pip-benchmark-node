@@ -2,10 +2,10 @@ var async = require('async');
 
 import { MeasurementType } from '../config/MeasurementType';
 import { ConfigurationManager } from '../config/ConfigurationManager';
-import { ExecutionState } from '../ExecutionState';
+import { ExecutionState } from '../results/ExecutionState';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
-import { BenchmarkResult } from '../BenchmarkResult';
+import { BenchmarkResult } from '../results/BenchmarkResult';
 
 import { ExecutionContext } from './ExecutionContext';
 import { ExecutionStrategy } from './ExecutionStrategy';

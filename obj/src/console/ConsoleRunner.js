@@ -76,8 +76,8 @@ class ConsoleRunner {
                             console.log(this._runner.results[0].performanceMeasurement.averageValue.toFixed(2));
                         // Generate report
                         if (this._args.reportFile != null)
-                            this._runner.saveReportToFile(this._args.reportFile);
-                        console.log(this._runner.generateReport());
+                            this._runner.report.saveToFile(this._args.reportFile);
+                        console.log(this._runner.report.generate());
                         callback();
                     });
                 }

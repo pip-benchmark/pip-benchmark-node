@@ -1,7 +1,7 @@
 import { ConfigurationManager } from '../config/ConfigurationManager';
 import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
-import { ExecutionState } from '../ExecutionState';
-import { BenchmarkResult } from '../BenchmarkResult';
+import { ExecutionState } from '../results/ExecutionState';
+import { BenchmarkResult } from '../results/BenchmarkResult';
 export declare class BenchmarkProcess {
     private _configuration;
     private _strategy;

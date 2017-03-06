@@ -1,4 +1,4 @@
-import { Measurement } from '../Measurement';
+import { Measurement } from '../results/Measurement';
 
 export abstract class BenchmarkMeter {
     protected _lastMeasuredTime: number;

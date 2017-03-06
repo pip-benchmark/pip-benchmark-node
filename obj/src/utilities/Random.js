@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class RandomDataGenerator {
+class Random {
     constructor() { }
     randomStringList(minCount, maxCount, itemSize) {
         let result = [];
@@ -12,7 +12,7 @@ class RandomDataGenerator {
     randomString(size) {
         let text = '';
         for (let index = 0; index < size; index++) {
-            text += RandomDataGenerator.AllowStringChars.charAt(this.randomInteger(0, RandomDataGenerator.AllowStringChars.length));
+            text += Random.AllowStringChars.charAt(this.randomInteger(0, Random.AllowStringChars.length));
         }
         return text.toString();
     }
@@ -33,6 +33,6 @@ class RandomDataGenerator {
         return this.randomDouble(0, 100) >= 50;
     }
 }
-RandomDataGenerator.AllowStringChars = "ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz -";
-exports.RandomDataGenerator = RandomDataGenerator;
-//# sourceMappingURL=RandomDataGenerator.js.map
+Random.AllowStringChars = "ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz -";
+exports.Random = Random;
+//# sourceMappingURL=Random.js.map

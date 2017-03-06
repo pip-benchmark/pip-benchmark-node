@@ -1,7 +1,7 @@
 var util = require('util');
 
 import { Parameter } from '../../Parameter';
-import { SimpleTypeConverter } from '../../utilities/SimpleTypeConverter';
+import { Converter } from '../../utilities/Converter';
 import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 
 export class BenchmarkProportionParameter extends Parameter {
@@ -15,10 +15,10 @@ export class BenchmarkProportionParameter extends Parameter {
     }
 
     public get value(): string {
-        return SimpleTypeConverter.integerToString(this._benchmark.proportion); 
+        return Converter.integerToString(this._benchmark.proportion); 
     }
     
     public set value(value: string) {
-        this._benchmark.proportion = SimpleTypeConverter.stringToInteger(value, 100);
+        this._benchmark.proportion = Converter.stringToInteger(value, 100);
     }
 }

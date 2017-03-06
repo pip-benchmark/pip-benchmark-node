@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var util = require('util');
-const ExecutionState_1 = require("../runner/ExecutionState");
+const ExecutionState_1 = require("../runner/results/ExecutionState");
 class ConsoleEventPrinter {
     static attach(runner) {
         runner.addErrorReportedListener(ConsoleEventPrinter.onErrorReported);

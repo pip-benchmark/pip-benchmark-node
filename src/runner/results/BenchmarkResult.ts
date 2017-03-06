@@ -1,5 +1,5 @@
 import { Measurement } from './Measurement';
-import { BenchmarkInstance } from './benchmarks/BenchmarkInstance';
+import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 
 export class BenchmarkResult {	
     public benchmarks: BenchmarkInstance[] = [];
