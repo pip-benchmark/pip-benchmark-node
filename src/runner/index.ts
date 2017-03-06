@@ -1,10 +1,14 @@
-// export { ExecutionState } from './ExecutionState';
-// export { ExecutionType } from './ExecutionType';
-// export { MeasurementType } from './MeasurementType';
-// export { Measurement } from './Measurement';
-// export { BenchmarkInstance } from './benchmarks/BenchmarkInstance';
-// export { BenchmarkSuiteInstance } from './benchmarks/BenchmarkSuiteInstance';
-// export { BenchmarkResult } from './BenchmarkResult';
-// export { MessageCallback } from './MessageCallback';
-// export { ResultCallback } from './ResultCallback';
-// export { BenchmarkRunner } from './BenchmarkRunner';
+export { BenchmarkRunner } from './BenchmarkRunner';
+
+export { ExecutionType } from './config/ExecutionType';
+export { MeasurementType } from './config/MeasurementType';
+export { ConfigurationCallback } from './config/ConfigurationCallback';
+
+export { BenchmarkResult } from './results/BenchmarkResult';
+export { Measurement } from './results/Measurement';
+export { ResultCallback } from './results/ResultCallback';
+export { MessageCallback } from './results/MessageCallback';
+export { ErrorCallback } from './results/ErrorCallback';
+
+export { ExecutionState } from './execution/ExecutionState';
+export { ExecutionCallback } from './execution/ExecutionCallback';

@@ -13,6 +13,7 @@ var DelegatedBenchmark_1 = require("./DelegatedBenchmark");
 exports.DelegatedBenchmark = DelegatedBenchmark_1.DelegatedBenchmark;
 var BenchmarkSuite_1 = require("./BenchmarkSuite");
 exports.BenchmarkSuite = BenchmarkSuite_1.BenchmarkSuite;
-//export * from './runner';
+__export(require("./runner"));
+__export(require("./console"));
 __export(require("./standardbenchmarks"));
 //# sourceMappingURL=index.js.map
