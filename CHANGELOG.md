@@ -1,5 +1,12 @@
 # Portable Benchmarking Framework in Node.js Changelog
 
+## <a name="2.0.0"></a> 2.0.0 (2017-02-06)
+
+Complete refactoring of benchmark runner
+
+### Breaking Changes
+* Runner API was completely changed
+
 ## <a name="1.0.0"></a> 1.0.0 (2017-01-28)
 
 Initial public release
