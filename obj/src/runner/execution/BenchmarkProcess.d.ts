@@ -1,4 +1,4 @@
-import { BenchmarkSuiteInstance } from '../BenchmarkSuiteInstance';
+import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
 import { MeasurementType } from '../MeasurementType';
 import { ExecutionType } from '../ExecutionType';
 import { ExecutionState } from '../ExecutionState';

@@ -66,13 +66,13 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
         for (let index = 0; index < this.benchmarks.length; index++) {
             let benchmark = this.benchmarks[index];
             if (benchmark.passive) {
-                benchmark.startProportionRange = 0;
-                benchmark.endProportionRange = 0;
+                benchmark.startRange = 0;
+                benchmark.endRange = 0;
             }
             else {
                 let normalizedProportion = benchmark.proportion / totalProportion;
-                benchmark.startProportionRange = startProportionRange;
-                benchmark.endProportionRange = startProportionRange + normalizedProportion;
+                benchmark.startRange = startProportionRange;
+                benchmark.endRange = startProportionRange + normalizedProportion;
                 startProportionRange += normalizedProportion;
             }
         }
@@ -83,7 +83,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
         let proportion = Math.random();
         for (let index = 0; index < this._benchmarkCount; index++) {
             let thisBenchmark = this.benchmarks[index];
-            if (thisBenchmark.withinProportionRange(proportion))
+            if (thisBenchmark.withinRange(proportion))
                 return thisBenchmark;
         }
         return null;

@@ -3,38 +3,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var async = require('async');
 const BenchmarkProcess_1 = require("../execution/BenchmarkProcess");
 const EnvironmentProperties_1 = require("./EnvironmentProperties");
-const BenchmarkSuiteInstance_1 = require("../BenchmarkSuiteInstance");
+const BenchmarkSuiteInstance_1 = require("../benchmarks/BenchmarkSuiteInstance");
 const StandardBenchmarkSuite_1 = require("./StandardBenchmarkSuite");
-const SystemInformation_1 = require("./SystemInformation");
-class EnvironmentState extends BenchmarkProcess_1.BenchmarkProcess {
+const SystemInfo_1 = require("./SystemInfo");
+class EnvironmentManager extends BenchmarkProcess_1.BenchmarkProcess {
     constructor(runner) {
         super(runner);
         try {
-            this.loadSystemBenchmarks();
+            this.load();
         }
         catch (ex) {
             // Ignore. it shall never happen here...
         }
     }
-    get systemInformation() {
-        return new SystemInformation_1.SystemInformation();
+    get systemInfo() {
+        return new SystemInfo_1.SystemInfo();
     }
-    get cpuBenchmark() {
-        return this._cpuBenchmark;
+    get cpuMeasurement() {
+        return this._cpuMeasurement;
     }
-    get videoBenchmark() {
-        return this._videoBenchmark;
+    get videoMeasurement() {
+        return this._videoMeasurement;
     }
-    get diskBenchmark() {
-        return this._diskBenchmark;
+    get diskMeasurement() {
+        return this._diskMeasurement;
     }
-    benchmarkEnvironment(cpu, disk, video, callback) {
+    measure(cpu, disk, video, callback) {
         async.series([
             (callback) => {
                 if (cpu) {
-                    this.computeCpuBenchmark((err, result) => {
+                    this.measureCpu((err, result) => {
                         if (err == null)
-                            this._cpuBenchmark = result;
+                            this._cpuMeasurement = result;
                         callback();
                     });
                 }
@@ -43,9 +43,9 @@ class EnvironmentState extends BenchmarkProcess_1.BenchmarkProcess {
             },
             (callback) => {
                 if (disk) {
-                    this.computeDiskBenchmark((err, result) => {
+                    this.measureDisk((err, result) => {
                         if (err == null)
-                            this._diskBenchmark = result;
+                            this._diskMeasurement = result;
                         callback();
                     });
                 }
@@ -54,9 +54,9 @@ class EnvironmentState extends BenchmarkProcess_1.BenchmarkProcess {
             },
             (callback) => {
                 if (video) {
-                    this.computeVideoBenchmark((err, result) => {
+                    this.measureVideo((err, result) => {
                         if (err == null)
-                            this._videoBenchmark = result;
+                            this._videoMeasurement = result;
                         callback();
                     });
                 }
@@ -65,59 +65,59 @@ class EnvironmentState extends BenchmarkProcess_1.BenchmarkProcess {
             }
         ], (err) => {
             this.stop();
-            this.saveSystemBenchmarks();
+            this.save();
             if (callback)
                 callback(err);
         });
     }
-    loadSystemBenchmarks() {
+    load() {
         let properties = new EnvironmentProperties_1.EnvironmentProperties();
         properties.load();
-        this._cpuBenchmark = properties.getAsDouble("System.CpuBenchmark", 0);
-        this._videoBenchmark = properties.getAsDouble("System.VideoBenchmark", 0);
-        this._diskBenchmark = properties.getAsDouble("System.DiskBenchmark", 0);
+        this._cpuMeasurement = properties.getAsDouble("CpuMeasurement", 0);
+        this._videoMeasurement = properties.getAsDouble("VideoMeasurement", 0);
+        this._diskMeasurement = properties.getAsDouble("DiskMeasurement", 0);
     }
-    saveSystemBenchmarks() {
+    save() {
         let properties = new EnvironmentProperties_1.EnvironmentProperties();
-        properties.setAsDouble("System.CpuBenchmark", this._cpuBenchmark);
-        properties.setAsDouble("System.VideoBenchmark", this._videoBenchmark);
-        properties.setAsDouble("System.DiskBenchmark", this._diskBenchmark);
+        properties.setAsDouble("CpuMeasurement", this._cpuMeasurement);
+        properties.setAsDouble("VideoMeasurement", this._videoMeasurement);
+        properties.setAsDouble("DiskMeasurement", this._diskMeasurement);
         properties.save();
     }
-    computeCpuBenchmark(callback) {
+    measureCpu(callback) {
         let suite = new StandardBenchmarkSuite_1.StandardBenchmarkSuite();
         let instance = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
         instance.unselectAllBenchmarks();
         instance.selectBenchmark(suite.cpuBenchmark.name);
-        super.duration = EnvironmentState.Duration;
+        super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {
             let result = super.results[0].performanceMeasurement.averageValue;
             callback(null, result);
         });
     }
-    computeDiskBenchmark(callback) {
+    measureDisk(callback) {
         let suite = new StandardBenchmarkSuite_1.StandardBenchmarkSuite();
         let instance = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
         instance.unselectAllBenchmarks();
         instance.selectBenchmark(suite.diskBenchmark.name);
-        super.duration = EnvironmentState.Duration;
+        super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {
             let result = super.results[0].performanceMeasurement.averageValue;
             callback(null, result);
         });
     }
-    computeVideoBenchmark(callback) {
+    measureVideo(callback) {
         let suite = new StandardBenchmarkSuite_1.StandardBenchmarkSuite();
         let instance = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
         instance.unselectAllBenchmarks();
         instance.selectBenchmark(suite.videoBenchmark.name);
-        super.duration = EnvironmentState.Duration;
+        super.duration = EnvironmentManager.Duration;
         super.run([instance], () => {
             let result = super.results[0].performanceMeasurement.averageValue;
             callback(null, result);
         });
     }
 }
-EnvironmentState.Duration = 5;
-exports.EnvironmentState = EnvironmentState;
-//# sourceMappingURL=EnvironmentState.js.map
+EnvironmentManager.Duration = 5;
+exports.EnvironmentManager = EnvironmentManager;
+//# sourceMappingURL=EnvironmentManager.js.map

@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const BenchmarkSuiteManager_1 = require("./BenchmarkSuiteManager");
+const BenchmarksManager_1 = require("./benchmarks/BenchmarksManager");
 const ParametersManager_1 = require("./parameters/ParametersManager");
 const BenchmarkProcess_1 = require("./execution/BenchmarkProcess");
-const ReportGenerator_1 = require("./report/ReportGenerator");
-const EnvironmentState_1 = require("./environment/EnvironmentState");
+const ReportGenerator_1 = require("./results/ReportGenerator");
+const EnvironmentManager_1 = require("./environment/EnvironmentManager");
 class BenchmarkRunner {
     constructor() {
         this._resultUpdatedListeners = [];
         this._messageSentListeners = [];
         this._errorReportedListeners = [];
-        this._suiteManager = new BenchmarkSuiteManager_1.BenchmarkSuiteManager(this);
+        this._benchmarks = new BenchmarksManager_1.BenchmarksManager(this);
         this._process = new BenchmarkProcess_1.BenchmarkProcess(this);
         this._parameters = new ParametersManager_1.ParametersManager(this);
         this._reportGenerator = new ReportGenerator_1.ReportGenerator(this);
-        this._environmentState = new EnvironmentState_1.EnvironmentState(this);
+        this._environment = new EnvironmentManager_1.EnvironmentManager(this);
     }
     get parameters() {
         return this._parameters;
@@ -23,43 +23,43 @@ class BenchmarkRunner {
         return this._process;
     }
     get suiteManager() {
-        return this._suiteManager;
+        return this._benchmarks;
     }
     get reportGenerator() {
         return this._reportGenerator;
     }
-    get environmentState() {
-        return this._environmentState;
+    get environment() {
+        return this._environment;
     }
     get suiteInstances() {
-        return this._suiteManager.suites;
+        return this._benchmarks.suites;
     }
     addSuiteFromClass(className) {
-        this._suiteManager.addSuiteFromClass(className);
+        this._benchmarks.addSuiteFromClass(className);
     }
     addSuite(suite) {
-        this._suiteManager.addSuite(suite);
+        this._benchmarks.addSuite(suite);
     }
     loadSuitesFromModule(moduleName) {
-        this._suiteManager.loadSuitesFromModule(moduleName);
+        this._benchmarks.loadSuitesFromModule(moduleName);
     }
     unloadSuiteByName(suiteName) {
-        this._suiteManager.removeSuiteByName(suiteName);
+        this._benchmarks.removeSuiteByName(suiteName);
     }
     unloadAllSuites() {
-        this._suiteManager.removeAllSuites();
+        this._benchmarks.removeAllSuites();
     }
     unloadSuite(suite) {
-        this._suiteManager.removeSuite(suite);
+        this._benchmarks.removeSuite(suite);
     }
     selectAllBenchmarks() {
-        this._suiteManager.selectAllBenchmarks();
+        this._benchmarks.selectAllBenchmarks();
     }
     selectBenchmarksByName(...benchmarkNames) {
-        this._suiteManager.selectBenchmarksByName(benchmarkNames);
+        this._benchmarks.selectBenchmarksByName(benchmarkNames);
     }
     selectBenchmarks(...benchmarks) {
-        this._suiteManager.selectBenchmarks(benchmarks);
+        this._benchmarks.selectBenchmarks(benchmarks);
     }
     get measurementType() {
         return this._process.measurementType;
@@ -158,34 +158,19 @@ class BenchmarkRunner {
         return this._process.running;
     }
     start() {
-        this._process.start(this._suiteManager.suites);
+        this._process.start(this._benchmarks.suites);
     }
     stop() {
         this._process.stop();
     }
     run(callback) {
-        this._process.run(this._suiteManager.suites, callback);
+        this._process.run(this._benchmarks.suites, callback);
     }
     generateReport() {
         return this._reportGenerator.generateReport();
     }
     saveReportToFile(fileName) {
         this._reportGenerator.saveReportToFile(fileName);
-    }
-    getSystemInformation() {
-        return this._environmentState.systemInformation;
-    }
-    get cpuBenchmark() {
-        return this.environmentState.cpuBenchmark;
-    }
-    get videoBenchmark() {
-        return this.environmentState.videoBenchmark;
-    }
-    get diskBenchmark() {
-        return this.environmentState.diskBenchmark;
-    }
-    benchmarkEnvironment(cpu = true, disk = true, video = true, callback) {
-        this._environmentState.benchmarkEnvironment(cpu, disk, video, callback);
     }
 }
 exports.BenchmarkRunner = BenchmarkRunner;

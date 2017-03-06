@@ -1,7 +1,7 @@
 import { Parameter } from '../Parameter';
 import { BenchmarkSuite } from '../BenchmarkSuite';
-import { BenchmarkSuiteInstance } from './BenchmarkSuiteInstance';
-import { BenchmarkInstance } from './BenchmarkInstance';
+import { BenchmarkSuiteInstance } from './benchmarks/BenchmarkSuiteInstance';
+import { BenchmarkInstance } from './benchmarks/BenchmarkInstance';
 import { ResultCallback } from './ResultCallback';
 import { MessageCallback } from './MessageCallback';
 import { ExecutionState } from './ExecutionState';
@@ -9,29 +9,29 @@ import { ExecutionType } from './ExecutionType';
 import { MeasurementType } from './MeasurementType';
 import { BenchmarkResult } from './BenchmarkResult';
 
-import { BenchmarkSuiteManager } from './BenchmarkSuiteManager';
+import { BenchmarksManager } from './benchmarks/BenchmarksManager';
 import { ParametersManager } from './parameters/ParametersManager';
 import { BenchmarkProcess } from './execution/BenchmarkProcess';
-import { ReportGenerator } from './report/ReportGenerator';
-import { EnvironmentState } from './environment/EnvironmentState';
+import { ReportGenerator } from './results/ReportGenerator';
+import { EnvironmentManager } from './environment/EnvironmentManager';
 
 export class BenchmarkRunner {
-    private _suiteManager: BenchmarkSuiteManager;
+    private _benchmarks: BenchmarksManager;
     private _parameters: ParametersManager;
     private _process: BenchmarkProcess;
     private _reportGenerator: ReportGenerator;
-    private _environmentState: EnvironmentState;
+    private _environment: EnvironmentManager;
 
     private _resultUpdatedListeners: ResultCallback[] = [];
     private _messageSentListeners: MessageCallback[] = [];
     private _errorReportedListeners: MessageCallback[] = [];
 
     public constructor() {
-        this._suiteManager = new BenchmarkSuiteManager(this);
+        this._benchmarks = new BenchmarksManager(this);
         this._process = new BenchmarkProcess(this);
         this._parameters = new ParametersManager(this);
         this._reportGenerator = new ReportGenerator(this);
-        this._environmentState = new EnvironmentState(this);
+        this._environment = new EnvironmentManager(this);
     }
 
     public get parameters(): ParametersManager {
@@ -42,56 +42,56 @@ export class BenchmarkRunner {
         return this._process;
     }
 
-    public get suiteManager(): BenchmarkSuiteManager {
-        return this._suiteManager;
+    public get suiteManager(): BenchmarksManager {
+        return this._benchmarks;
     }
 
     public get reportGenerator(): ReportGenerator {
         return this._reportGenerator;
     }
 
-    public get environmentState(): EnvironmentState {
-        return this._environmentState;
+    public get environment(): EnvironmentManager {
+        return this._environment;
     }
 
     public get suiteInstances(): BenchmarkSuiteInstance[] {
-        return this._suiteManager.suites;
+        return this._benchmarks.suites;
     }
 
     public addSuiteFromClass(className: string): void {
-        this._suiteManager.addSuiteFromClass(className);
+        this._benchmarks.addSuiteFromClass(className);
     }
 
     public addSuite(suite: any): void {
-        this._suiteManager.addSuite(suite);
+        this._benchmarks.addSuite(suite);
     }
 
     public loadSuitesFromModule(moduleName: string): void {
-        this._suiteManager.loadSuitesFromModule(moduleName);
+        this._benchmarks.loadSuitesFromModule(moduleName);
     }
 
     public unloadSuiteByName(suiteName: string): void {
-        this._suiteManager.removeSuiteByName(suiteName);
+        this._benchmarks.removeSuiteByName(suiteName);
     }
 
     public unloadAllSuites(): void {
-        this._suiteManager.removeAllSuites();
+        this._benchmarks.removeAllSuites();
     }
 
     public unloadSuite(suite: any): void {
-        this._suiteManager.removeSuite(suite);
+        this._benchmarks.removeSuite(suite);
     }
 
     public selectAllBenchmarks(): void {
-        this._suiteManager.selectAllBenchmarks();
+        this._benchmarks.selectAllBenchmarks();
     }
 
     public selectBenchmarksByName(...benchmarkNames: string[]): void {
-        this._suiteManager.selectBenchmarksByName(benchmarkNames);
+        this._benchmarks.selectBenchmarksByName(benchmarkNames);
     }
 
     public selectBenchmarks(...benchmarks: BenchmarkInstance[]): void {
-        this._suiteManager.selectBenchmarks(benchmarks);
+        this._benchmarks.selectBenchmarks(benchmarks);
     }
 
     public get measurementType(): MeasurementType {
@@ -209,7 +209,7 @@ export class BenchmarkRunner {
     }
 
     public start(): void {
-        this._process.start(this._suiteManager.suites);
+        this._process.start(this._benchmarks.suites);
     }
 
     public stop(): void {
@@ -217,7 +217,7 @@ export class BenchmarkRunner {
     }
 
     public run(callback: () => void): void {
-        this._process.run(this._suiteManager.suites, callback);
+        this._process.run(this._benchmarks.suites, callback);
     }
 
     public generateReport(): string {
@@ -226,26 +226,5 @@ export class BenchmarkRunner {
 
     public saveReportToFile(fileName: string): void {
         this._reportGenerator.saveReportToFile(fileName);
-    }
-
-    public getSystemInformation(): any {
-        return this._environmentState.systemInformation;
-    }
-
-    public get cpuBenchmark(): number {
-        return this.environmentState.cpuBenchmark;
-    }
-
-    public get videoBenchmark(): number {
-        return this.environmentState.videoBenchmark;
-    }
-
-    public get diskBenchmark(): number {
-        return this.environmentState.diskBenchmark;
-    }
-
-    public benchmarkEnvironment(cpu: boolean = true, disk: boolean = true, video: boolean = true, 
-        callback?: (err: any) => void): void {
-        this._environmentState.benchmarkEnvironment(cpu, disk, video, callback);
     }
 }

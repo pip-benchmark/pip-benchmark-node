@@ -1,9 +1,9 @@
 var async = require('async');
 
-import { BenchmarkSuite } from '../BenchmarkSuite';
+import { BenchmarkSuite } from '../../BenchmarkSuite';
 import { BenchmarkInstance } from './BenchmarkInstance';
-import { IExecutionContext } from '../IExecutionContext';
-import { Parameter } from '../Parameter';
+import { IExecutionContext } from '../../IExecutionContext';
+import { Parameter } from '../../Parameter';
 
 export class BenchmarkSuiteInstance {
     private _suite: BenchmarkSuite;

@@ -69,14 +69,14 @@ export class ConsoleRunner {
             async.series([
                 (callback) => {
                     // Benchmark the environment
-                    if (this._args.benchmarkEnvironment) {
-                        console.log("Benchmarking Environment (wait up to 2 mins)...");
-                        this._runner.benchmarkEnvironment(true, true, false, (err) => {
+                    if (this._args.measureEnvironment) {
+                        console.log("Measuring Environment (wait up to 2 mins)...");
+                        this._runner.environment.measure(true, true, false, (err) => {
                             let output = util.format(
                                 "CPU: %d, Video: %d, Disk: %d",
-                                (this._runner.cpuBenchmark || 0).toFixed(2),
-                                (this._runner.videoBenchmark || 0).toFixed(2),
-                                (this._runner.diskBenchmark || 0).toFixed(2)
+                                (this._runner.environment.cpuMeasurement || 0).toFixed(2),
+                                (this._runner.environment.videoMeasurement || 0).toFixed(2),
+                                (this._runner.environment.diskMeasurement || 0).toFixed(2)
                             );
                             console.log(output);
 
@@ -118,17 +118,17 @@ export class ConsoleRunner {
         console.log("Pip.Benchmark Console Runner. (c) Conceptual Vision Consulting LLC 2017");
         console.log();
         console.log("Command Line Parameters:");
-        console.log("-a <assembly>    - Assembly with benchmarks to be loaded. You may include multiple assemblies");
-        console.log("-p <param>=<value> - Name of benchmark to be executed. You may include multiple parameters");
+        console.log("-a <module>    - Module with benchmarks to be loaded. You may include multiple modules");
+        console.log("-p <param>=<value> - Set parameter value. You may include multiple parameters");
         console.log("-b <benchmark>   - Name of benchmark to be executed. You may include multiple benchmarks");
-        console.log("-c <config file> - File with configuration parameters to be loaded");
+        console.log("-c <config file> - File with parameters to be loaded");
         console.log("-r <report file> - File to save benchmarking report");
-        console.log("-d <seconds>     - Benchmarking time specified in seconds");
+        console.log("-d <seconds>     - Benchmarking duration in seconds");
         console.log("-h               - Display this help screen");
         console.log("-B               - Show all available benchmarks");
         console.log("-P               - Show all available parameters");
-        console.log("-e               - Benchmark environment");
-        console.log("-x [proportional|sequencial] - Execution type");
+        console.log("-e               - Measure environment");
+        console.log("-x [proportional|sequencial] - Execution type: Proportional or Sequencial");
         console.log("-m [peak|nominal] - Measurement type: Peak or Nominal");
         console.log("-n <rate>        - Nominal rate in transactions per second");
     }
@@ -136,7 +136,7 @@ export class ConsoleRunner {
     private printBenchmarks(): void {
         console.log("Pip.Benchmark Console Runner. (c) Conceptual Vision Consulting LLC 2017");
         console.log();
-        console.log("Loaded Benchmarks:");
+        console.log("Benchmarks:");
 
         let suites = this._runner.suiteManager.suites;
         _.each(suites, (suite) => {
@@ -149,7 +149,7 @@ export class ConsoleRunner {
     private printParameters(): void {
         console.log("Pip.Benchmark Console Runner. (c) Conceptual Vision Consulting LLC 2017");
         console.log();
-        console.log("Configuration Parameters:");
+        console.log("Parameters:");
 
         let parameters = this._runner.parameters.userDefined;
         for (let index = 0; index < parameters.length; index++) {

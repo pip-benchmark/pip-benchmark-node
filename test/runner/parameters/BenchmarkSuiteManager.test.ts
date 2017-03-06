@@ -1,8 +1,8 @@
 let assert = require('chai').assert;
 
-import { BenchmarkRunner } from '../../src/runner/BenchmarkRunner';
+import { BenchmarkRunner } from '../../../src/runner/BenchmarkRunner';
 
-suite('BenchmarkSuiteManager', ()=> {
+suite('BenchmarksManager', ()=> {
 
     test('loadSuites', () => {
         let runner = new BenchmarkRunner();

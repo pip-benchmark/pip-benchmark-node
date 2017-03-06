@@ -11,7 +11,7 @@ export declare class ReportGenerator {
     private padStringLeft(value, length, padSymbol);
     private padStringRight(value, length, padSymbol);
     private generateSingleResult();
-    private generateSystemInformation();
+    private generateSystemInfo();
     private generateSystemBenchmark();
     private generateParameters();
     saveReportToFile(fileName: string): void;

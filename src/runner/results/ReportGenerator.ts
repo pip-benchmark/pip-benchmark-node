@@ -29,7 +29,7 @@ export class ReportGenerator {
             output += this.generateSingleResult();
         }
         
-        output += this.generateSystemInformation();
+        output += this.generateSystemInfo();
         output += this.generateSystemBenchmark();
         output += this.generateParameters();
         return output;
@@ -225,12 +225,12 @@ export class ReportGenerator {
         return output;
     }
 
-    private generateSystemInformation(): string {
+    private generateSystemInfo(): string {
         let output = '';
         output += "System Information:";
         output += ReportGenerator.NewLine;
-        for (let prop in this._runner.environmentState.systemInformation) {
-            let value = this._runner.environmentState.systemInformation[prop];
+        for (let prop in this._runner.environment.systemInfo) {
+            let value = this._runner.environment.systemInfo[prop];
             output += util.format("  %s: %s", prop, value);
             output += ReportGenerator.NewLine;
         }
@@ -243,13 +243,13 @@ export class ReportGenerator {
         output += "System Benchmarking:";
         output += ReportGenerator.NewLine;
         output += util.format("  CPU Performance (MFLOP/s): %d",
-            this.formatNumber(this._runner.environmentState.cpuBenchmark));
+            this.formatNumber(this._runner.environment.cpuMeasurement));
         output += ReportGenerator.NewLine;
         output += util.format("  Video Performance (GOP/s): %d",
-            this.formatNumber(this._runner.environmentState.videoBenchmark));
+            this.formatNumber(this._runner.environment.videoMeasurement));
         output += ReportGenerator.NewLine;
         output += util.format("  Disk Performance (MB/s):   %d",
-            this.formatNumber(this._runner.environmentState.diskBenchmark));
+            this.formatNumber(this._runner.environment.diskMeasurement));
         output += ReportGenerator.NewLine;
         output += ReportGenerator.NewLine;
         return output;

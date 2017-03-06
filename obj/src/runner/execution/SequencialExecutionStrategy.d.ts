@@ -1,4 +1,4 @@
-import { BenchmarkInstance } from '../BenchmarkInstance';
+import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { BenchmarkResult } from '../BenchmarkResult';
 import { ExecutionStrategy } from './ExecutionStrategy';
 export declare class SequencialExecutionStrategy extends ExecutionStrategy {

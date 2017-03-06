@@ -1,8 +1,8 @@
 var _ = require('lodash');
 
 import { Parameter } from '../../Parameter';
-import { BenchmarkSuiteInstance } from '../BenchmarkSuiteInstance';
-import { BenchmarkInstance } from '../BenchmarkInstance';
+import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
+import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 import { MeasurementTypeParameter } from './MeasurementTypeParameter';
 import { NominalRateParameter } from './NominalRateParameter';
 import { ExecutionTypeParameter } from './ExecutionTypeParameter';

@@ -1,7 +1,7 @@
 var util = require('util');
 
 import { Parameter } from '../../Parameter';
-import { BenchmarkSuiteInstance } from '../BenchmarkSuiteInstance';
+import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
 
 export class BenchmarkSuiteParameter extends Parameter {
     private _originalParameter: Parameter;

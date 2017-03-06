@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
-import { BenchmarkInstance } from '../BenchmarkInstance';
-import { BenchmarkSuiteInstance } from '../BenchmarkSuiteInstance';
+import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
+import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
 import { MeasurementType } from '../MeasurementType';
 import { ExecutionType } from '../ExecutionType';
 import { ExecutionState } from '../ExecutionState';

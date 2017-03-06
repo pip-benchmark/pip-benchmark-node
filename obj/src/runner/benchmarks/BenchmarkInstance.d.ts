@@ -1,12 +1,12 @@
-import { IExecutionContext } from '../IExecutionContext';
-import { Benchmark } from '../Benchmark';
+import { IExecutionContext } from '../../IExecutionContext';
+import { Benchmark } from '../../Benchmark';
 export declare class BenchmarkInstance {
     private _suite;
     private _benchmark;
     private _selected;
     private _proportion;
-    private _startProportionRange;
-    private _endProportionRange;
+    private _startRange;
+    private _endRange;
     constructor(suite: any, benchmark: Benchmark);
     readonly suite: any;
     readonly benchmark: Benchmark;
@@ -16,9 +16,9 @@ export declare class BenchmarkInstance {
     selected: boolean;
     readonly passive: boolean;
     proportion: number;
-    startProportionRange: number;
-    endProportionRange: number;
-    withinProportionRange(proportion: number): boolean;
+    startRange: number;
+    endRange: number;
+    withinRange(proportion: number): boolean;
     setUp(context: IExecutionContext, callback: (err: any) => void): void;
     execute(callback: (err: any) => void): void;
     tearDown(callback: (err: any) => void): void;

@@ -1,19 +1,26 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require('lodash');
 var path = require('path');
-const BenchmarkSuite_1 = require("../BenchmarkSuite");
-const BenchmarkSuiteInstance_1 = require("./BenchmarkSuiteInstance");
-class BenchmarkSuiteManager {
-    constructor(runner) {
-        this._suites = [];
+
+import { BenchmarkSuite } from '../../BenchmarkSuite';
+import { Benchmark } from '../../Benchmark';
+import { BenchmarkSuiteInstance } from './BenchmarkSuiteInstance';
+import { BenchmarkInstance } from './BenchmarkInstance';
+
+export class BenchmarksManager {
+	private _runner: any;
+    private _suites: BenchmarkSuiteInstance[] = [];
+
+    public constructor(runner: any) {
         this._runner = runner;
     }
-    get suites() {
+ 
+    public get suites(): BenchmarkSuiteInstance[] {
         return this._suites;
     }
-    getSelectedBenchmarks() {
-        let benchmarks = [];
+
+    public getSelectedBenchmarks(): BenchmarkInstance[] {
+        let benchmarks: BenchmarkInstance[] = [];
+
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -23,9 +30,11 @@ class BenchmarkSuiteManager {
                 }
             }
         }
+
         return benchmarks;
     }
-    selectAllBenchmarks() {
+
+    public selectAllBenchmarks(): void {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -34,7 +43,8 @@ class BenchmarkSuiteManager {
             }
         }
     }
-    selectBenchmarksByName(benchmarkNames) {
+
+    public selectBenchmarksByName(benchmarkNames: string[]): void {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -47,7 +57,8 @@ class BenchmarkSuiteManager {
             }
         }
     }
-    selectBenchmarks(benchmarks) {
+
+    public selectBenchmarks(benchmarks: BenchmarkInstance[]): void {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -60,7 +71,8 @@ class BenchmarkSuiteManager {
             }
         }
     }
-    unselectAllBenchmarks() {
+
+    public unselectAllBenchmarks(): void {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -69,7 +81,8 @@ class BenchmarkSuiteManager {
             }
         }
     }
-    unselectBenchmarksByName(benchmarkNames) {
+
+    public unselectBenchmarksByName(benchmarkNames: string[]): void {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -82,7 +95,8 @@ class BenchmarkSuiteManager {
             }
         }
     }
-    unselectBenchmarks(benchmarks) {
+
+    public unselectBenchmarks(benchmarks: BenchmarkInstance[]): void {
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             for (let index2 = 0; index2 < suite.benchmarks.length; index2++) {
@@ -95,63 +109,76 @@ class BenchmarkSuiteManager {
             }
         }
     }
-    addSuiteFromClass(suiteClassName) {
-        if (suiteClassName == null || suiteClassName.length == 0)
+
+    public addSuiteFromClass(suiteClassName: string): void {
+        if (suiteClassName == null || suiteClassName.length == 0) 
             return;
+
         let moduleName = suiteClassName;
         suiteClassName = null;
+
         let pos = moduleName.indexOf(',');
         if (pos >= 0) {
             let moduleAndClassName = moduleName;
             moduleName = moduleAndClassName.substring(0, pos);
             suiteClassName = moduleAndClassName.substring(pos + 1);
         }
+
         if (moduleName.startsWith('.'))
             moduleName = path.resolve(moduleName);
+
         let suite = require(moduleName);
         if (suite == null)
             throw new Error('Module ' + moduleName + ' was not found');
+
         if (suiteClassName != null && suiteClassName.length > 0)
             suite = suite[suiteClassName];
+
         if (_.isFunction(suite)) {
             suite = new suite();
             this.addSuite(suite);
         }
     }
-    addSuite(suite) {
-        if (suite instanceof BenchmarkSuite_1.BenchmarkSuite)
-            suite = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
-        if (!(suite instanceof BenchmarkSuiteInstance_1.BenchmarkSuiteInstance))
+
+    public addSuite(suite: any): void {
+        if (suite instanceof BenchmarkSuite)
+            suite = new BenchmarkSuiteInstance(suite);
+        if (!(suite instanceof BenchmarkSuiteInstance))
             throw Error('Incorrect suite type');
+
         this._runner.process.stop();
         this._suites.push(suite);
         this._runner.parameters.addSuite(suite);
     }
-    loadSuitesFromModule(moduleName) {
+
+    public loadSuitesFromModule(moduleName: string): void {
         this._runner.process.stop();
+
         if (moduleName.startsWith('.'))
             moduleName = path.resolve(moduleName);
+
         let suites = require(moduleName);
         if (suites == null)
             throw new Error('Module ' + moduleName + ' was not found');
+
         for (let prop in suites) {
             let suite = suites[prop];
             if (_.isFunction(suite) && suite.name.endsWith('Suite')) {
                 try {
                     suite = new suite();
-                    if (suite instanceof BenchmarkSuite_1.BenchmarkSuite) {
-                        suite = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
+                    if (suite instanceof BenchmarkSuite) {
+                        suite = new BenchmarkSuiteInstance(suite);
                         this._suites.push(suite);
                         this._runner.parameters.addSuite(suite);
                     }
-                }
-                catch (ex) {
+                } catch (ex) {
                     // Ignore
                 }
             }
         }
     }
-    findSuite(suiteName) {
+
+    private findSuite(suiteName: string): BenchmarkSuiteInstance {
         suiteName = suiteName.toLowerCase();
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
@@ -160,31 +187,39 @@ class BenchmarkSuiteManager {
         }
         return null;
     }
-    removeSuiteByName(suiteName) {
+
+    public removeSuiteByName(suiteName: string): void {
         this._runner.process.stop();
         let suite = this.findSuite(suiteName);
         if (suite != null) {
             this._runner.parameters.removeSuite(suite);
-            this._suites = _.remove(this._suites, (s) => { return s == suite; });
+
+            this._suites = _.remove(this._suites, (s) => { return s == suite; })
         }
     }
-    removeSuite(suite) {
-        if (suite instanceof BenchmarkSuite_1.BenchmarkSuite)
-            suite = _.find(this._suites, (s) => { return s.suite == suite; });
-        if (!(suite instanceof BenchmarkSuiteInstance_1.BenchmarkSuiteInstance))
+
+    public removeSuite(suite: any): void {
+        if (suite instanceof BenchmarkSuite)
+            suite = _.find(this._suites, (s) => { return s.suite == suite });
+
+        if (!(suite instanceof BenchmarkSuiteInstance))
             throw new Error('Wrong suite type');
+
         this._runner.process.stop();
         this._runner.parameters.removeSuite(suite);
+
         this._suites = _.remove(this._suites, (s) => s == suite);
     }
-    removeAllSuites() {
+
+    public removeAllSuites(): void {
         this._runner.process.stop();
+
         for (let index = 0; index < this._suites.length; index++) {
             let suite = this._suites[index];
             this._runner.parameters.removeSuite(suite);
         }
+        
         this._suites = [];
     }
+
 }
-exports.BenchmarkSuiteManager = BenchmarkSuiteManager;
-//# sourceMappingURL=BenchmarkSuiteManager.js.map

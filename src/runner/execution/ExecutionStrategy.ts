@@ -1,8 +1,8 @@
 var _ = require('lodash');
 
 import { ExecutionState } from '../ExecutionState';
-import { BenchmarkInstance } from '../BenchmarkInstance';
-import { BenchmarkSuiteInstance } from '../BenchmarkSuiteInstance';
+import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
+import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
 import { BenchmarkResult } from '../BenchmarkResult';
 
 import { TransactionMeter } from './TransactionMeter';

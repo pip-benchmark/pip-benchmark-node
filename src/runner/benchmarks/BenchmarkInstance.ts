@@ -1,14 +1,14 @@
-import { IExecutionContext } from '../IExecutionContext';
-import { Benchmark } from '../Benchmark';
-import { PassiveBenchmark } from '../PassiveBenchmark';
+import { IExecutionContext } from '../../IExecutionContext';
+import { Benchmark } from '../../Benchmark';
+import { PassiveBenchmark } from '../../PassiveBenchmark';
 
 export class BenchmarkInstance {
     private _suite: any;
     private _benchmark: Benchmark;
     private _selected: boolean = false;
     private _proportion: number = 100;
-    private _startProportionRange: number;
-    private _endProportionRange: number;
+    private _startRange: number;
+    private _endRange: number;
 
     public constructor(suite: any, benchmark: Benchmark) {
         this._suite = suite;
@@ -55,25 +55,25 @@ export class BenchmarkInstance {
         this._proportion = Math.max(0, Math.min(10000, value));
     }
 
-    public get startProportionRange(): number {
-        return this._startProportionRange;
+    public get startRange(): number {
+        return this._startRange;
     }
     
-    public set startProportionRange(value: number) {
-        this._startProportionRange = value;
+    public set startRange(value: number) {
+        this._startRange = value;
     }
     
-    public get endProportionRange(): number {
-        return this._endProportionRange;
+    public get endRange(): number {
+        return this._endRange;
     }
     
-    public set endProportionRange(value: number) {
-        this._endProportionRange = value;
+    public set endRange(value: number) {
+        this._endRange = value;
     }
 
-    public withinProportionRange(proportion: number): boolean {
-    	return proportion >= this._startProportionRange 
-            && proportion < this._endProportionRange;
+    public withinRange(proportion: number): boolean {
+    	return proportion >= this._startRange 
+            && proportion < this._endRange;
     }
     
     public setUp(context: IExecutionContext, callback: (err: any) => void): void {

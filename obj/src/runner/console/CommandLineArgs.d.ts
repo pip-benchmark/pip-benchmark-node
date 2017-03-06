@@ -13,7 +13,7 @@ export declare class CommandLineArgs {
     showHelp: boolean;
     showBenchmarks: boolean;
     showParameters: boolean;
-    benchmarkEnvironment: boolean;
+    measureEnvironment: boolean;
     measurementType: MeasurementType;
     executionType: ExecutionType;
     nominalRate: number;

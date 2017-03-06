@@ -2,8 +2,8 @@ var async = require('async');
 
 import { MeasurementType } from '../MeasurementType';
 import { ExecutionState } from '../ExecutionState';
-import { BenchmarkInstance } from '../BenchmarkInstance';
-import { BenchmarkSuiteInstance } from '../BenchmarkSuiteInstance';
+import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
+import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
 import { BenchmarkResult } from '../BenchmarkResult';
 
 import { ExecutionContext } from './ExecutionContext';
@@ -97,12 +97,12 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
             let benchmark = this.benchmarks[index];
 
             if (benchmark.passive) {
-                benchmark.startProportionRange = 0;
-                benchmark.endProportionRange = 0;
+                benchmark.startRange = 0;
+                benchmark.endRange = 0;
             } else {
                 let normalizedProportion = benchmark.proportion / totalProportion;
-                benchmark.startProportionRange = startProportionRange;
-                benchmark.endProportionRange = startProportionRange + normalizedProportion;
+                benchmark.startRange = startProportionRange;
+                benchmark.endRange = startProportionRange + normalizedProportion;
                 startProportionRange += normalizedProportion;
             }
         }
@@ -114,7 +114,7 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
         let proportion = Math.random();
         for (let index = 0; index < this._benchmarkCount; index++) {
             let thisBenchmark = this.benchmarks[index];
-            if (thisBenchmark.withinProportionRange(proportion))
+            if (thisBenchmark.withinRange(proportion))
                 return thisBenchmark;
         }
 

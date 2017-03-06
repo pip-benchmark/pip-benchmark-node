@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var async = require('async');
 const BenchmarkInstance_1 = require("./BenchmarkInstance");
-const Parameter_1 = require("../Parameter");
+const Parameter_1 = require("../../Parameter");
 class BenchmarkSuiteInstance {
     constructor(suite) {
         this._benchmarks = [];

@@ -1,6 +1,6 @@
 import { BenchmarkSuiteInstance } from './BenchmarkSuiteInstance';
 import { BenchmarkInstance } from './BenchmarkInstance';
-export declare class BenchmarkSuiteManager {
+export declare class BenchmarksManager {
     private _runner;
     private _suites;
     constructor(runner: any);

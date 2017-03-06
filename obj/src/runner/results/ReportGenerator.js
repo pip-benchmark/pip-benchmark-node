@@ -21,7 +21,7 @@ class ReportGenerator {
         else {
             output += this.generateSingleResult();
         }
-        output += this.generateSystemInformation();
+        output += this.generateSystemInfo();
         output += this.generateSystemBenchmark();
         output += this.generateParameters();
         return output;
@@ -175,12 +175,12 @@ class ReportGenerator {
         output += ReportGenerator.NewLine;
         return output;
     }
-    generateSystemInformation() {
+    generateSystemInfo() {
         let output = '';
         output += "System Information:";
         output += ReportGenerator.NewLine;
-        for (let prop in this._runner.environmentState.systemInformation) {
-            let value = this._runner.environmentState.systemInformation[prop];
+        for (let prop in this._runner.environment.systemInfo) {
+            let value = this._runner.environment.systemInfo[prop];
             output += util.format("  %s: %s", prop, value);
             output += ReportGenerator.NewLine;
         }
@@ -191,11 +191,11 @@ class ReportGenerator {
         let output = '';
         output += "System Benchmarking:";
         output += ReportGenerator.NewLine;
-        output += util.format("  CPU Performance (MFLOP/s): %d", this.formatNumber(this._runner.environmentState.cpuBenchmark));
+        output += util.format("  CPU Performance (MFLOP/s): %d", this.formatNumber(this._runner.environment.cpuMeasurement));
         output += ReportGenerator.NewLine;
-        output += util.format("  Video Performance (GOP/s): %d", this.formatNumber(this._runner.environmentState.videoBenchmark));
+        output += util.format("  Video Performance (GOP/s): %d", this.formatNumber(this._runner.environment.videoMeasurement));
         output += ReportGenerator.NewLine;
-        output += util.format("  Disk Performance (MB/s):   %d", this.formatNumber(this._runner.environmentState.diskBenchmark));
+        output += util.format("  Disk Performance (MB/s):   %d", this.formatNumber(this._runner.environment.diskMeasurement));
         output += ReportGenerator.NewLine;
         output += ReportGenerator.NewLine;
         return output;

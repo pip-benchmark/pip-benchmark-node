@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const PassiveBenchmark_1 = require("../PassiveBenchmark");
+const PassiveBenchmark_1 = require("../../PassiveBenchmark");
 class BenchmarkInstance {
     constructor(suite, benchmark) {
         this._selected = false;
@@ -38,21 +38,21 @@ class BenchmarkInstance {
     set proportion(value) {
         this._proportion = Math.max(0, Math.min(10000, value));
     }
-    get startProportionRange() {
-        return this._startProportionRange;
+    get startRange() {
+        return this._startRange;
     }
-    set startProportionRange(value) {
-        this._startProportionRange = value;
+    set startRange(value) {
+        this._startRange = value;
     }
-    get endProportionRange() {
-        return this._endProportionRange;
+    get endRange() {
+        return this._endRange;
     }
-    set endProportionRange(value) {
-        this._endProportionRange = value;
+    set endRange(value) {
+        this._endRange = value;
     }
-    withinProportionRange(proportion) {
-        return proportion >= this._startProportionRange
-            && proportion < this._endProportionRange;
+    withinRange(proportion) {
+        return proportion >= this._startRange
+            && proportion < this._endRange;
     }
     setUp(context, callback) {
         this._benchmark.context = context;

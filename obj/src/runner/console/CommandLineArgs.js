@@ -14,7 +14,7 @@ class CommandLineArgs {
         this.showHelp = false;
         this.showBenchmarks = false;
         this.showParameters = false;
-        this.benchmarkEnvironment = false;
+        this.measureEnvironment = false;
         this.measurementType = MeasurementType_1.MeasurementType.Peak;
         this.executionType = ExecutionType_1.ExecutionType.Proportional;
         this.nominalRate = 1;
@@ -74,7 +74,7 @@ class CommandLineArgs {
                 this.showParameters = true;
             }
             else if (arg == "-e" || arg == "--environment") {
-                this.benchmarkEnvironment = true;
+                this.measureEnvironment = true;
             }
         }
     }

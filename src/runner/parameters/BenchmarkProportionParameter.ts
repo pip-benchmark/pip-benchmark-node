@@ -2,7 +2,7 @@ var util = require('util');
 
 import { Parameter } from '../../Parameter';
 import { SimpleTypeConverter } from '../../SimpleTypeConverter';
-import { BenchmarkInstance } from '../BenchmarkInstance';
+import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 
 export class BenchmarkProportionParameter extends Parameter {
     private _benchmark: BenchmarkInstance;

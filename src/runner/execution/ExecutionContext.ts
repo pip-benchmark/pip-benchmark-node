@@ -1,5 +1,5 @@
 import { IExecutionContext } from '../../IExecutionContext';
-import { BenchmarkSuiteInstance } from '../BenchmarkSuiteInstance';
+import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
 import { ExecutionStrategy } from './ExecutionStrategy';
 
 export class ExecutionContext implements IExecutionContext {

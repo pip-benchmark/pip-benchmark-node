@@ -50,7 +50,7 @@ export class CommandLineArgs {
             } else if (arg == "-P" || arg == "--show-params") {
                 this.showParameters = true;
             } else if (arg == "-e" || arg == "--environment") {
-                this.benchmarkEnvironment = true;
+                this.measureEnvironment = true;
             }
         }
     }
@@ -65,7 +65,7 @@ export class CommandLineArgs {
     public showHelp: boolean = false;
     public showBenchmarks: boolean = false;
     public showParameters: boolean = false;
-    public benchmarkEnvironment: boolean = false;
+    public measureEnvironment: boolean = false;
     public measurementType: MeasurementType = MeasurementType.Peak;
     public executionType: ExecutionType = ExecutionType.Proportional;
     public nominalRate: number = 1;

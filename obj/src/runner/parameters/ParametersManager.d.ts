@@ -1,5 +1,5 @@
 import { Parameter } from '../../Parameter';
-import { BenchmarkSuiteInstance } from '../BenchmarkSuiteInstance';
+import { BenchmarkSuiteInstance } from '../benchmarks/BenchmarkSuiteInstance';
 import { ParametersCallback } from './ParametersCallback';
 export declare class ParametersManager {
     private _runner;
