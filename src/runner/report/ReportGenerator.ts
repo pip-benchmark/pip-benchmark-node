@@ -21,7 +21,7 @@ export class ReportGenerator {
     public generateReport(): string {
         let output = '';
         output += this.generateHeader();
-        output += this.generateTestList();
+        output += this.generateBenchmarkList();
 
         if (this._runner.process.results.length > 1) {
             output += this.generateMultipleResults();
@@ -52,7 +52,7 @@ export class ReportGenerator {
         return output;
     }
 
-    private generateTestList(): string {
+    private generateBenchmarkList(): string {
         let output = '';
         output += "Executed Benchmarks:";
         output += ReportGenerator.NewLine;
@@ -229,11 +229,11 @@ export class ReportGenerator {
         let output = '';
         output += "System Information:";
         output += ReportGenerator.NewLine;
-        // for (let prop in this._runner.environmentState.systemInfo) {
-        //     let value = this._runner.environmentState.systemInfo[prop];
-        //     output += util.format("  %s: %s", prop, value);
-        //     output += ReportGenerator.NewLine;
-        // }
+        for (let prop in this._runner.environmentState.systemInformation) {
+            let value = this._runner.environmentState.systemInformation[prop];
+            output += util.format("  %s: %s", prop, value);
+            output += ReportGenerator.NewLine;
+        }
         output += ReportGenerator.NewLine;
         return output;
     }
@@ -242,15 +242,15 @@ export class ReportGenerator {
         let output = '';
         output += "System Benchmarking:";
         output += ReportGenerator.NewLine;
-        // output += util.format("  CPU Performance (MFLOP/s): %d",
-        //     this.runner().environmentState.cpuBenchmark.toFixed(2));
-        // output += ReportGenerator.NewLine;
-        // output += util.format("  Video Performance (GOP/s): %d",
-        //     this._runner.environmentState.videoBenchmark.toFixed(2));
-        // output += ReportGenerator.NewLine;
-        // output += util.format("  Disk Performance (MB/s):   %d",
-        //     this._runner.environmentState.diskBenchmark.toFixed(2));
-        // output += ReportGenerator.NewLine;
+        output += util.format("  CPU Performance (MFLOP/s): %d",
+            this.formatNumber(this._runner.environmentState.cpuBenchmark));
+        output += ReportGenerator.NewLine;
+        output += util.format("  Video Performance (GOP/s): %d",
+            this.formatNumber(this._runner.environmentState.videoBenchmark));
+        output += ReportGenerator.NewLine;
+        output += util.format("  Disk Performance (MB/s):   %d",
+            this.formatNumber(this._runner.environmentState.diskBenchmark));
+        output += ReportGenerator.NewLine;
         output += ReportGenerator.NewLine;
         return output;
     }
@@ -273,6 +273,7 @@ export class ReportGenerator {
     }
 
     private formatNumber(value: number): string {
+        value = value || 0;
         return value.toFixed(2);
     }
 
@@ -293,9 +294,9 @@ export class ReportGenerator {
     }
 
     private formatTimeSpan(ticks: number): string {
-        let millis = ticks % 1000;
-        let seconds = (ticks / 1000) % 60;
-        let minutes = (ticks / 1000 / 60) % 60;
+        let millis = (ticks % 1000).toFixed(0);
+        let seconds = ((ticks / 1000) % 60).toFixed(0);
+        let minutes = ((ticks / 1000 / 60) % 60).toFixed(0);
         let hours = (ticks / 1000 / 60 / 60).toFixed(0);
         return util.format("%d:%d:%d.%d", hours, minutes, seconds, millis);
     }

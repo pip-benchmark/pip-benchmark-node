@@ -14,13 +14,14 @@ import { BenchmarkSuiteManager } from './BenchmarkSuiteManager';
 import { ConfigurationManager } from './config/ConfigurationManager';
 import { BenchmarkProcess } from './execution/BenchmarkProcess';
 import { ReportGenerator } from './report/ReportGenerator';
+import { EnvironmentState } from './environment/EnvironmentState';
 
 export class BenchmarkRunner {
     private _suiteManager: BenchmarkSuiteManager;
     private _configurationManager: ConfigurationManager;
     private _process: BenchmarkProcess;
     private _reportGenerator: ReportGenerator;
-    // private _environmentState: EnvironmentState;
+    private _environmentState: EnvironmentState;
 
     private _resultUpdatedListeners: ResultCallback[] = [];
     private _configurationUpdatedListeners: ConfigurationCallback[] = [];
@@ -32,7 +33,7 @@ export class BenchmarkRunner {
         this._process = new BenchmarkProcess(this);
         this._configurationManager = new ConfigurationManager(this);
         this._reportGenerator = new ReportGenerator(this);
-        // this._environmentState = new EnvironmentState(this);
+        this._environmentState = new EnvironmentState(this);
     }
 
     public get configurationManager(): ConfigurationManager {
@@ -51,9 +52,9 @@ export class BenchmarkRunner {
         return this._reportGenerator;
     }
 
-    // public get environmentState(): EnvironmentState {
-    //     return this._environmentState;
-    // }
+    public get environmentState(): EnvironmentState {
+        return this._environmentState;
+    }
 
     public get suiteInstances(): BenchmarkSuiteInstance[] {
         return this._suiteManager.suites;
@@ -271,27 +272,24 @@ export class BenchmarkRunner {
         this._reportGenerator.saveReportToFile(fileName);
     }
 
-    // public Map<String, String> getSystemInformation() {
-    //     return getEnvironmentState().getSystemInformation();
-    // }
+    public getSystemInformation(): any {
+        return this._environmentState.systemInformation;
+    }
 
-    // public double getCpuBenchmark() {
-    //     return getEnvironmentState().getCpuBenchmark();
-    // }
+    public get cpuBenchmark(): number {
+        return this.environmentState.cpuBenchmark;
+    }
 
-    // public double getVideoBenchmark() {
-    //     return getEnvironmentState().getVideoBenchmark();
-    // }
+    public get videoBenchmark(): number {
+        return this.environmentState.videoBenchmark;
+    }
 
-    // public double getDiskBenchmark() {
-    //     return getEnvironmentState().getDiskBenchmark();
-    // }
+    public get diskBenchmark(): number {
+        return this.environmentState.diskBenchmark;
+    }
 
-    // public void benchmarkEnvironment(boolean cpu, boolean disk, boolean video) {
-    //     getEnvironmentState().benchmarkEnvironment(cpu, disk, video);
-    // }
-
-    // public void benchmarkEnvironment() {
-    //     getEnvironmentState().benchmarkEnvironment(true, true, true);
-    // }
+    public benchmarkEnvironment(cpu: boolean = true, disk: boolean = true, video: boolean = true, 
+        callback?: (err: any) => void): void {
+        this._environmentState.benchmarkEnvironment(cpu, disk, video, callback);
+    }
 }

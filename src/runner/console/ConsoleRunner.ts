@@ -1,7 +1,8 @@
 var _ = require('lodash');
+var async = require('async');
+var util = require('util');
 
 import { BenchmarkRunner } from '../BenchmarkRunner';
-
 import { CommandLineArgs } from './CommandLineArgs';
 import { ConsoleEventPrinter } from './ConsoleEventPrinter';
 
@@ -64,31 +65,48 @@ export class ConsoleRunner {
                 this.printBenchmarks();
                 return;
             }
-                                    
-            // // Benchmark the environment
-            // if (args.getBenchmarkEnvironment()) {
-            //     console.log("Benchmarking Environment (wait up to 2 mins)...");
-            //     runner.benchmarkEnvironment();
-            //     System.out.printf("CPU: %.2f, Video: %.2f, Disk: %.2f\n",
-            //         runner.getCpuBenchmark(), runner.getVideoBenchmark(), runner.getDiskBenchmark());
-            // }
+            
+            async.series([
+                (callback) => {
+                    // Benchmark the environment
+                    if (this._args.benchmarkEnvironment) {
+                        console.log("Benchmarking Environment (wait up to 2 mins)...");
+                        this._runner.benchmarkEnvironment(true, true, false, (err) => {
+                            let output = util.format(
+                                "CPU: %d, Video: %d, Disk: %d",
+                                (this._runner.cpuBenchmark || 0).toFixed(2),
+                                (this._runner.videoBenchmark || 0).toFixed(2),
+                                (this._runner.diskBenchmark || 0).toFixed(2)
+                            );
+                            console.log(output);
 
-            // Configure benchmarking
-            this._runner.measurementType = this._args.measurementType;
-            this._runner.nominalRate = this._args.nominalRate;
-            this._runner.executionType = this._args.executionType;
-            this._runner.duration = this._args.duration;
+                            callback(err);
+                        });
+                    } else callback();
+                },
+                (callback) => {
+                    // Configure benchmarking
+                    this._runner.measurementType = this._args.measurementType;
+                    this._runner.nominalRate = this._args.nominalRate;
+                    this._runner.executionType = this._args.executionType;
+                    this._runner.duration = this._args.duration;
 
-            // Perform benchmarking
-            this._runner.run(() => {
-                if (this._runner.results.length > 0)
-                    console.log(this._runner.results[0].performanceMeasurement.averageValue.toFixed(2));
+                    // Perform benchmarking
+                    this._runner.run(() => {
+                        if (this._runner.results.length > 0)
+                            console.log(this._runner.results[0].performanceMeasurement.averageValue.toFixed(2));
 
-                // Generate report
-                if (this._args.reportFile != null)
-                    this._runner.saveReportToFile(this._args.reportFile);
+                        // Generate report
+                        if (this._args.reportFile != null)
+                            this._runner.saveReportToFile(this._args.reportFile);
 
-                console.log(this._runner.generateReport());
+                        console.log(this._runner.generateReport());
+
+                        callback();
+                    });
+                }
+            ], (err) => {
+                // Do nothing
             });
         }
         catch (ex) {

@@ -5,7 +5,7 @@ import { Properties } from './Properties';
 export class BenchmarkingProperties extends Properties {
 
     private getFilePath(): string {
-        return "BenchmarkSettings.properties";
+        return "BenchmarkEnvironment.properties";
     }
 
     public load(): void {

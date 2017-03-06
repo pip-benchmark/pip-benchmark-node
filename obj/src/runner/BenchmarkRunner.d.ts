@@ -12,11 +12,13 @@ import { BenchmarkSuiteManager } from './BenchmarkSuiteManager';
 import { ConfigurationManager } from './config/ConfigurationManager';
 import { BenchmarkProcess } from './execution/BenchmarkProcess';
 import { ReportGenerator } from './report/ReportGenerator';
+import { EnvironmentState } from './environment/EnvironmentState';
 export declare class BenchmarkRunner {
     private _suiteManager;
     private _configurationManager;
     private _process;
     private _reportGenerator;
+    private _environmentState;
     private _resultUpdatedListeners;
     private _configurationUpdatedListeners;
     private _messageSentListeners;
@@ -26,6 +28,7 @@ export declare class BenchmarkRunner {
     readonly process: BenchmarkProcess;
     readonly suiteManager: BenchmarkSuiteManager;
     readonly reportGenerator: ReportGenerator;
+    readonly environmentState: EnvironmentState;
     readonly suiteInstances: BenchmarkSuiteInstance[];
     addSuiteFromClass(className: string): void;
     addSuite(suite: any): void;
@@ -65,4 +68,9 @@ export declare class BenchmarkRunner {
     run(callback: () => void): void;
     generateReport(): string;
     saveReportToFile(fileName: string): void;
+    getSystemInformation(): any;
+    readonly cpuBenchmark: number;
+    readonly videoBenchmark: number;
+    readonly diskBenchmark: number;
+    benchmarkEnvironment(cpu?: boolean, disk?: boolean, video?: boolean, callback?: (err: any) => void): void;
 }

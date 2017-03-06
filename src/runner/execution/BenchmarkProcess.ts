@@ -112,7 +112,10 @@ export class BenchmarkProcess {
 
         // Initialize parameters and start 
         this._results = [];
-        this._strategy.start(callback);
+        this._strategy.start(() => {
+            this.stop();
+            if (callback) callback();
+        });
     }
 
     public stop(): void {

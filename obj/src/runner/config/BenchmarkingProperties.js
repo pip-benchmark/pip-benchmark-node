@@ -4,7 +4,7 @@ var path = require('path');
 const Properties_1 = require("./Properties");
 class BenchmarkingProperties extends Properties_1.Properties {
     getFilePath() {
-        return "BenchmarkSettings.properties";
+        return "BenchmarkEnvironment.properties";
     }
     load() {
         if (path.existSync(this.getFilePath())) {

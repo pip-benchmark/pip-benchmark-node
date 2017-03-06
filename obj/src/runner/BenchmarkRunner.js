@@ -4,9 +4,9 @@ const BenchmarkSuiteManager_1 = require("./BenchmarkSuiteManager");
 const ConfigurationManager_1 = require("./config/ConfigurationManager");
 const BenchmarkProcess_1 = require("./execution/BenchmarkProcess");
 const ReportGenerator_1 = require("./report/ReportGenerator");
+const EnvironmentState_1 = require("./environment/EnvironmentState");
 class BenchmarkRunner {
     constructor() {
-        // private _environmentState: EnvironmentState;
         this._resultUpdatedListeners = [];
         this._configurationUpdatedListeners = [];
         this._messageSentListeners = [];
@@ -15,7 +15,7 @@ class BenchmarkRunner {
         this._process = new BenchmarkProcess_1.BenchmarkProcess(this);
         this._configurationManager = new ConfigurationManager_1.ConfigurationManager(this);
         this._reportGenerator = new ReportGenerator_1.ReportGenerator(this);
-        // this._environmentState = new EnvironmentState(this);
+        this._environmentState = new EnvironmentState_1.EnvironmentState(this);
     }
     get configurationManager() {
         return this._configurationManager;
@@ -29,9 +29,9 @@ class BenchmarkRunner {
     get reportGenerator() {
         return this._reportGenerator;
     }
-    // public get environmentState(): EnvironmentState {
-    //     return this._environmentState;
-    // }
+    get environmentState() {
+        return this._environmentState;
+    }
     get suiteInstances() {
         return this._suiteManager.suites;
     }
@@ -207,6 +207,21 @@ class BenchmarkRunner {
     }
     saveReportToFile(fileName) {
         this._reportGenerator.saveReportToFile(fileName);
+    }
+    getSystemInformation() {
+        return this._environmentState.systemInformation;
+    }
+    get cpuBenchmark() {
+        return this.environmentState.cpuBenchmark;
+    }
+    get videoBenchmark() {
+        return this.environmentState.videoBenchmark;
+    }
+    get diskBenchmark() {
+        return this.environmentState.diskBenchmark;
+    }
+    benchmarkEnvironment(cpu = true, disk = true, video = true, callback) {
+        this._environmentState.benchmarkEnvironment(cpu, disk, video, callback);
     }
 }
 exports.BenchmarkRunner = BenchmarkRunner;

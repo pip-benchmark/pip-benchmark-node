@@ -6,7 +6,7 @@ export declare class ReportGenerator {
     readonly runner: any;
     generateReport(): string;
     private generateHeader();
-    private generateTestList();
+    private generateBenchmarkList();
     private generateMultipleResults();
     private padStringLeft(value, length, padSymbol);
     private padStringRight(value, length, padSymbol);

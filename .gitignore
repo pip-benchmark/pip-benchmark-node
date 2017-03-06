@@ -6,3 +6,4 @@
 /data/test_write.properties
 /DiskBenchmark-*.dat
 /BenchmarkReport.txt
+/BenchmarkEnvironment.properties

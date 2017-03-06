@@ -81,7 +81,11 @@ class BenchmarkProcess {
             this._strategy = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this, selectedBenchmarks);
         // Initialize parameters and start 
         this._results = [];
-        this._strategy.start(callback);
+        this._strategy.start(() => {
+            this.stop();
+            if (callback)
+                callback();
+        });
     }
     stop() {
         if (this._strategy != null) {
