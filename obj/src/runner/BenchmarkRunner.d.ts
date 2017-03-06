@@ -11,10 +11,12 @@ import { BenchmarkResult } from './BenchmarkResult';
 import { BenchmarkSuiteManager } from './BenchmarkSuiteManager';
 import { ConfigurationManager } from './config/ConfigurationManager';
 import { BenchmarkProcess } from './execution/BenchmarkProcess';
+import { ReportGenerator } from './report/ReportGenerator';
 export declare class BenchmarkRunner {
     private _suiteManager;
     private _configurationManager;
     private _process;
+    private _reportGenerator;
     private _resultUpdatedListeners;
     private _configurationUpdatedListeners;
     private _messageSentListeners;
@@ -23,6 +25,7 @@ export declare class BenchmarkRunner {
     readonly configurationManager: ConfigurationManager;
     readonly process: BenchmarkProcess;
     readonly suiteManager: BenchmarkSuiteManager;
+    readonly reportGenerator: ReportGenerator;
     readonly suiteInstances: BenchmarkSuiteInstance[];
     addSuiteFromClass(className: string): void;
     addSuite(suite: any): void;
@@ -59,4 +62,7 @@ export declare class BenchmarkRunner {
     readonly running: boolean;
     start(): void;
     stop(): void;
+    run(callback: () => void): void;
+    generateReport(): string;
+    saveReportToFile(fileName: string): void;
 }

@@ -13,7 +13,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
         this._ticksPerTransaction = 0;
         this._embedded = !!embedded;
     }
-    start() {
+    start(callback) {
         this._running = true;
         // Initialize and start
         async.each(this.suites, (suite, callback) => {
@@ -27,11 +27,10 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
             }
             if (!this._embedded)
                 this.notifyResultUpdate(ExecutionState_1.ExecutionState.Starting);
-            //setTimeout(() => { this.execute }, 0);
-            this.execute();
+            this.execute(callback);
         });
     }
-    stop() {
+    stop(callback) {
         // Interrupt any wait
         if (this._timeout != null) {
             clearTimeout(this._timeout);
@@ -45,6 +44,9 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
             // Deinitialize tests
             async.each(this.suites, (suite, callback) => {
                 suite.tearDown(callback);
+            }, (err) => {
+                if (callback != null)
+                    callback();
             });
         }
     }
@@ -112,7 +114,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
                     if (err == null)
                         this.reportProgress(1, now);
                     // Introduce delay to keep nominal rate
-                    if (err != null && this.process.measurementType == MeasurementType_1.MeasurementType.Nominal) {
+                    if (err == null && this.process.measurementType == MeasurementType_1.MeasurementType.Nominal) {
                         let delay = this._ticksPerTransaction - (now - this._lastExecutedTime);
                         this._lastExecutedTime = now;
                         if (delay > 0)
@@ -121,6 +123,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
                             callback(err);
                     }
                     else {
+                        this._lastExecutedTime = now;
                         callback(err);
                     }
                 });
@@ -137,7 +140,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
             }
         }
     }
-    execute() {
+    execute(callback) {
         this.calculateProportionRanges();
         this.reset();
         if (this.process.measurementType == MeasurementType_1.MeasurementType.Nominal)
@@ -156,7 +159,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
             let called = 0;
             this.executeBenchmark(benchmark, (err) => { process.nextTick(callback, err); });
         }, (err) => {
-            this.stop();
+            this.stop(callback);
         });
     }
 }

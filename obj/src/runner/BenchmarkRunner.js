@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const BenchmarkSuiteManager_1 = require("./BenchmarkSuiteManager");
 const ConfigurationManager_1 = require("./config/ConfigurationManager");
 const BenchmarkProcess_1 = require("./execution/BenchmarkProcess");
+const ReportGenerator_1 = require("./report/ReportGenerator");
 class BenchmarkRunner {
     constructor() {
-        // private _reportGenerator: ReportGenerator;
         // private _environmentState: EnvironmentState;
         this._resultUpdatedListeners = [];
         this._configurationUpdatedListeners = [];
@@ -14,7 +14,7 @@ class BenchmarkRunner {
         this._suiteManager = new BenchmarkSuiteManager_1.BenchmarkSuiteManager(this);
         this._process = new BenchmarkProcess_1.BenchmarkProcess(this);
         this._configurationManager = new ConfigurationManager_1.ConfigurationManager(this);
-        // this._reportGenerator = new ReportGenerator(this);
+        this._reportGenerator = new ReportGenerator_1.ReportGenerator(this);
         // this._environmentState = new EnvironmentState(this);
     }
     get configurationManager() {
@@ -26,9 +26,9 @@ class BenchmarkRunner {
     get suiteManager() {
         return this._suiteManager;
     }
-    // public get reportGenerator(): ReportGenerator {
-    //     return this._reportGenerator;
-    // }
+    get reportGenerator() {
+        return this._reportGenerator;
+    }
     // public get environmentState(): EnvironmentState {
     //     return this._environmentState;
     // }
@@ -198,6 +198,15 @@ class BenchmarkRunner {
     }
     stop() {
         this._process.stop();
+    }
+    run(callback) {
+        this._process.run(this._suiteManager.suites, callback);
+    }
+    generateReport() {
+        return this._reportGenerator.generateReport();
+    }
+    saveReportToFile(fileName) {
+        this._reportGenerator.saveReportToFile(fileName);
     }
 }
 exports.BenchmarkRunner = BenchmarkRunner;

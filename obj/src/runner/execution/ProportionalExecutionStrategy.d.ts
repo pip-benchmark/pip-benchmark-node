@@ -11,12 +11,12 @@ export declare class ProportionalExecutionStrategy extends ExecutionStrategy {
     private _onlyBenchmark;
     private _timeout;
     constructor(process: any, benchmarks: BenchmarkInstance[], embedded?: boolean);
-    start(): void;
-    stop(): void;
+    start(callback?: () => void): void;
+    stop(callback?: () => void): void;
     getResults(): BenchmarkResult[];
     private calculateProportionRanges();
     private chooseBenchmarkProportionally();
     private executeDelay(delay, callback);
     protected executeBenchmark(benchmark: BenchmarkInstance, callback: (err: any) => void): void;
-    private execute();
+    private execute(callback?);
 }

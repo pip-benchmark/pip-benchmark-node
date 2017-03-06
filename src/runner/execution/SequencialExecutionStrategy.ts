@@ -20,7 +20,7 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
         super(process, benchmarks);
     }
 
-    public start(): void {
+    public start(callback?: () => void): void {
         if (this.process().duration() <= 0)
             throw new Error("Duration was not set");
 
@@ -28,10 +28,10 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
 
         // Start control thread
         //setTimeout(() => { this.execute(); }, 0);
-        this.execute();
+        this.execute(callback);
     }
 
-    public stop(): void {
+    public stop(callback?: () => void): void {
         if (this._timeout != null) {
             clearTimeout(this._timeout);
             this._timeout = null;
@@ -45,13 +45,15 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
 
             this.notifyResultUpdate(ExecutionState.Completed);
         }
+
+        if (callback) callback();
     }
 
     public getResults(): BenchmarkResult[] {
         return this._results;
     }
 
-    private execute() {
+    private execute(callback?: () => void) {
         async.eachSeries(
             this.benchmarks,
             (benchmark, callback) => {
@@ -72,16 +74,17 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
                         if (results.length > 0)
                             this._results.push(results[0]);
 
-                        this._current.stop();
-                        this._current = null;
-                        
-                        callback();
+                        this._current.stop(() => {
+                            this._current = null;
+                            
+                            callback();
+                        });
                     }, 
                     this.process.delay * 1000
                 );
             },
             (err) => {
-                this.stop();
+                this.stop(callback);
             }
         )
     }

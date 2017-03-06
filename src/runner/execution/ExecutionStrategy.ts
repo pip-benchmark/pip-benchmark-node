@@ -61,8 +61,8 @@ export abstract class ExecutionStrategy {
         return this._currentResult;
     }
 
-    public abstract start(): void;
-    public abstract stop(): void;
+    public abstract start(callback?: () => void): void;
+    public abstract stop(callback?: () => void): void;
     public abstract getResults(): BenchmarkResult[];
     
     protected reset(): void {

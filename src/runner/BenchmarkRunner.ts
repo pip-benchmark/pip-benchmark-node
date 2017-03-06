@@ -13,12 +13,13 @@ import { BenchmarkResult } from './BenchmarkResult';
 import { BenchmarkSuiteManager } from './BenchmarkSuiteManager';
 import { ConfigurationManager } from './config/ConfigurationManager';
 import { BenchmarkProcess } from './execution/BenchmarkProcess';
+import { ReportGenerator } from './report/ReportGenerator';
 
 export class BenchmarkRunner {
     private _suiteManager: BenchmarkSuiteManager;
     private _configurationManager: ConfigurationManager;
     private _process: BenchmarkProcess;
-    // private _reportGenerator: ReportGenerator;
+    private _reportGenerator: ReportGenerator;
     // private _environmentState: EnvironmentState;
 
     private _resultUpdatedListeners: ResultCallback[] = [];
@@ -30,7 +31,7 @@ export class BenchmarkRunner {
         this._suiteManager = new BenchmarkSuiteManager(this);
         this._process = new BenchmarkProcess(this);
         this._configurationManager = new ConfigurationManager(this);
-        // this._reportGenerator = new ReportGenerator(this);
+        this._reportGenerator = new ReportGenerator(this);
         // this._environmentState = new EnvironmentState(this);
     }
 
@@ -46,9 +47,9 @@ export class BenchmarkRunner {
         return this._suiteManager;
     }
 
-    // public get reportGenerator(): ReportGenerator {
-    //     return this._reportGenerator;
-    // }
+    public get reportGenerator(): ReportGenerator {
+        return this._reportGenerator;
+    }
 
     // public get environmentState(): EnvironmentState {
     //     return this._environmentState;
@@ -258,13 +259,17 @@ export class BenchmarkRunner {
         this._process.stop();
     }
 
-    // public String generateReport() {
-    //     return getReportGenerator().generateReport();
-    // }
+    public run(callback: () => void): void {
+        this._process.run(this._suiteManager.suites, callback);
+    }
 
-    // public void saveReportToFile(String fileName) throws IOException {
-    //     getReportGenerator().saveReportToFile(fileName);
-    // }
+    public generateReport(): string {
+        return this._reportGenerator.generateReport();
+    }
+
+    public saveReportToFile(fileName: string): void {
+        this._reportGenerator.saveReportToFile(fileName);
+    }
 
     // public Map<String, String> getSystemInformation() {
     //     return getEnvironmentState().getSystemInformation();

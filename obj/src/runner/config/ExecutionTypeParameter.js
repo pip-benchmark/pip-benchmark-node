@@ -8,7 +8,7 @@ class ExecutionTypeParameter extends Parameter_1.Parameter {
         this._process = process;
     }
     get value() {
-        return this._process.getExecutionType() == ExecutionType_1.ExecutionType.Proportional
+        return this._process.executionType == ExecutionType_1.ExecutionType.Proportional
             ? "Proportional" : "Sequencial";
     }
     set value(value) {

@@ -82,6 +82,10 @@ export class BenchmarkProcess {
     }
 
     public start(suites: BenchmarkSuiteInstance[]): void {
+        this.run(suites, () => {});
+    }
+
+    public run(suites: BenchmarkSuiteInstance[], callback: () => void): void {
         if (this._strategy != null)
             this.stop();
 
@@ -108,7 +112,7 @@ export class BenchmarkProcess {
 
         // Initialize parameters and start 
         this._results = [];
-        this._strategy.start();
+        this._strategy.start(callback);
     }
 
     public stop(): void {

@@ -18,8 +18,8 @@ export declare abstract class ExecutionStrategy {
     readonly benchmarks: BenchmarkInstance[];
     readonly suites: BenchmarkSuiteInstance[];
     protected readonly currentResult: BenchmarkResult;
-    abstract start(): void;
-    abstract stop(): void;
+    abstract start(callback?: () => void): void;
+    abstract stop(callback?: () => void): void;
     abstract getResults(): BenchmarkResult[];
     protected reset(): void;
     reportProgress(increment: number, now?: number): void;

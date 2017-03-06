@@ -15,7 +15,7 @@ export class ExecutionTypeParameter extends Parameter {
     }
 
     public get value(): string {
-        return this._process.getExecutionType() == ExecutionType.Proportional 
+        return this._process.executionType == ExecutionType.Proportional 
             ? "Proportional" : "Sequencial"; 
     }
 

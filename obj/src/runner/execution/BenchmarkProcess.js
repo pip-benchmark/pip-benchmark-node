@@ -57,6 +57,9 @@ class BenchmarkProcess {
         return this._results;
     }
     start(suites) {
+        this.run(suites, () => { });
+    }
+    run(suites, callback) {
         if (this._strategy != null)
             this.stop();
         // Identify active tests
@@ -78,7 +81,7 @@ class BenchmarkProcess {
             this._strategy = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this, selectedBenchmarks);
         // Initialize parameters and start 
         this._results = [];
-        this._strategy.start();
+        this._strategy.start(callback);
     }
     stop() {
         if (this._strategy != null) {

@@ -10,15 +10,15 @@ class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy 
         this._running = false;
         this._results = [];
     }
-    start() {
+    start(callback) {
         if (this.process().duration() <= 0)
             throw new Error("Duration was not set");
         this.notifyResultUpdate(ExecutionState_1.ExecutionState.Starting);
         // Start control thread
         //setTimeout(() => { this.execute(); }, 0);
-        this.execute();
+        this.execute(callback);
     }
-    stop() {
+    stop(callback) {
         if (this._timeout != null) {
             clearTimeout(this._timeout);
             this._timeout = null;
@@ -29,11 +29,13 @@ class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy 
                 this._current.stop();
             this.notifyResultUpdate(ExecutionState_1.ExecutionState.Completed);
         }
+        if (callback)
+            callback();
     }
     getResults() {
         return this._results;
     }
-    execute() {
+    execute(callback) {
         async.eachSeries(this.benchmarks, (benchmark, callback) => {
             // Skip if benchmarking was interrupted
             if (!this._running) {
@@ -48,16 +50,13 @@ class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy 
                 let results = this._current.getResults();
                 if (results.length > 0)
                     this._results.push(results[0]);
-                this._current.stop();
-                this._current = null;
-                callback();
+                this._current.stop(() => {
+                    this._current = null;
+                    callback();
+                });
             }, this.process.delay * 1000);
         }, (err) => {
-            if (this._running) {
-                this._running = false;
-                this.process.stop();
-                this.notifyResultUpdate(ExecutionState_1.ExecutionState.Completed);
-            }
+            this.stop(callback);
         });
     }
 }

@@ -61,23 +61,14 @@ class ConsoleRunner {
             this._runner.executionType = this._args.executionType;
             this._runner.duration = this._args.duration;
             // Perform benchmarking
-            this._runner.start();
-            // if (runner.getResults().size() > 0)
-            //     System.out.printf("%f", runner.getResults().get(0).getPerformanceMeasurement().getAverageValue());
-            // // Generate report
-            // if (args.getReportFile() != null) {
-            //     FileOutputStream stream = new FileOutputStream(args.getReportFile());
-            //     try {
-            //         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stream));
-            //         try {
-            //             writer.write(runner.generateReport());
-            //         } finally {
-            //             writer.close();
-            //         }
-            //     } finally {
-            //         stream.close();
-            //     }
-            // }
+            this._runner.run(() => {
+                if (this._runner.results.length > 0)
+                    console.log(this._runner.results[0].performanceMeasurement.averageValue.toFixed(2));
+                // Generate report
+                if (this._args.reportFile != null)
+                    this._runner.saveReportToFile(this._args.reportFile);
+                console.log(this._runner.generateReport());
+            });
         }
         catch (ex) {
             console.error(ex);

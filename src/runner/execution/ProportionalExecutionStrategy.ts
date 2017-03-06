@@ -24,7 +24,7 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
         this._embedded = !!embedded;
     }
 
-    public start(): void {
+    public start(callback?: () => void): void {
         this._running = true;
 
         // Initialize and start
@@ -44,13 +44,12 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
                 if (!this._embedded)
                     this.notifyResultUpdate(ExecutionState.Starting);
                 
-                //setTimeout(() => { this.execute }, 0);
-                this.execute();
+                this.execute(callback);
             }
         );
     }
 
-    public stop(): void {
+    public stop(callback?: () => void): void {
         // Interrupt any wait
         if (this._timeout != null) {
             clearTimeout(this._timeout);
@@ -65,9 +64,15 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
                 this.notifyResultUpdate(ExecutionState.Completed);
 
             // Deinitialize tests
-            async.each(this.suites, (suite, callback) => {
-                suite.tearDown(callback);
-            });
+            async.each(
+                this.suites, 
+                (suite, callback) => {
+                    suite.tearDown(callback);
+                },
+                (err) => {
+                    if (callback != null) callback();
+                }
+            );
         }
     }
 
@@ -145,13 +150,14 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
                         this.reportProgress(1, now);
 
                     // Introduce delay to keep nominal rate
-                    if (err != null && this.process.measurementType == MeasurementType.Nominal) {
+                    if (err == null && this.process.measurementType == MeasurementType.Nominal) {
                         let delay = this._ticksPerTransaction - (now - this._lastExecutedTime);
                         this._lastExecutedTime = now;
 
                         if (delay > 0) this.executeDelay(delay, callback);
                         else callback(err);
                     } else {
+                        this._lastExecutedTime = now;
                         callback(err);
                     }
                 });
@@ -167,7 +173,7 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
         }
     }
 
-    private execute(): void {
+    private execute(callback?: () => void): void {
         this.calculateProportionRanges();
         this.reset();
 
@@ -196,7 +202,7 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
                 );
             }, 
             (err) => {
-                this.stop();
+                this.stop(callback);
             }
         );
     }

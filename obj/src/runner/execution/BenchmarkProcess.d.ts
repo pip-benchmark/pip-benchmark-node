@@ -23,6 +23,7 @@ export declare class BenchmarkProcess {
     forceContinue: boolean;
     readonly results: BenchmarkResult[];
     start(suites: BenchmarkSuiteInstance[]): void;
+    run(suites: BenchmarkSuiteInstance[], callback: () => void): void;
     stop(): void;
     notifyResultUpdate(status: ExecutionState, result: BenchmarkResult): void;
     notifyMessageSent(message: string): void;
