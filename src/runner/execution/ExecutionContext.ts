@@ -6,14 +6,14 @@ import { ResultAggregator } from './ResultAggregator';
 export class ExecutionContext implements IExecutionContext {
     private _suite: BenchmarkSuiteInstance;
     private _aggregator: ResultAggregator;
-    private _stopCallback: () => void;
+    private _strategy: ExecutionStrategy;
 
     public constructor(suite: BenchmarkSuiteInstance, 
-        aggregator: ResultAggregator, stopCallback: () => void) {
+        aggregator: ResultAggregator, strategy: ExecutionStrategy) {
 
         this._aggregator = aggregator;
         this._suite = suite;
-        this._stopCallback = stopCallback;
+        this._strategy = strategy;
     }
     
     public get parameters(): any {
@@ -32,7 +32,12 @@ export class ExecutionContext implements IExecutionContext {
         this._aggregator.reportError(error);
     }
 
+    public get isStopped()
+    {
+        return this._strategy.isStopped;
+    }
+
     public stop(): void {
-        this._stopCallback();
+        this._strategy.stop();
     }
 }

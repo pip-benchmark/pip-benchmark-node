@@ -38,8 +38,8 @@ class BenchmarkRunner {
     get environment() {
         return this._environment;
     }
-    get running() {
-        return this._execution.running;
+    get isRunning() {
+        return this._execution.isRunning;
     }
     start() {
         this._execution.start(this._benchmarks.selected);

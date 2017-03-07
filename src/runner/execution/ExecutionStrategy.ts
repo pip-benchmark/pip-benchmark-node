@@ -10,15 +10,19 @@ import { BenchmarkResult } from '../results/BenchmarkResult';
 export abstract class ExecutionStrategy {
     protected _configuration: ConfigurationManager;
     protected _results: ResultsManager;
+    protected _execution: any;
+
     protected _benchmarks: BenchmarkInstance[];
     protected _activeBenchmarks: BenchmarkInstance[];
     protected _suites: BenchmarkSuiteInstance[];
 
     protected constructor(configuration: ConfigurationManager, 
-        results: ResultsManager, benchmarks: BenchmarkInstance[]) {
+        results: ResultsManager, execution: any, benchmarks: BenchmarkInstance[]) {
 
         this._configuration = configuration;
         this._results = results;
+        this._execution = execution;
+
         this._benchmarks = benchmarks;
         this._activeBenchmarks = this.getActiveBenchmarks(benchmarks);
         this._suites = this.getBenchmarkSuites(benchmarks);
@@ -41,7 +45,8 @@ export abstract class ExecutionStrategy {
         return suites;
     }
 
+    public abstract isStopped: boolean;
     public abstract start(callback?: (err: any) => void): void;
     public abstract stop(callback?: (err: any) => void): void;
-    
+
 }

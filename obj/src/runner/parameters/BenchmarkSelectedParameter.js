@@ -9,10 +9,10 @@ class BenchmarkSelectedParameter extends Parameter_1.Parameter {
         this._benchmark = benchmark;
     }
     get value() {
-        return Converter_1.Converter.booleanToString(this._benchmark.selected);
+        return Converter_1.Converter.booleanToString(this._benchmark.isSelected);
     }
     set value(value) {
-        this._benchmark.selected = Converter_1.Converter.stringToBoolean(value);
+        this._benchmark.isSelected = Converter_1.Converter.stringToBoolean(value);
     }
 }
 exports.BenchmarkSelectedParameter = BenchmarkSelectedParameter;

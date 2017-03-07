@@ -4,9 +4,12 @@ var async = require('async');
 const ExecutionStrategy_1 = require("./ExecutionStrategy");
 const ProportionalExecutionStrategy_1 = require("./ProportionalExecutionStrategy");
 class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy {
-    constructor(configuration, results, benchmarks) {
-        super(configuration, results, benchmarks);
+    constructor(configuration, results, execution, benchmarks) {
+        super(configuration, results, execution, benchmarks);
         this._running = false;
+    }
+    get isStopped() {
+        return !this._running;
     }
     start(callback) {
         if (this._configuration.duration <= 0)
@@ -23,6 +26,8 @@ class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy 
         }
         if (this._running) {
             this._running = false;
+            if (this._execution)
+                this._execution.stop();
             if (this._current != null) {
                 this._current.stop(callback);
             }
@@ -44,7 +49,7 @@ class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy 
                 return;
             }
             // Start embedded strategy
-            this._current = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this._configuration, this._results, [benchmark]);
+            this._current = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this._configuration, this._results, null, [benchmark]);
             this._current.start();
             // Wait for specified duration and stop embedded strategy
             this._timeout = setTimeout(() => {

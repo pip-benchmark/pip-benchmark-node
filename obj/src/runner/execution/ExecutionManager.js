@@ -8,12 +8,13 @@ const SequencialExecutionStrategy_1 = require("./SequencialExecutionStrategy");
 class ExecutionManager {
     constructor(configuration, results) {
         this._updatedListeners = [];
+        this._running = false;
         this._strategy = null;
         this._configuration = configuration;
         this._results = results;
     }
-    get running() {
-        return this._strategy != null;
+    get isRunning() {
+        return this._running;
     }
     start(benchmarks) {
         this.run(benchmarks, (err) => { });
@@ -23,15 +24,16 @@ class ExecutionManager {
             callback(new Error("There are no benchmarks to execute"));
             return;
         }
-        if (this._strategy != null)
+        if (this._running)
             this.stop();
+        this._running = true;
         this._results.clear();
         this.notifyUpdated(ExecutionState_1.ExecutionState.Running);
         // Create requested execution strategy
         if (this._configuration.executionType == ExecutionType_1.ExecutionType.Sequential)
-            this._strategy = new SequencialExecutionStrategy_1.SequencialExecutionStrategy(this._configuration, this._results, benchmarks);
+            this._strategy = new SequencialExecutionStrategy_1.SequencialExecutionStrategy(this._configuration, this._results, this, benchmarks);
         else
-            this._strategy = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this._configuration, this._results, benchmarks);
+            this._strategy = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this._configuration, this._results, this, benchmarks);
         // Initialize parameters and start 
         this._strategy.start((err) => {
             this.stop();
@@ -40,9 +42,12 @@ class ExecutionManager {
         });
     }
     stop() {
-        if (this._strategy != null) {
-            this._strategy.stop();
-            this._strategy = null;
+        if (this._running) {
+            this._running = false;
+            if (this._strategy != null) {
+                this._strategy.stop();
+                this._strategy = null;
+            }
             this.notifyUpdated(ExecutionState_1.ExecutionState.Completed);
         }
     }

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class ExecutionContext {
-    constructor(suite, aggregator, stopCallback) {
+    constructor(suite, aggregator, strategy) {
         this._aggregator = aggregator;
         this._suite = suite;
-        this._stopCallback = stopCallback;
+        this._strategy = strategy;
     }
     get parameters() {
         return this._suite.suite.parameters;
@@ -18,8 +18,11 @@ class ExecutionContext {
     reportError(error) {
         this._aggregator.reportError(error);
     }
+    get isStopped() {
+        return this._strategy.isStopped;
+    }
     stop() {
-        this._stopCallback();
+        this._strategy.stop();
     }
 }
 exports.ExecutionContext = ExecutionContext;

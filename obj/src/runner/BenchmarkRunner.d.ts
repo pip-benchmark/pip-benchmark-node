@@ -21,7 +21,7 @@ export declare class BenchmarkRunner {
     readonly benchmarks: BenchmarksManager;
     readonly report: ReportGenerator;
     readonly environment: EnvironmentManager;
-    readonly running: boolean;
+    readonly isRunning: boolean;
     start(): void;
     stop(): void;
     run(callback: (err: any) => void): void;

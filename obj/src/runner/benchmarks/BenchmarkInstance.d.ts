@@ -13,8 +13,8 @@ export declare class BenchmarkInstance {
     readonly name: string;
     readonly fullName: string;
     readonly description: string;
-    selected: boolean;
-    readonly passive: boolean;
+    isSelected: boolean;
+    readonly isPassive: boolean;
     proportion: number;
     startRange: number;
     endRange: number;

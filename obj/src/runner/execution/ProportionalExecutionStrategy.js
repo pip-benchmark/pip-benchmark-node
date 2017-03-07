@@ -7,8 +7,8 @@ const ExecutionContext_1 = require("./ExecutionContext");
 const ExecutionStrategy_1 = require("./ExecutionStrategy");
 const ResultAggregator_1 = require("./ResultAggregator");
 class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy {
-    constructor(configuration, results, benchmarks) {
-        super(configuration, results, benchmarks);
+    constructor(configuration, results, execution, benchmarks) {
+        super(configuration, results, execution, benchmarks);
         this._running = false;
         this._ticksPerTransaction = 0;
         this._aggregator = new ResultAggregator_1.ResultAggregator(results, benchmarks);
@@ -18,9 +18,12 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
             return;
         this._running = true;
         this._aggregator.start();
+        this.calculateProportionalRanges();
+        if (this._configuration.measurementType == MeasurementType_1.MeasurementType.Nominal)
+            this._ticksPerTransaction = 1000.0 / this._configuration.nominalRate;
         // Initialize and start
         async.each(this._suites, (suite, callback) => {
-            let context = new ExecutionContext_1.ExecutionContext(suite, this._aggregator, this.stop);
+            let context = new ExecutionContext_1.ExecutionContext(suite, this._aggregator, this);
             suite.setUp(context, callback);
         }, (err) => {
             // Abort if initialization failed
@@ -33,6 +36,9 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
             this.execute(callback);
         });
     }
+    get isStopped() {
+        return !this._running;
+    }
     stop(callback) {
         // Interrupt any wait
         if (this._timeout != null) {
@@ -43,6 +49,8 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
         if (this._running) {
             this._running = false;
             this._aggregator.stop();
+            if (this._execution)
+                this._execution.stop();
             // Deinitialize tests
             async.each(this._suites, (suite, callback) => {
                 suite.tearDown(callback);
@@ -84,7 +92,7 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
     }
     executeBenchmark(benchmark, callback) {
         try {
-            if (benchmark == null || benchmark.passive) {
+            if (benchmark == null || benchmark.isPassive) {
                 // Delay if benchmarks are passive
                 this.executeDelay(500, callback);
             }
@@ -128,9 +136,6 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
         }
     }
     execute(callback) {
-        this.calculateProportionalRanges();
-        if (this._configuration.measurementType == MeasurementType_1.MeasurementType.Nominal)
-            this._ticksPerTransaction = 1000.0 / this._configuration.nominalRate;
         this._lastExecutedTime = Date.now();
         let duration = this._configuration.duration > 0 ? this._configuration.duration : 365 * 24 * 36000;
         this._stopTime = Date.now() + duration * 1000;

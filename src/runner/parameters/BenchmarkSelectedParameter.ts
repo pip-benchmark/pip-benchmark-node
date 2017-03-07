@@ -15,10 +15,10 @@ export class BenchmarkSelectedParameter extends Parameter {
     }
 
     public get value(): string {
-        return Converter.booleanToString(this._benchmark.selected); 
+        return Converter.booleanToString(this._benchmark.isSelected); 
     }
     
     public set value(value: string) {
-        this._benchmark.selected = Converter.stringToBoolean(value);
+        this._benchmark.isSelected = Converter.stringToBoolean(value);
     }
 }

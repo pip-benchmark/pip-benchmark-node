@@ -23,13 +23,13 @@ class BenchmarkInstance {
     get description() {
         return this._benchmark.description;
     }
-    get selected() {
+    get isSelected() {
         return this._selected;
     }
-    set selected(value) {
+    set isSelected(value) {
         this._selected = value;
     }
-    get passive() {
+    get isPassive() {
         return this._benchmark instanceof PassiveBenchmark_1.PassiveBenchmark;
     }
     get proportion() {

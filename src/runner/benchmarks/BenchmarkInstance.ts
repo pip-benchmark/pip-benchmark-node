@@ -35,15 +35,15 @@ export class BenchmarkInstance {
         return this._benchmark.description;
     }
 
-    public get selected(): boolean {
+    public get isSelected(): boolean {
         return this._selected;
     }
     
-    public set selected(value: boolean) {
+    public set isSelected(value: boolean) {
         this._selected = value;
     }
 
-    public get passive(): boolean {
+    public get isPassive(): boolean {
         return this._benchmark instanceof PassiveBenchmark;
     }
 

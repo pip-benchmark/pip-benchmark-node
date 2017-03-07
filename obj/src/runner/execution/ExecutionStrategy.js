@@ -2,9 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require('lodash');
 class ExecutionStrategy {
-    constructor(configuration, results, benchmarks) {
+    constructor(configuration, results, execution, benchmarks) {
         this._configuration = configuration;
         this._results = results;
+        this._execution = execution;
         this._benchmarks = benchmarks;
         this._activeBenchmarks = this.getActiveBenchmarks(benchmarks);
         this._suites = this.getBenchmarkSuites(benchmarks);

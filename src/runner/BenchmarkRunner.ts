@@ -54,8 +54,8 @@ export class BenchmarkRunner {
         return this._environment;
     }
 
-    public get running(): boolean {
-        return this._execution.running;
+    public get isRunning(): boolean {
+        return this._execution.isRunning;
     }
 
     public start(): void {

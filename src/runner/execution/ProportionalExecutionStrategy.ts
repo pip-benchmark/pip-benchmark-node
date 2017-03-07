@@ -24,9 +24,9 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
     private _timeout: any;
     
     public constructor(configuration: ConfigurationManager, results: ResultsManager, 
-        benchmarks: BenchmarkInstance[]) {
+        execution: any, benchmarks: BenchmarkInstance[]) {
         
-        super(configuration, results, benchmarks);
+        super(configuration, results, execution, benchmarks);
 
         this._aggregator = new ResultAggregator(results, benchmarks);
     }
@@ -37,11 +37,16 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
         this._running = true;
         this._aggregator.start();
 
+        this.calculateProportionalRanges();
+
+        if (this._configuration.measurementType == MeasurementType.Nominal)
+            this._ticksPerTransaction = 1000.0 / this._configuration.nominalRate;
+
         // Initialize and start
         async.each(
             this._suites, 
             (suite, callback) => {
-                let context = new ExecutionContext(suite, this._aggregator, this.stop);
+                let context = new ExecutionContext(suite, this._aggregator, this);
                 suite.setUp(context, callback);
             },
             (err) => {
@@ -58,6 +63,10 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
         );
     }
 
+    public get isStopped(): boolean {
+        return !this._running;
+    }
+
     public stop(callback?: (err: any) => void): void {
         // Interrupt any wait
         if (this._timeout != null) {
@@ -69,6 +78,9 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
         if (this._running) {
             this._running = false;
             this._aggregator.stop();
+
+            if (this._execution)
+                this._execution.stop();
 
             // Deinitialize tests
             async.each(
@@ -119,7 +131,7 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
 
     private executeBenchmark(benchmark: BenchmarkInstance, callback: (err: any) => void): void {
         try {
-            if (benchmark == null || benchmark.passive) {
+            if (benchmark == null || benchmark.isPassive) {
                 // Delay if benchmarks are passive
                 this.executeDelay(500, callback);
             } else {
@@ -162,11 +174,6 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
     }
 
     private execute(callback?: (err: any) => void): void {
-        this.calculateProportionalRanges();
-
-        if (this._configuration.measurementType == MeasurementType.Nominal)
-            this._ticksPerTransaction = 1000.0 / this._configuration.nominalRate;
-
         this._lastExecutedTime = Date.now();
         let duration = this._configuration.duration > 0 ? this._configuration.duration : 365 * 24 * 36000;
         this._stopTime = Date.now() + duration * 1000;

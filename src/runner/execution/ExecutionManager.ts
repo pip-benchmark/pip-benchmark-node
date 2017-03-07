@@ -18,6 +18,7 @@ export class ExecutionManager {
     protected _results: ResultsManager;
     
     private _updatedListeners: ExecutionCallback[] = [];
+    private _running: boolean = false;
     private _strategy: ExecutionStrategy = null;
 
     public constructor(configuration: ConfigurationManager, results: ResultsManager) {
@@ -25,8 +26,8 @@ export class ExecutionManager {
         this._results = results;
     }
     
-    public get running(): boolean {
-        return this._strategy != null;
+    public get isRunning(): boolean {
+        return this._running;
     }
 
     public start(benchmarks: BenchmarkInstance[]): void {
@@ -39,17 +40,18 @@ export class ExecutionManager {
             return;
         }
 
-        if (this._strategy != null)
+        if (this._running)
             this.stop();
+        this._running = true;
 
         this._results.clear();
         this.notifyUpdated(ExecutionState.Running);
 
         // Create requested execution strategy
         if (this._configuration.executionType == ExecutionType.Sequential)
-            this._strategy = new SequencialExecutionStrategy(this._configuration, this._results, benchmarks);
+            this._strategy = new SequencialExecutionStrategy(this._configuration, this._results, this, benchmarks);
         else
-            this._strategy = new ProportionalExecutionStrategy(this._configuration, this._results, benchmarks);
+            this._strategy = new ProportionalExecutionStrategy(this._configuration, this._results, this, benchmarks);
 
         // Initialize parameters and start 
         this._strategy.start((err) => {
@@ -59,9 +61,13 @@ export class ExecutionManager {
     }
 
     public stop(): void {
-        if (this._strategy != null) {
-            this._strategy.stop();
-            this._strategy = null;
+        if (this._running) {
+            this._running = false;
+
+            if (this._strategy != null) {
+                this._strategy.stop();
+                this._strategy = null;
+            }
 
             this.notifyUpdated(ExecutionState.Completed);
         }
