@@ -19,7 +19,7 @@ export class BenchmarkRunner {
         this._configuration = new ConfigurationManager();
         this._results = new ResultsManager();
         this._parameters = new ParametersManager(this._configuration);
-        this._benchmarks = new BenchmarksManager(this._configuration, this._parameters);
+        this._benchmarks = new BenchmarksManager(this._parameters);
         this._execution = new ExecutionManager(this._configuration, this._results);
         this._environment = new EnvironmentManager();
         this._report = new ReportGenerator(this._configuration, this._results, 

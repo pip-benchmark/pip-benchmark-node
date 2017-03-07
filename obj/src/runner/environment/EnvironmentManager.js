@@ -70,7 +70,8 @@ class EnvironmentManager extends ExecutionManager_1.ExecutionManager {
             }
         ], (err) => {
             this.stop();
-            this.save();
+            if (err == null)
+                this.save();
             if (callback)
                 callback(err);
         });

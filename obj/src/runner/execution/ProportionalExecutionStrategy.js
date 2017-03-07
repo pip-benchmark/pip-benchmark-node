@@ -14,6 +14,8 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
         this._aggregator = new ResultAggregator_1.ResultAggregator(results, benchmarks);
     }
     start(callback) {
+        if (this._running)
+            return;
         this._running = true;
         this._aggregator.start();
         // Initialize and start

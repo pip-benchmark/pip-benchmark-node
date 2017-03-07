@@ -15,7 +15,6 @@ import { Properties } from '../../utilities/Properties';
 
 export class ParametersManager {
     private _configuration: ConfigurationManager;
-    private _execution: any;
     private _parameters: Parameter[] = [];
 
     public constructor(configuration: ConfigurationManager) {
@@ -57,12 +56,12 @@ export class ParametersManager {
         this._configuration.notifyChanged();
     }
 
-    public saveToFile(fileName: string): void {
+    public saveToFile(path: string): void {
         let properties = new Properties();
         _.each(_.parameters, (parameter) => {
             properties[parameter.name] = parameter.value;
         });
-        properties.saveToFile(fileName);
+        properties.saveToFile(path);
     }
 
     public addSuite(suite: BenchmarkSuiteInstance): void {

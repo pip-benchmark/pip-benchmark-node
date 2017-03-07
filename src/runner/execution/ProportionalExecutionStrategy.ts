@@ -32,6 +32,8 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
     }
 
     public start(callback?: (err: any) => void): void {
+        if (this._running) return;
+        
         this._running = true;
         this._aggregator.start();
 

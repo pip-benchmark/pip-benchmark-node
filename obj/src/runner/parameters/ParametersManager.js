@@ -41,12 +41,12 @@ class ParametersManager {
         });
         this._configuration.notifyChanged();
     }
-    saveToFile(fileName) {
+    saveToFile(path) {
         let properties = new Properties_1.Properties();
         _.each(_.parameters, (parameter) => {
             properties[parameter.name] = parameter.value;
         });
-        properties.saveToFile(fileName);
+        properties.saveToFile(path);
     }
     addSuite(suite) {
         _.each(suite.benchmarks, (benchmark) => {

@@ -11,6 +11,9 @@ class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy 
     start(callback) {
         if (this._configuration.duration <= 0)
             throw new Error("Duration was not set");
+        if (!this._running)
+            return;
+        this._running = true;
         this.execute(callback);
     }
     stop(callback) {

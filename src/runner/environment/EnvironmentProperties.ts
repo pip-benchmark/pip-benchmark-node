@@ -9,27 +9,27 @@ export class EnvironmentProperties extends Properties {
     }
 
     public get cpuBenchmark(): number {
-        return super.getAsDouble("Environment.CpuBenchmark", 0);
+        return super.getAsDouble("CpuBenchmark", 0);
     }
 
     public set cpuBenchmark(value: number) {
-        super.setAsDouble("Environment.CpuBenchmark", value);
+        super.setAsDouble("CpuBenchmark", value);
     }
 
     public get diskBenchmark(): number {
-        return super.getAsDouble("Environment.DiskBenchmark", 0);
+        return super.getAsDouble("DiskBenchmark", 0);
     }
 
     public set diskBenchmark(value: number) {
-        super.setAsDouble("Environment.DiskBenchmark", value);
+        super.setAsDouble("DiskBenchmark", value);
     }
 
     public get videoBenchmark(): number {
-        return super.getAsDouble("Environment.VideoBenchmark", 0);
+        return super.getAsDouble("VideoBenchmark", 0);
     }
 
     public set videoBenchmark(value: number) {
-        super.setAsDouble("Environment.VideoBenchmark", value);
+        super.setAsDouble("VideoBenchmark", value);
     }
 
     public load(): void {

@@ -9,12 +9,10 @@ import { ConfigurationManager } from '../config/ConfigurationManager';
 import { ParametersManager } from '../parameters/ParametersManager';
 
 export class BenchmarksManager {
-    private _configuration: ConfigurationManager;
     private _parameters: ParametersManager;
     private _suites: BenchmarkSuiteInstance[] = [];
 
-    public constructor(configuration: ConfigurationManager, parameters: ParametersManager) {
-        this._configuration = configuration;
+    public constructor(parameters: ParametersManager) {
         this._parameters = parameters;
     }
  

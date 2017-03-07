@@ -5,9 +5,8 @@ var path = require('path');
 const BenchmarkSuite_1 = require("../../BenchmarkSuite");
 const BenchmarkSuiteInstance_1 = require("./BenchmarkSuiteInstance");
 class BenchmarksManager {
-    constructor(configuration, parameters) {
+    constructor(parameters) {
         this._suites = [];
-        this._configuration = configuration;
         this._parameters = parameters;
     }
     get suites() {

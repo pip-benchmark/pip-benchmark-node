@@ -24,6 +24,10 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
         if (this._configuration.duration <= 0)
             throw new Error("Duration was not set");
 
+        if (!this._running) return;
+
+        this._running = true;
+
         this.execute(callback);
     }
 

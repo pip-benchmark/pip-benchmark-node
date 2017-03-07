@@ -12,7 +12,7 @@ class BenchmarkRunner {
         this._configuration = new ConfigurationManager_1.ConfigurationManager();
         this._results = new ResultsManager_1.ResultsManager();
         this._parameters = new ParametersManager_1.ParametersManager(this._configuration);
-        this._benchmarks = new BenchmarksManager_1.BenchmarksManager(this._configuration, this._parameters);
+        this._benchmarks = new BenchmarksManager_1.BenchmarksManager(this._parameters);
         this._execution = new ExecutionManager_1.ExecutionManager(this._configuration, this._results);
         this._environment = new EnvironmentManager_1.EnvironmentManager();
         this._report = new ReportGenerator_1.ReportGenerator(this._configuration, this._results, this._parameters, this._benchmarks, this._environment);

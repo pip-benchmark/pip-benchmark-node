@@ -20,7 +20,6 @@ class ExecutionManager {
     }
     run(benchmarks, callback) {
         if (benchmarks == null || benchmarks.length == 0) {
-            this.stop();
             callback(new Error("There are no benchmarks to execute"));
             return;
         }
@@ -28,7 +27,7 @@ class ExecutionManager {
             this.stop();
         this._results.clear();
         this.notifyUpdated(ExecutionState_1.ExecutionState.Running);
-        // Create requested test strategy
+        // Create requested execution strategy
         if (this._configuration.executionType == ExecutionType_1.ExecutionType.Sequential)
             this._strategy = new SequencialExecutionStrategy_1.SequencialExecutionStrategy(this._configuration, this._results, benchmarks);
         else

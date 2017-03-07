@@ -7,22 +7,22 @@ class EnvironmentProperties extends Properties_1.Properties {
         return "BenchmarkEnvironment.properties";
     }
     get cpuBenchmark() {
-        return super.getAsDouble("Environment.CpuBenchmark", 0);
+        return super.getAsDouble("CpuBenchmark", 0);
     }
     set cpuBenchmark(value) {
-        super.setAsDouble("Environment.CpuBenchmark", value);
+        super.setAsDouble("CpuBenchmark", value);
     }
     get diskBenchmark() {
-        return super.getAsDouble("Environment.DiskBenchmark", 0);
+        return super.getAsDouble("DiskBenchmark", 0);
     }
     set diskBenchmark(value) {
-        super.setAsDouble("Environment.DiskBenchmark", value);
+        super.setAsDouble("DiskBenchmark", value);
     }
     get videoBenchmark() {
-        return super.getAsDouble("Environment.VideoBenchmark", 0);
+        return super.getAsDouble("VideoBenchmark", 0);
     }
     set videoBenchmark(value) {
-        super.setAsDouble("Environment.VideoBenchmark", value);
+        super.setAsDouble("VideoBenchmark", value);
     }
     load() {
         if (path.existSync(this.getFilePath())) {

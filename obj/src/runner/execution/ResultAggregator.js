@@ -20,6 +20,7 @@ class ResultAggregator {
     }
     start() {
         this._result = new BenchmarkResult_1.BenchmarkResult();
+        this._result.benchmarks = this._benchmarks;
         this._result.startTime = Date.now();
         this._transactionCounter = 0;
         this._transactionMeter.clear();

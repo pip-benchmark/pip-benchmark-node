@@ -34,6 +34,7 @@ export class ResultAggregator {
 
     public start(): void {
         this._result = new BenchmarkResult();
+        this._result.benchmarks = this._benchmarks;
         this._result.startTime = Date.now();
 
         this._transactionCounter = 0;
