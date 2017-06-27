@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var util = require('util');
+let util = require('util');
 class Formatter {
     static padLeft(value, length, padSymbol) {
         let output = '';
@@ -28,14 +28,14 @@ class Formatter {
     }
     static formatDate(date) {
         date = date || new Date();
-        var value = date.toISOString();
-        var pos = value.indexOf('T');
+        let value = date.toISOString();
+        let pos = value.indexOf('T');
         return value.substring(0, pos);
     }
     static formatTime(date) {
         date = date || new Date();
-        var value = date.toISOString();
-        var pos = value.indexOf('T');
+        let value = date.toISOString();
+        let pos = value.indexOf('T');
         value = value.substring(pos + 1);
         pos = value.indexOf('.');
         return pos > 0 ? value.substring(0, pos) : value;

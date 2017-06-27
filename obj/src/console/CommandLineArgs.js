@@ -14,6 +14,7 @@ class CommandLineArgs {
         this.showHelp = false;
         this.showBenchmarks = false;
         this.showParameters = false;
+        this.showReport = false;
         this.measureEnvironment = false;
         this.measurementType = MeasurementType_1.MeasurementType.Peak;
         this.executionType = ExecutionType_1.ExecutionType.Proportional;
@@ -53,12 +54,13 @@ class CommandLineArgs {
                 this.duration = Converter_1.Converter.stringToLong(args[++index], 60);
             }
             else if ((arg == "-m" || arg == "--measure") && moreArgs) {
-                this.measurementType = args[++index].toLowerCase() == "nominal"
+                let measure = args[++index].toLowerCase();
+                this.measurementType = measure.startsWith("nom")
                     ? MeasurementType_1.MeasurementType.Nominal : MeasurementType_1.MeasurementType.Peak;
             }
-            else if ((arg == "-e" || arg == "--execute") && moreArgs) {
+            else if ((arg == "-x" || arg == "--execute") && moreArgs) {
                 let execution = args[++index].toLowerCase();
-                this.executionType = execution == "seq" || execution == "sequential"
+                this.executionType = execution.startsWith("seq")
                     ? ExecutionType_1.ExecutionType.Sequential : ExecutionType_1.ExecutionType.Proportional;
             }
             else if ((arg == "-n" || arg == "--nominal") && moreArgs) {
@@ -72,6 +74,9 @@ class CommandLineArgs {
             }
             else if (arg == "-P" || arg == "--show-params") {
                 this.showParameters = true;
+            }
+            else if (arg == "-R" || arg == "--show-report") {
+                this.showReport = true;
             }
             else if (arg == "-e" || arg == "--environment") {
                 this.measureEnvironment = true;

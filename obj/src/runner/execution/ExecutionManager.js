@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var _ = require('lodash');
+let _ = require('lodash');
 const ExecutionType_1 = require("../config/ExecutionType");
 const ExecutionState_1 = require("./ExecutionState");
 const ProportionalExecutionStrategy_1 = require("./ProportionalExecutionStrategy");
@@ -30,10 +30,12 @@ class ExecutionManager {
         this._results.clear();
         this.notifyUpdated(ExecutionState_1.ExecutionState.Running);
         // Create requested execution strategy
-        if (this._configuration.executionType == ExecutionType_1.ExecutionType.Sequential)
+        if (this._configuration.executionType == ExecutionType_1.ExecutionType.Sequential) {
             this._strategy = new SequencialExecutionStrategy_1.SequencialExecutionStrategy(this._configuration, this._results, this, benchmarks);
-        else
+        }
+        else {
             this._strategy = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this._configuration, this._results, this, benchmarks);
+        }
         // Initialize parameters and start 
         this._strategy.start((err) => {
             this.stop();

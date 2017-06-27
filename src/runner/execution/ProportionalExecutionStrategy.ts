@@ -1,5 +1,5 @@
-var _ = require('lodash');
-var async = require('async');
+let _ = require('lodash');
+let async = require('async');
 
 import { MeasurementType } from '../config/MeasurementType';
 import { ConfigurationManager } from '../config/ConfigurationManager';
@@ -32,7 +32,10 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
     }
 
     public start(callback?: (err: any) => void): void {
-        if (this._running) return;
+        if (this._running) {
+            callback(null);
+            return;
+        }
         
         this._running = true;
         this._aggregator.start();
@@ -99,17 +102,17 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
 
     private calculateProportionalRanges(): void {
         let totalProportion = 0;
-        _.each(this._activeBenchmarks, (benchmark) => {
+        for (let benchmark of this._activeBenchmarks) {
             totalProportion += benchmark.proportion;
-        });
+        }
 
         let startRange = 0;
-        _.each(this._activeBenchmarks, (benchmark) => {
+        for (let benchmark of this._activeBenchmarks) {
             let normalizedProportion = benchmark.proportion / totalProportion;
             benchmark.startRange = startRange;
             benchmark.endRange = startRange + normalizedProportion;
             startRange += normalizedProportion;
-        });
+        }
     }
 
     private chooseBenchmarkProportionally(): BenchmarkInstance {

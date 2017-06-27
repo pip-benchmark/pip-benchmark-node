@@ -1,4 +1,4 @@
-var os = require('os');
+let os = require('os');
 
 import { BenchmarkMeter } from './BenchmarkMeter';
 

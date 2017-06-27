@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var _ = require('lodash');
-var path = require('path');
+let _ = require('lodash');
+let path = require('path');
 const BenchmarkSuite_1 = require("../../BenchmarkSuite");
 const BenchmarkSuiteInstance_1 = require("./BenchmarkSuiteInstance");
 class BenchmarksManager {
@@ -14,67 +14,67 @@ class BenchmarksManager {
     }
     get selected() {
         let benchmarks = [];
-        _.each(this._suites, (suite) => {
-            _.each(suite.benchmarks, (benchmark) => {
-                if (benchmark.selected)
+        for (let suite of this._suites) {
+            for (let benchmark of suite.benchmarks) {
+                if (benchmark.isSelected)
                     benchmarks.push(benchmark);
-            });
-        });
+            }
+        }
         return benchmarks;
     }
     selectAll() {
-        _.each(this._suites, (suite) => {
-            _.each(suite.benchmarks, (benchmark) => {
-                benchmark.selected = true;
-            });
-        });
+        for (let suite of this._suites) {
+            for (let benchmark of suite.benchmarks) {
+                benchmark.isSelected = true;
+            }
+        }
     }
     selectByName(benchmarkNames) {
-        _.each(this._suites, (suite) => {
-            _.each(suite.benchmarks, (benchmark) => {
-                _.each(benchmarkNames, (benchmarkName) => {
+        for (let suite of this._suites) {
+            for (let benchmark of suite.benchmarks) {
+                for (let benchmarkName of benchmarkNames) {
                     if (benchmarkName == benchmark.fullName)
-                        benchmark.selected = true;
-                });
-            });
-        });
+                        benchmark.isSelected = true;
+                }
+            }
+        }
     }
     select(benchmarks) {
-        _.each(this._suites, (suite) => {
-            _.each(suite.benchmarks, (benchmark) => {
-                _.each(benchmarks, (anotherBenchmark) => {
+        for (let suite of this._suites) {
+            for (let benchmark of suite.benchmarks) {
+                for (let anotherBenchmark of benchmarks) {
                     if (benchmark == anotherBenchmark)
-                        benchmark.selected = true;
-                });
-            });
-        });
+                        benchmark.isSelected = true;
+                }
+            }
+        }
     }
     unselectAll() {
-        _.each(this._suites, (suite) => {
-            _.each(suite.benchmarks, (benchmark) => {
-                benchmark.selected = false;
-            });
-        });
+        for (let suite of this._suites) {
+            for (let benchmark of suite.benchmarks) {
+                benchmark.isSelected = false;
+            }
+        }
     }
     unselectByName(benchmarkNames) {
-        _.each(this._suites, (suite) => {
-            _.each(suite.benchmarks, (benchmark) => {
-                _.each(benchmarkNames, (benchmarkName) => {
+        for (let suite of this._suites) {
+            for (let benchmark of suite.benchmarks) {
+                for (let benchmarkName of benchmarkNames) {
                     if (benchmarkName == benchmark.fullName)
-                        benchmark.selected = false;
-                });
-            });
-        });
+                        benchmark.isSelected = false;
+                }
+            }
+        }
     }
     unselect(benchmarks) {
-        _.each(this._suites, (suite) => {
-            _.each(suite.benchmarks, (benchmark) => {
-                _.each(benchmarks, (anotherBenchmark) => {
+        for (let suite of this._suites) {
+            for (let benchmark of suite.benchmarks) {
+                for (let anotherBenchmark of benchmarks) {
                     if (benchmark == anotherBenchmark)
-                        benchmark.selected = false;
-                });
-            });
-        });
+                        benchmark.isSelected = false;
+                }
+            }
+        }
     }
     addSuiteFromClass(suiteClassName) {
         if (suiteClassName == null || suiteClassName.length == 0)

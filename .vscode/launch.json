@@ -12,7 +12,9 @@
 			"stopOnEntry": false,
 			"program": "${workspaceRoot}/benchmark.js",
 //			"args": ["-a", "./obj/src/standardbenchmarks", "-b", "Utility.Empty", "-d", "3"],
-			"args": ["-e"],
+//			"args": ["-e"],
+			"args": ["-a", "./obj/src/standardbenchmarks", "-b", "Utility.Empty", "-b", "Utility.RandomDelay", "-d", "3", "-x", "seq"],
+//			"args": ["-a", "./obj/src/standardbenchmarks", "-P"],
 			"cwd": "${workspaceRoot}",
 			"sourceMaps": true,
 			"outDir": "${workspaceRoot}/obj"

@@ -1,4 +1,4 @@
-var _ = require('lodash');
+let _ = require('lodash');
 
 import { ConfigurationManager } from '../config/ConfigurationManager';
 import { ResultsManager } from '../results/ResultsManager';

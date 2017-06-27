@@ -1,4 +1,4 @@
-var path = require('path');
+let path = require('path');
 
 import { Properties } from '../../utilities/Properties';
 

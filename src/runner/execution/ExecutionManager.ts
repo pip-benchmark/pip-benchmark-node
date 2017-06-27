@@ -1,4 +1,4 @@
-var _ = require('lodash');
+let _ = require('lodash');
 
 import { ConfigurationManager } from '../config/ConfigurationManager';
 import { ResultsManager } from '../results/ResultsManager';
@@ -48,10 +48,11 @@ export class ExecutionManager {
         this.notifyUpdated(ExecutionState.Running);
 
         // Create requested execution strategy
-        if (this._configuration.executionType == ExecutionType.Sequential)
+        if (this._configuration.executionType == ExecutionType.Sequential) {
             this._strategy = new SequencialExecutionStrategy(this._configuration, this._results, this, benchmarks);
-        else
+        } else {
             this._strategy = new ProportionalExecutionStrategy(this._configuration, this._results, this, benchmarks);
+        }
 
         // Initialize parameters and start 
         this._strategy.start((err) => {

@@ -1,4 +1,4 @@
-var async = require('async');
+let async = require('async');
 
 import { ConfigurationManager } from '../config/ConfigurationManager';
 import { ResultsManager } from '../results/ResultsManager';
@@ -29,7 +29,10 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
         if (this._configuration.duration <= 0)
             throw new Error("Duration was not set");
 
-        if (!this._running) return;
+        if (this._running) {
+            callback(null);
+            return;
+        }
 
         this._running = true;
 

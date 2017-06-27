@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var async = require('async');
+let async = require('async');
 const ConfigurationManager_1 = require("../config/ConfigurationManager");
 const ResultsManager_1 = require("../results/ResultsManager");
 const ExecutionManager_1 = require("../execution/ExecutionManager");

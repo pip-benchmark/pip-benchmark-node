@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs = require('fs');
-var os = require('os');
+let fs = require('fs');
+let os = require('os');
 const PropertyFileLine_1 = require("./PropertyFileLine");
 const Converter_1 = require("./Converter");
 class Properties {
@@ -22,28 +22,23 @@ class Properties {
             if (this.hasOwnProperty && prop != 'lines')
                 delete this[prop];
         }
-        for (let index = 0; index < this.lines.length; index++) {
-            let line = this.lines[index];
-            if (line.key != null && line.key.length > 0) {
+        for (let line of this.lines) {
+            if (line.key != null && line.key.length > 0)
                 this[line.key] = line.value;
-            }
         }
     }
     saveToFile(file) {
         this.synchronizeItems();
         let content = '';
-        for (let index = 0; index < this.lines.length; index++) {
-            let line = this.lines[index];
+        for (let line of this.lines) {
             content += line.line + os.EOL;
         }
         fs.writeFileSync(file, content, { encoding: 'UTF-8' });
     }
     findLine(key) {
-        for (let index = 0; index < this.lines.length; index++) {
-            let line = this.lines[index];
-            if (key == line.key) {
+        for (let line of this.lines) {
+            if (key == line.key)
                 return line;
-            }
         }
         return null;
     }

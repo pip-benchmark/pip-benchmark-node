@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs = require('fs');
+let fs = require('fs');
 const Benchmark_1 = require("../../Benchmark");
 class DefaultDiskBenchmark extends Benchmark_1.Benchmark {
     constructor() {

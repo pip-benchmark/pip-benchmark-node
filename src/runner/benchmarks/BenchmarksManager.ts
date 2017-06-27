@@ -1,5 +1,5 @@
-var _ = require('lodash');
-var path = require('path');
+let _ = require('lodash');
+let path = require('path');
 
 import { BenchmarkSuite } from '../../BenchmarkSuite';
 import { Benchmark } from '../../Benchmark';
@@ -23,74 +23,74 @@ export class BenchmarksManager {
     public get selected(): BenchmarkInstance[] {
         let benchmarks: BenchmarkInstance[] = [];
 
-        _.each(this._suites, (suite) => {
-            _.each(suite.benchmarks, (benchmark) => {
-                if (benchmark.selected)
+        for (let suite of this._suites) {
+            for (let benchmark of suite.benchmarks) {
+                if (benchmark.isSelected)
                     benchmarks.push(benchmark);
-            });
-        });
+            }
+        }
 
         return benchmarks;
     }
 
     public selectAll(): void {
-        _.each(this._suites, (suite) => {
-            _.each(suite.benchmarks, (benchmark) => {
-                benchmark.selected = true;
-            });
-        });
+       for (let suite of this._suites) {
+            for (let benchmark of suite.benchmarks) {
+                benchmark.isSelected = true;
+            }
+        }
     }
 
     public selectByName(benchmarkNames: string[]): void {
-        _.each(this._suites, (suite) => {
-            _.each(suite.benchmarks, (benchmark) => {
-                _.each(benchmarkNames, (benchmarkName) => {
+        for (let suite of this._suites) {
+            for (let benchmark of suite.benchmarks) {
+                for (let benchmarkName of benchmarkNames) {
                     if (benchmarkName == benchmark.fullName)
-                        benchmark.selected = true;
-                });
-            });
-        });
+                        benchmark.isSelected = true;
+                }
+            }
+        }
     }
 
     public select(benchmarks: BenchmarkInstance[]): void {
-        _.each(this._suites, (suite) => {
-            _.each(suite.benchmarks, (benchmark) => {
-                _.each(benchmarks, (anotherBenchmark) => {
+        for (let suite of this._suites) {
+            for (let benchmark of suite.benchmarks){
+                for (let anotherBenchmark of benchmarks) {
                     if (benchmark == anotherBenchmark)
-                        benchmark.selected = true;
-                });
-            });
-        });
+                        benchmark.isSelected = true;
+                }
+            }
+        }
     }
 
     public unselectAll(): void {
-        _.each(this._suites, (suite) => {
-            _.each(suite.benchmarks, (benchmark) => {
-                benchmark.selected = false;
-            });
-        });
+        for (let suite of this._suites) {
+            for (let benchmark of suite.benchmarks) {
+                benchmark.isSelected = false;
+            }
+        }
     }
 
     public unselectByName(benchmarkNames: string[]): void {
-        _.each(this._suites, (suite) => {
-            _.each(suite.benchmarks, (benchmark) => {
-                _.each(benchmarkNames, (benchmarkName) => {
+        for (let suite of this._suites) {
+            for (let benchmark of suite.benchmarks) {
+                for (let benchmarkName of benchmarkNames) {
                     if (benchmarkName == benchmark.fullName)
-                        benchmark.selected = false;
-                });
-            });
-        });
+                        benchmark.isSelected = false;
+                }
+            }
+        }
     }
 
     public unselect(benchmarks: BenchmarkInstance[]): void {
-        _.each(this._suites, (suite) => {
-            _.each(suite.benchmarks, (benchmark) => {
-                _.each(benchmarks, (anotherBenchmark) => {
+        for (let suite of this._suites) {
+            for (let benchmark of suite.benchmarks) {
+                for (let anotherBenchmark of benchmarks) {
                     if (benchmark == anotherBenchmark)
-                        benchmark.selected = false;
-                });
-            });
-        });
+                        benchmark.isSelected = false;
+                }
+            }
+        }
     }
 
     public addSuiteFromClass(suiteClassName: string): void {

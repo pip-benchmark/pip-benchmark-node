@@ -1,6 +1,6 @@
-var _ = require('lodash');
-var async = require('async');
-var util = require('util');
+let _ = require('lodash');
+let async = require('async');
+let util = require('util');
 
 import { BenchmarkRunner } from '../runner/BenchmarkRunner';
 import { CommandLineArgs } from './CommandLineArgs';
@@ -33,17 +33,17 @@ export class ConsoleRunner {
             }
 
             // Load modules
-            _.each(this._args.modules, (module) => {
+            for (let module of this._args.modules) {
                 this._runner.benchmarks.addSuitesFromModule(module);
-            });
+            }
 
             // Load test suites classes
-            _.each(this._args.classes, (clazz) => {
+            for (let clazz of this._args.classes) {
                 this._runner.benchmarks.addSuiteFromClass(clazz);
-            });
+            }
             
             // Load configuration
-            if ( this._args.configurationFile != null)
+            if (this._args.configurationFile != null)
                 this._runner.parameters.loadFromFile(this._args.configurationFile);
 
             // Set parameters
@@ -96,11 +96,13 @@ export class ConsoleRunner {
                         if (this._runner.results.all.length > 0)
                             console.log(this._runner.results.all[0].performanceMeasurement.averageValue.toFixed(2));
 
-                        // Generate report
+                        // Generate report and save to file
                         if (this._args.reportFile != null)
                             this._runner.report.saveToFile(this._args.reportFile);
 
-                        //console.log(this._runner.report.generate());
+                        // Show report in console
+                        if (this._args.showReport)
+                            console.log(this._runner.report.generate());
 
                         callback(err);
                     });
@@ -117,7 +119,7 @@ export class ConsoleRunner {
     public printHelp(): void {
         console.log("Pip.Benchmark Console Runner. (c) Conceptual Vision Consulting LLC 2017");
         console.log();
-        console.log("Command Line Parameters:");
+        console.log("Command Line Arguments:");
         console.log("-a <module>    - Module with benchmarks to be loaded. You may include multiple modules");
         console.log("-p <param>=<value> - Set parameter value. You may include multiple parameters");
         console.log("-b <benchmark>   - Name of benchmark to be executed. You may include multiple benchmarks");
@@ -127,8 +129,9 @@ export class ConsoleRunner {
         console.log("-h               - Display this help screen");
         console.log("-B               - Show all available benchmarks");
         console.log("-P               - Show all available parameters");
+        console.log("-R               - Show report");
         console.log("-e               - Measure environment");
-        console.log("-x [proportional|sequencial] - Execution type: Proportional or Sequencial");
+        console.log("-x [prop|seq] - Execution type: Proportional or Sequencial");
         console.log("-m [peak|nominal] - Measurement type: Peak or Nominal");
         console.log("-n <rate>        - Nominal rate in transactions per second");
     }
@@ -174,7 +177,7 @@ export class ConsoleRunner {
         // Gracefully shutdown
         process.on('exit', function () {
             runner.stop();
-            console.log("Goodbye!");
+            //console.log("Goodbye!");
         });
 
         runner.start(process.argv);

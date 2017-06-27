@@ -1,4 +1,4 @@
-var util = require('util');
+let util = require('util');
 
 export class Formatter {
 
@@ -35,15 +35,15 @@ export class Formatter {
 
     public static formatDate(date: Date): string {
         date = date || new Date();
-        var value = date.toISOString();
-        var pos = value.indexOf('T');
+        let value = date.toISOString();
+        let pos = value.indexOf('T');
         return value.substring(0, pos);
     }
 
     public static formatTime(date: Date) {
         date = date || new Date();
-        var value = date.toISOString();
-        var pos = value.indexOf('T');
+        let value = date.toISOString();
+        let pos = value.indexOf('T');
         value = value.substring(pos + 1);
         pos = value.indexOf('.');
         return pos > 0 ? value.substring(0, pos) : value;

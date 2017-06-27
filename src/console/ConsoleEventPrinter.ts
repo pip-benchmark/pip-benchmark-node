@@ -1,4 +1,4 @@
-var util = require('util');
+let util = require('util');
 
 import { BenchmarkRunner } from '../runner/BenchmarkRunner';
 import { BenchmarkResult } from '../runner/results/BenchmarkResult';

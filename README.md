@@ -15,7 +15,25 @@ In addition to performance benchmarking, it helps in other types of non-function
 
 ## Usage
 
-TBD...
+To run benchmark do the following
+```bash
+node ./benchmark.js -a <path to suite> -b <benchmark name> -p <param>=<value>
+```
+
+To show available benchmarks
+```bash
+node ./benchmark.js -a <path to suite> -B
+```
+
+To show available parameters
+```bash
+node ./benchmark.js -a <path to suite> -P
+```
+
+To measure environment (CPU, video, disk)
+```bash
+node ./benchmark.js -e
+```
 
 ## Installation
 

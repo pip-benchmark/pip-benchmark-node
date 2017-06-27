@@ -1,4 +1,4 @@
-var os = require('os');
+let os = require('os');
 
 export class SystemInfo {
 

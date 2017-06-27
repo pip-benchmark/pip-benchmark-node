@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var async = require('async');
+let async = require('async');
 const ExecutionStrategy_1 = require("./ExecutionStrategy");
 const ProportionalExecutionStrategy_1 = require("./ProportionalExecutionStrategy");
 class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy {
@@ -14,8 +14,10 @@ class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy 
     start(callback) {
         if (this._configuration.duration <= 0)
             throw new Error("Duration was not set");
-        if (!this._running)
+        if (this._running) {
+            callback(null);
             return;
+        }
         this._running = true;
         this.execute(callback);
     }

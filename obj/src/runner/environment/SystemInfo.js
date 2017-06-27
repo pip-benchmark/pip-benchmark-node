@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var os = require('os');
+let os = require('os');
 class SystemInfo {
     constructor() {
         this.put("Machine Name", os.hostname());

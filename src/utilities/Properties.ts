@@ -1,5 +1,5 @@
-var fs = require('fs');
-var os = require('os');
+let fs = require('fs');
+let os = require('os');
 
 import { PropertyFileLine } from './PropertyFileLine';
 import { Converter } from './Converter';
@@ -25,11 +25,9 @@ export class Properties {
                 delete this[prop];
         }
 
-        for (let index = 0; index < this.lines.length; index++) {
-            let line = this.lines[index];
-            if (line.key != null && line.key.length > 0) {
+        for (let line of this.lines) {
+            if (line.key != null && line.key.length > 0)
                 this[line.key] = line.value;
-            }
         }
     }
 
@@ -37,8 +35,7 @@ export class Properties {
         this.synchronizeItems();
 
         let content = '';
-        for (let index = 0; index < this.lines.length; index++) {
-            let line = this.lines[index];
+        for (let line of this.lines) {
             content += line.line + os.EOL;
         }
 
@@ -46,11 +43,9 @@ export class Properties {
     }
 
     private findLine(key: string): PropertyFileLine {
-        for (let index = 0; index < this.lines.length; index++) {
-            let line = this.lines[index];
-            if (key == line.key) {
+        for (let line of this.lines) {
+            if (key == line.key)
                 return line;
-            }
         }
         return null;
     }

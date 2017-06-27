@@ -1,4 +1,4 @@
-var async = require('async');
+let async = require('async');
 
 import { ConfigurationManager } from '../config/ConfigurationManager';
 import { ResultsManager } from '../results/ResultsManager';

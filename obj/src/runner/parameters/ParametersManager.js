@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var _ = require('lodash');
+let _ = require('lodash');
 const MeasurementTypeParameter_1 = require("./MeasurementTypeParameter");
 const NominalRateParameter_1 = require("./NominalRateParameter");
 const ExecutionTypeParameter_1 = require("./ExecutionTypeParameter");
@@ -20,13 +20,13 @@ class ParametersManager {
     }
     get userDefined() {
         let parameters = [];
-        _.each(this._parameters, (parameter) => {
+        for (let parameter of this._parameters) {
             if (!parameter.name.endsWith(".Selected")
                 && !parameter.name.endsWith(".Proportion")
                 && !parameter.name.startsWith("General.")) {
                 parameters.push(parameter);
             }
-        });
+        }
         return parameters;
     }
     get all() {
@@ -35,30 +35,30 @@ class ParametersManager {
     loadFromFile(path) {
         let properties = new Properties_1.Properties();
         properties.loadFromFile(path);
-        _.each(this._parameters, (parameter) => {
+        for (let parameter of this._parameters) {
             if (properties.hasOwnProperty(parameter.name))
                 parameter.value = properties[parameter.name];
-        });
+        }
         this._configuration.notifyChanged();
     }
     saveToFile(path) {
         let properties = new Properties_1.Properties();
-        _.each(_.parameters, (parameter) => {
+        for (let parameter of this._parameters) {
             properties[parameter.name] = parameter.value;
-        });
+        }
         properties.saveToFile(path);
     }
     addSuite(suite) {
-        _.each(suite.benchmarks, (benchmark) => {
+        for (let benchmark of suite.benchmarks) {
             let benchmarkSelectedParameter = new BenchmarkSelectedParameter_1.BenchmarkSelectedParameter(benchmark);
             this._parameters.push(benchmarkSelectedParameter);
             let benchmarkProportionParameter = new BenchmarkProportionParameter_1.BenchmarkProportionParameter(benchmark);
             this._parameters.push(benchmarkProportionParameter);
-        });
-        _.each(suite.parameters, (parameter) => {
+        }
+        for (let parameter of suite.parameters) {
             let suiteParameter = new BenchmarkSuiteParameter_1.BenchmarkSuiteParameter(suite, parameter);
             this._parameters.push(suiteParameter);
-        });
+        }
         this._configuration.notifyChanged();
     }
     removeSuite(suite) {
@@ -69,17 +69,17 @@ class ParametersManager {
         this._configuration.notifyChanged();
     }
     setToDefault() {
-        _.each(this._parameters, (parameter) => {
+        for (let parameter of this._parameters) {
             if (parameter instanceof BenchmarkSuiteParameter_1.BenchmarkSuiteParameter)
                 parameter.value = parameter.defaultValue;
-        });
+        }
         this._configuration.notifyChanged();
     }
     set(parameters) {
-        _.each(this._parameters, (parameter) => {
+        for (let parameter of this._parameters) {
             if (parameters.hasOwnProperty(parameter.name))
                 parameter.value = parameters[parameter.name];
-        });
+        }
         this._configuration.notifyChanged();
     }
 }

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var _ = require('lodash');
-var async = require('async');
+let _ = require('lodash');
+let async = require('async');
 const MeasurementType_1 = require("../config/MeasurementType");
 const ExecutionContext_1 = require("./ExecutionContext");
 const ExecutionStrategy_1 = require("./ExecutionStrategy");
@@ -14,8 +14,10 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
         this._aggregator = new ResultAggregator_1.ResultAggregator(results, benchmarks);
     }
     start(callback) {
-        if (this._running)
+        if (this._running) {
+            callback(null);
             return;
+        }
         this._running = true;
         this._aggregator.start();
         this.calculateProportionalRanges();
@@ -66,16 +68,16 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
     }
     calculateProportionalRanges() {
         let totalProportion = 0;
-        _.each(this._activeBenchmarks, (benchmark) => {
+        for (let benchmark of this._activeBenchmarks) {
             totalProportion += benchmark.proportion;
-        });
+        }
         let startRange = 0;
-        _.each(this._activeBenchmarks, (benchmark) => {
+        for (let benchmark of this._activeBenchmarks) {
             let normalizedProportion = benchmark.proportion / totalProportion;
             benchmark.startRange = startRange;
             benchmark.endRange = startRange + normalizedProportion;
             startRange += normalizedProportion;
-        });
+        }
     }
     chooseBenchmarkProportionally() {
         let proportion = Math.random();

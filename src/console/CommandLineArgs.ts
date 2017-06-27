@@ -35,11 +35,12 @@ export class CommandLineArgs {
             } else if ((arg == "-d" || arg == "--duration") && moreArgs) {
                 this.duration = Converter.stringToLong(args[++index], 60);
             } else if ((arg == "-m" || arg == "--measure") && moreArgs) {
-                this.measurementType = args[++index].toLowerCase() == "nominal"
+                let measure = args[++index].toLowerCase();
+                this.measurementType = measure.startsWith("nom")
                     ? MeasurementType.Nominal : MeasurementType.Peak;
-            } else if ((arg == "-e" || arg == "--execute") && moreArgs) {
+            } else if ((arg == "-x" || arg == "--execute") && moreArgs) {
                 let execution = args[++index].toLowerCase();
-                this.executionType = execution == "seq" || execution == "sequential"
+                this.executionType = execution.startsWith("seq")
                     ? ExecutionType.Sequential : ExecutionType.Proportional;
             } else if ((arg == "-n" || arg == "--nominal") && moreArgs) {
                 this.nominalRate = Converter.stringToDouble(args[++index], 1);
@@ -49,6 +50,8 @@ export class CommandLineArgs {
                 this.showBenchmarks = true;
             } else if (arg == "-P" || arg == "--show-params") {
                 this.showParameters = true;
+            } else if (arg == "-R" || arg == "--show-report") {
+                this.showReport = true;
             } else if (arg == "-e" || arg == "--environment") {
                 this.measureEnvironment = true;
             }
@@ -65,6 +68,7 @@ export class CommandLineArgs {
     public showHelp: boolean = false;
     public showBenchmarks: boolean = false;
     public showParameters: boolean = false;
+    public showReport: boolean = false;
     public measureEnvironment: boolean = false;
     public measurementType: MeasurementType = MeasurementType.Peak;
     public executionType: ExecutionType = ExecutionType.Proportional;

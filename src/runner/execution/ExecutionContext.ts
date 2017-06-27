@@ -32,8 +32,7 @@ export class ExecutionContext implements IExecutionContext {
         this._aggregator.reportError(error);
     }
 
-    public get isStopped()
-    {
+    public get isStopped() {
         return this._strategy.isStopped;
     }
 

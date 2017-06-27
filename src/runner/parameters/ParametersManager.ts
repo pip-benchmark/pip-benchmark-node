@@ -1,4 +1,4 @@
-var _ = require('lodash');
+let _ = require('lodash');
 
 import { Parameter } from '../../Parameter';
 import { ConfigurationManager } from '../config/ConfigurationManager';
@@ -29,13 +29,13 @@ export class ParametersManager {
     public get userDefined(): Parameter[] {
         let parameters: Parameter[] = [];
 
-        _.each(this._parameters, (parameter) => {
+        for (let parameter of this._parameters) {
             if (!parameter.name.endsWith(".Selected") 
                 && !parameter.name.endsWith(".Proportion")
                 && !parameter.name.startsWith("General.")) {
                 parameters.push(parameter);
             }
-        });
+        }
 
         return parameters; 
     }
@@ -48,24 +48,24 @@ export class ParametersManager {
         let properties = new Properties();
         properties.loadFromFile(path);
 
-        _.each(this._parameters, (parameter) => {
+        for (let parameter of this._parameters) {
             if (properties.hasOwnProperty(parameter.name))
                 parameter.value = properties[parameter.name];
-        });
+        }
 
         this._configuration.notifyChanged();
     }
 
     public saveToFile(path: string): void {
         let properties = new Properties();
-        _.each(_.parameters, (parameter) => {
+        for (let parameter of this._parameters) {
             properties[parameter.name] = parameter.value;
-        });
+        }
         properties.saveToFile(path);
     }
 
     public addSuite(suite: BenchmarkSuiteInstance): void {
-        _.each(suite.benchmarks, (benchmark) => {
+       for (let benchmark of suite.benchmarks) {
             let benchmarkSelectedParameter
                 = new BenchmarkSelectedParameter(benchmark);
             this._parameters.push(benchmarkSelectedParameter);
@@ -73,12 +73,12 @@ export class ParametersManager {
             let benchmarkProportionParameter
                 = new BenchmarkProportionParameter(benchmark);
             this._parameters.push(benchmarkProportionParameter);
-        });
+        }
 
-        _.each(suite.parameters, (parameter) => {
+        for (let parameter of suite.parameters) {
             let suiteParameter = new BenchmarkSuiteParameter(suite, parameter);
             this._parameters.push(suiteParameter);
-        });
+        }
 
         this._configuration.notifyChanged();
     }
@@ -94,19 +94,19 @@ export class ParametersManager {
     }
 
     public setToDefault(): void {
-        _.each(this._parameters, (parameter) => {
+        for (let parameter of this._parameters) {
             if (parameter instanceof BenchmarkSuiteParameter)
                 parameter.value = parameter.defaultValue;
-        });
+        }
 
         this._configuration.notifyChanged();
     }
 
     public set(parameters: any) {
-        _.each(this._parameters, (parameter) => {
+        for (let parameter of this._parameters) {
             if (parameters.hasOwnProperty(parameter.name))
                 parameter.value = parameters[parameter.name];
-        });
+        }
 
         this._configuration.notifyChanged();
     }

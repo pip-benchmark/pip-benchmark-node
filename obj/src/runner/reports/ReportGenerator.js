@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var _ = require('lodash');
-var fs = require('fs');
-var util = require('util');
+let _ = require('lodash');
+let fs = require('fs');
+let util = require('util');
 const MeasurementType_1 = require("../config/MeasurementType");
 const Formatter_1 = require("../../utilities/Formatter");
 class ReportGenerator {
@@ -50,11 +50,11 @@ class ReportGenerator {
         output += "Executed Benchmarks:";
         output += ReportGenerator.NewLine;
         let index = 0;
-        _.each(this._benchmarks.selected, (benchmark) => {
+        for (let benchmark of this._benchmarks.selected) {
             index++;
             output += util.format("  %d. %s.%s [%d%%]", index, benchmark.suite.name, benchmark.name, benchmark.proportion);
             output += ReportGenerator.NewLine;
-        });
+        }
         output += ReportGenerator.NewLine;
         return output;
     }
@@ -188,10 +188,10 @@ class ReportGenerator {
         let output = '';
         output += "Parameters:";
         output += ReportGenerator.NewLine;
-        _.each(this._parameters.all, (parameter) => {
+        for (let parameter of this._parameters.all) {
             output += util.format("  %s=%s", parameter.name, parameter.value);
             output += ReportGenerator.NewLine;
-        });
+        }
         output += ReportGenerator.NewLine;
         return output;
     }
