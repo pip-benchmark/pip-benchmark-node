@@ -147,7 +147,7 @@ class ConsoleRunner {
             runner.stop();
             //console.log("Goodbye!");
         });
-        runner.start(process.argv);
+        runner.start(args || process.argv);
     }
 }
 exports.ConsoleRunner = ConsoleRunner;
