@@ -59,7 +59,7 @@ export class BenchmarkRunner {
     }
 
     public start(): void {
-        this._execution.start(this._benchmarks.selected);
+        this._execution.start(this._benchmarks.isSelected);
     }
 
     public stop(): void {
@@ -67,6 +67,6 @@ export class BenchmarkRunner {
     }
 
     public run(callback: (err: any) => void): void {
-        this._execution.run(this._benchmarks.selected, callback);
+        this._execution.run(this._benchmarks.isSelected, callback);
     }
 }

@@ -36,31 +36,31 @@ class BenchmarkSuiteInstance {
     get benchmarks() {
         return this._benchmarks;
     }
-    get selected() {
+    get isSelected() {
         return _.filter(this._benchmarks, (benchmark) => {
-            return benchmark.selected;
+            return benchmark.isSelected;
         });
     }
     selectAll() {
         _.each(this._benchmarks, (benchmark) => {
-            benchmark.selected = true;
+            benchmark.isSelected = true;
         });
     }
     selectByName(benchmarkName) {
         _.each(this._benchmarks, (benchmark) => {
             if (benchmark.name == benchmarkName)
-                benchmark.selected = true;
+                benchmark.isSelected = true;
         });
     }
     unselectAll() {
         _.each(this._benchmarks, (benchmark) => {
-            benchmark.selected = false;
+            benchmark.isSelected = false;
         });
     }
     unselectByName(benchmarkName) {
         _.each(this._benchmarks, (benchmark) => {
             if (benchmark.name == benchmarkName)
-                benchmark.selected = false;
+                benchmark.isSelected = false;
         });
     }
     setUp(context, callback) {
@@ -71,7 +71,7 @@ class BenchmarkSuiteInstance {
                 return;
             }
             async.each(this._benchmarks, (benchmark, callback) => {
-                if (benchmark.selected)
+                if (benchmark.isSelected)
                     benchmark.setUp(context, callback);
                 else
                     callback();
@@ -85,7 +85,7 @@ class BenchmarkSuiteInstance {
                 return;
             }
             async.each(this._benchmarks, (benchmark, callback) => {
-                if (benchmark.selected)
+                if (benchmark.isSelected)
                     benchmark.tearDown(callback);
                 else
                     callback();

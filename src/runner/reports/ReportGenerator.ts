@@ -74,7 +74,7 @@ export class ReportGenerator {
         output += "Executed Benchmarks:";
         output += ReportGenerator.NewLine;
         let index = 0;
-        for (let benchmark of this._benchmarks.selected) {
+        for (let benchmark of this._benchmarks.isSelected) {
             index++;
             output += util.format("  %d. %s.%s [%d%%]",
                 index, benchmark.suite.name, benchmark.name, benchmark.proportion

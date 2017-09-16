@@ -30,13 +30,13 @@ suite('BenchmarksManager', ()=> {
 
         benchmarks.addSuitesFromModule('./obj/src/standardbenchmarks');
 
-        assert.equal(0, benchmarks.selected.length);
+        assert.equal(0, benchmarks.isSelected.length);
 
         runner.benchmarks.selectAll();
-        assert.equal(5, benchmarks.selected.length);
+        assert.equal(5, benchmarks.isSelected.length);
 
         benchmarks.unselectAll();
-        assert.equal(0, benchmarks.selected.length);
+        assert.equal(0, benchmarks.isSelected.length);
     });
 
     test('selectBenchmarkByName', () => {
@@ -45,13 +45,13 @@ suite('BenchmarksManager', ()=> {
 
         benchmarks.addSuitesFromModule('./obj/src/standardbenchmarks');
 
-        assert.equal(0, benchmarks.selected.length);
+        assert.equal(0, benchmarks.isSelected.length);
 
         benchmarks.selectByName(['Utility.Empty']);
-        assert.equal(1, benchmarks.selected.length);
+        assert.equal(1, benchmarks.isSelected.length);
 
         benchmarks.unselectByName(['Utility.Empty']);
-        assert.equal(0, benchmarks.selected.length);
+        assert.equal(0, benchmarks.isSelected.length);
     });
 
 });

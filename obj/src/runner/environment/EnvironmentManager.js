@@ -95,7 +95,7 @@ class EnvironmentManager extends ExecutionManager_1.ExecutionManager {
         let instance = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
         instance.unselectAll();
         instance.selectByName(suite.cpuBenchmark.name);
-        this.run(instance.selected, (err) => {
+        this.run(instance.isSelected, (err) => {
             let result = this._results.all.length > 0
                 ? this._results.all[0].performanceMeasurement.averageValue : 0;
             callback(err, result);
@@ -106,7 +106,7 @@ class EnvironmentManager extends ExecutionManager_1.ExecutionManager {
         let instance = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
         instance.unselectAll();
         instance.selectByName(suite.diskBenchmark.name);
-        this.run(instance.selected, (err) => {
+        this.run(instance.isSelected, (err) => {
             let result = this._results.all.length > 0
                 ? this._results.all[0].performanceMeasurement.averageValue : 0;
             callback(err, result);
@@ -117,7 +117,7 @@ class EnvironmentManager extends ExecutionManager_1.ExecutionManager {
         let instance = new BenchmarkSuiteInstance_1.BenchmarkSuiteInstance(suite);
         instance.unselectAll();
         instance.selectByName(suite.videoBenchmark.name);
-        this.run(instance.selected, (err) => {
+        this.run(instance.isSelected, (err) => {
             let result = this._results.all.length > 0
                 ? this._results.all[0].performanceMeasurement.averageValue : 0;
             callback(err, result);

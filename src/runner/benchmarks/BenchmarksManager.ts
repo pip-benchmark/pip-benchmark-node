@@ -20,7 +20,7 @@ export class BenchmarksManager {
         return this._suites;
     }
 
-    public get selected(): BenchmarkInstance[] {
+    public get isSelected(): BenchmarkInstance[] {
         let benchmarks: BenchmarkInstance[] = [];
 
         for (let suite of this._suites) {

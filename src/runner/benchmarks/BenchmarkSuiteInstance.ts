@@ -47,35 +47,35 @@ export class BenchmarkSuiteInstance {
         return this._benchmarks;
     }
 
-    public get selected(): BenchmarkInstance[] {
+    public get isSelected(): BenchmarkInstance[] {
         return _.filter(this._benchmarks, (benchmark) => {
-            return benchmark.selected;
+            return benchmark.isSelected;
         });
     }
 
     public selectAll(): void {
         _.each(this._benchmarks, (benchmark) => {
-            benchmark.selected = true;
+            benchmark.isSelected = true;
         });
     }
 
     public selectByName(benchmarkName: string): void {
         _.each(this._benchmarks, (benchmark) => {
             if (benchmark.name == benchmarkName)
-                benchmark.selected = true;
+                benchmark.isSelected = true;
         });
     }
 
     public unselectAll(): void {
         _.each(this._benchmarks, (benchmark) => {
-            benchmark.selected = false;
+            benchmark.isSelected = false;
         });
     }
 
     public unselectByName(benchmarkName: string): void {
         _.each(this._benchmarks, (benchmark) => {
             if (benchmark.name == benchmarkName)
-                benchmark.selected = false;
+                benchmark.isSelected = false;
         });
     }
 
@@ -91,7 +91,7 @@ export class BenchmarkSuiteInstance {
             async.each(
                 this._benchmarks,
                 (benchmark, callback) => {
-                    if (benchmark.selected)
+                    if (benchmark.isSelected)
                         benchmark.setUp(context, callback);
                     else
                         callback();
@@ -111,7 +111,7 @@ export class BenchmarkSuiteInstance {
             async.each(
                 this._benchmarks,
                 (benchmark, callback) => {
-                    if (benchmark.selected)
+                    if (benchmark.isSelected)
                         benchmark.tearDown(callback);
                     else
                         callback();

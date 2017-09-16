@@ -42,13 +42,13 @@ class BenchmarkRunner {
         return this._execution.isRunning;
     }
     start() {
-        this._execution.start(this._benchmarks.selected);
+        this._execution.start(this._benchmarks.isSelected);
     }
     stop() {
         this._execution.stop();
     }
     run(callback) {
-        this._execution.run(this._benchmarks.selected, callback);
+        this._execution.run(this._benchmarks.isSelected, callback);
     }
 }
 exports.BenchmarkRunner = BenchmarkRunner;

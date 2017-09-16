@@ -12,7 +12,7 @@ class BenchmarksManager {
     get suites() {
         return this._suites;
     }
-    get selected() {
+    get isSelected() {
         let benchmarks = [];
         for (let suite of this._suites) {
             for (let benchmark of suite.benchmarks) {

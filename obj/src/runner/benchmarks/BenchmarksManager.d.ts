@@ -6,7 +6,7 @@ export declare class BenchmarksManager {
     private _suites;
     constructor(parameters: ParametersManager);
     readonly suites: BenchmarkSuiteInstance[];
-    readonly selected: BenchmarkInstance[];
+    readonly isSelected: BenchmarkInstance[];
     selectAll(): void;
     selectByName(benchmarkNames: string[]): void;
     select(benchmarks: BenchmarkInstance[]): void;
