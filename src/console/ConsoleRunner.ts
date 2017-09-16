@@ -131,7 +131,7 @@ export class ConsoleRunner {
         console.log("-P               - Show all available parameters");
         console.log("-R               - Show report");
         console.log("-e               - Measure environment");
-        console.log("-x [prop|seq] - Execution type: Proportional or Sequencial");
+        console.log("-x [prop|seq]    - Execution type: Proportional or Sequencial");
         console.log("-m [peak|nominal] - Measurement type: Peak or Nominal");
         console.log("-n <rate>        - Nominal rate in transactions per second");
     }
