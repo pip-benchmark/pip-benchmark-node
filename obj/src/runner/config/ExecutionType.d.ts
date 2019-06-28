@@ -1,4 +1,4 @@
 export declare enum ExecutionType {
     Proportional = 0,
-    Sequential = 1,
+    Sequential = 1
 }

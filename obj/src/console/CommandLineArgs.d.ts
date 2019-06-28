@@ -2,7 +2,7 @@ import { MeasurementType } from '../runner/config/MeasurementType';
 import { ExecutionType } from '../runner/config/ExecutionType';
 export declare class CommandLineArgs {
     constructor(args: string[]);
-    private processArguments(args);
+    private processArguments;
     modules: string[];
     classes: string[];
     benchmarks: string[];

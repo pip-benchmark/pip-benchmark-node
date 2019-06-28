@@ -2,10 +2,10 @@ import { PropertyFileLine } from './PropertyFileLine';
 export declare class Properties {
     lines: PropertyFileLine[];
     loadFromFile(file: string): void;
-    private populateItems();
+    private populateItems;
     saveToFile(file: string): void;
-    private findLine(key);
-    private synchronizeItems();
+    private findLine;
+    private synchronizeItems;
     getAsString(key: string, defaultValue: string): string;
     setAsString(key: string, value: string): void;
     getAsInteger(key: string, defaultValue: number): number;

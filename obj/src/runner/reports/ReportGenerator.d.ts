@@ -14,11 +14,11 @@ export declare class ReportGenerator {
     constructor(configuration: ConfigurationManager, results: ResultsManager, parameters: ParametersManager, benchmarks: BenchmarksManager, environment: EnvironmentManager);
     generate(): string;
     saveToFile(fileName: string): void;
-    private generateHeader();
-    private generateBenchmarkList();
-    private generateMultipleResults();
-    private generateSingleResult();
-    private generateSystemInfo();
-    private generateSystemBenchmark();
-    private generateParameters();
+    private generateHeader;
+    private generateBenchmarkList;
+    private generateMultipleResults;
+    private generateSingleResult;
+    private generateSystemInfo;
+    private generateSystemBenchmark;
+    private generateParameters;
 }

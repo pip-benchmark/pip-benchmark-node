@@ -10,9 +10,9 @@ export declare class EnvironmentManager extends ExecutionManager {
     readonly videoMeasurement: number;
     readonly diskMeasurement: number;
     measure(cpu: boolean, disk: boolean, video: boolean, callback?: (err: any) => void): void;
-    private load();
-    private save();
-    private measureCpu(callback);
-    private measureDisk(callback);
-    private measureVideo(callback);
+    private load;
+    private save;
+    private measureCpu;
+    private measureDisk;
+    private measureVideo;
 }

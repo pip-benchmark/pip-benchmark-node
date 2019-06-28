@@ -15,9 +15,9 @@ export declare class ProportionalExecutionStrategy extends ExecutionStrategy {
     start(callback?: (err: any) => void): void;
     readonly isStopped: boolean;
     stop(callback?: (err: any) => void): void;
-    private calculateProportionalRanges();
-    private chooseBenchmarkProportionally();
-    private executeDelay(delay, callback);
-    private executeBenchmark(benchmark, callback);
-    private execute(callback?);
+    private calculateProportionalRanges;
+    private chooseBenchmarkProportionally;
+    private executeDelay;
+    private executeBenchmark;
+    private execute;
 }

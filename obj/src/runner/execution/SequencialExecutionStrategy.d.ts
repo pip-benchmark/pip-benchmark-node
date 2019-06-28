@@ -10,5 +10,5 @@ export declare class SequencialExecutionStrategy extends ExecutionStrategy {
     readonly isStopped: boolean;
     start(callback?: (err: any) => void): void;
     stop(callback?: (err: any) => void): void;
-    private execute(callback?);
+    private execute;
 }

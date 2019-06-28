@@ -2,11 +2,11 @@ export declare class ConsoleRunner {
     private _args;
     private _runner;
     constructor();
-    private start(args);
+    private start;
     stop(): void;
-    private executeBatchMode();
+    private executeBatchMode;
     printHelp(): void;
-    private printBenchmarks();
-    private printParameters();
+    private printBenchmarks;
+    private printParameters;
     static run(args: string[]): void;
 }
