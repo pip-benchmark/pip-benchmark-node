@@ -72,6 +72,6 @@ class DefaultCpuBenchmark extends Benchmark_1.Benchmark {
         callback(null);
     }
 }
-DefaultCpuBenchmark.NumberOfAttempts = 20000;
 exports.DefaultCpuBenchmark = DefaultCpuBenchmark;
+DefaultCpuBenchmark.NumberOfAttempts = 20000;
 //# sourceMappingURL=DefaultCpuBenchmark.js.map

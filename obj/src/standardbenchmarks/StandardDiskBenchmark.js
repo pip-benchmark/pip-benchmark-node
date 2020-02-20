@@ -71,10 +71,10 @@ class StandardDiskBenchmark extends Benchmark_1.Benchmark {
         callback(null);
     }
 }
+exports.StandardDiskBenchmark = StandardDiskBenchmark;
 StandardDiskBenchmark.NameText = "Disk";
 StandardDiskBenchmark.DescriptionText = "Measures disk read and write operations";
 StandardDiskBenchmark.BufferSize = 512;
 StandardDiskBenchmark.ChunkSize = 1024000;
 StandardDiskBenchmark.FileSize = 102400000;
-exports.StandardDiskBenchmark = StandardDiskBenchmark;
 //# sourceMappingURL=StandardDiskBenchmark.js.map

@@ -6,6 +6,6 @@ class DefaultVideoBenchmark extends PassiveBenchmark_1.PassiveBenchmark {
         super("Video", "Measures performance of video card");
     }
 }
-DefaultVideoBenchmark.MaxLength = 100;
 exports.DefaultVideoBenchmark = DefaultVideoBenchmark;
+DefaultVideoBenchmark.MaxLength = 100;
 //# sourceMappingURL=DefaultVideoBenchmark.js.map

@@ -124,6 +124,6 @@ class EnvironmentManager extends ExecutionManager_1.ExecutionManager {
         });
     }
 }
-EnvironmentManager.Duration = 5;
 exports.EnvironmentManager = EnvironmentManager;
+EnvironmentManager.Duration = 5;
 //# sourceMappingURL=EnvironmentManager.js.map

@@ -196,7 +196,7 @@ class ReportGenerator {
         return output;
     }
 }
+exports.ReportGenerator = ReportGenerator;
 ReportGenerator.SeparatorLine = "***************************************************************\r\n";
 ReportGenerator.NewLine = "\r\n";
-exports.ReportGenerator = ReportGenerator;
 //# sourceMappingURL=ReportGenerator.js.map

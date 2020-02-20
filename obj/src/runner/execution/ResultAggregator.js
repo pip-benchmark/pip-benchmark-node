@@ -59,6 +59,6 @@ class ResultAggregator {
         this._results.add(this._result);
     }
 }
-ResultAggregator.MaxErrorCount = 1000;
 exports.ResultAggregator = ResultAggregator;
+ResultAggregator.MaxErrorCount = 1000;
 //# sourceMappingURL=ResultAggregator.js.map

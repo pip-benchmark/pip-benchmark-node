@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Random {
-    constructor() { }
+    constructor() {
+    }
     randomStringList(minCount, maxCount, itemSize) {
         let result = [];
         let count = Math.max(0, minCount + Math.random() * (maxCount - minCount));
@@ -33,6 +34,6 @@ class Random {
         return this.randomDouble(0, 100) >= 50;
     }
 }
-Random.AllowStringChars = "ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz -";
 exports.Random = Random;
+Random.AllowStringChars = "ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz -";
 //# sourceMappingURL=Random.js.map

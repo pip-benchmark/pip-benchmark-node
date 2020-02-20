@@ -71,8 +71,8 @@ class DefaultDiskBenchmark extends Benchmark_1.Benchmark {
         callback(null);
     }
 }
+exports.DefaultDiskBenchmark = DefaultDiskBenchmark;
 DefaultDiskBenchmark.BufferSize = 512;
 DefaultDiskBenchmark.ChunkSize = 1024000;
 DefaultDiskBenchmark.FileSize = 102400000;
-exports.DefaultDiskBenchmark = DefaultDiskBenchmark;
 //# sourceMappingURL=DefaultDiskBenchmark.js.map
