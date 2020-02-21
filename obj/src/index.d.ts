@@ -7,3 +7,4 @@ export { BenchmarkSuite } from './BenchmarkSuite';
 export * from './runner';
 export * from './console';
 export * from './standardbenchmarks';
+export * from './random';

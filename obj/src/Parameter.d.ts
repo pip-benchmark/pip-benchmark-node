@@ -9,15 +9,27 @@ export declare class Parameter {
     readonly defaultValue: string;
     value: string;
     getAsString(): string;
+    getAsNullableString(): string;
+    getAsStringWithDefault(defaultValue: string): string;
     setAsString(value: string): void;
     getAsBoolean(): boolean;
+    getAsNullableBoolean(): boolean;
+    getAsBooleanWithDefault(defaultValue: boolean): boolean;
     setAsBoolean(value: boolean): void;
     getAsInteger(): number;
+    getAsNullableInteger(): number;
+    getAsIntegerWithDefault(defaultValue: number): number;
     setAsInteger(value: number): void;
     getAsLong(): number;
+    getAsNullableLong(): number;
+    getAsLongWithDefault(defaultValue: number): number;
     setAsLong(value: number): void;
     getAsFloat(): number;
+    getAsNullableFloat(): number;
+    getAsFloatWithDefault(defaultValue: number): number;
     setAsFloat(value: number): void;
     getAsDouble(): number;
+    getAsNullableDouble(): number;
+    getAsDoubleWithDefault(defaultValue: number): number;
     setAsDouble(value: number): void;
 }

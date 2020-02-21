@@ -1,4 +1,5 @@
 export { BenchmarkRunner } from './BenchmarkRunner';
+export { BenchmarkBuilder } from './BenchmarkBuilder';
 export { ExecutionType } from './config/ExecutionType';
 export { MeasurementType } from './config/MeasurementType';
 export { ConfigurationCallback } from './config/ConfigurationCallback';

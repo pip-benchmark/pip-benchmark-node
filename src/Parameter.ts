@@ -36,13 +36,29 @@ export class Parameter {
     public getAsString(): string {
         return this.value;
     }
-    
+
+    public getAsNullableString(): string {
+        return this.value;
+    }
+
+    public getAsStringWithDefault(defaultValue: string): string {
+        return this.value || defaultValue;
+    }
+
     public setAsString(value: string): void {
         this.value = value;
     }
 
     public getAsBoolean(): boolean {
-        return Converter.stringToBoolean(this.value); 
+        return Converter.stringToBoolean(this.value, false); 
+    }
+
+    public getAsNullableBoolean(): boolean {
+        return Converter.stringToBoolean(this.value, null); 
+    }
+
+    public getAsBooleanWithDefault(defaultValue: boolean): boolean {
+        return Converter.stringToBoolean(this.value, defaultValue); 
     }
     
     public setAsBoolean(value: boolean): void {
@@ -52,7 +68,15 @@ export class Parameter {
     public getAsInteger(): number {
         return Converter.stringToInteger(this.value, 0);
     }
-    
+
+    public getAsNullableInteger(): number {
+        return Converter.stringToInteger(this.value, null);
+    }
+
+    public getAsIntegerWithDefault(defaultValue: number): number {
+        return Converter.stringToInteger(this.value, defaultValue);
+    }
+
     public setAsInteger(value: number): void {
         this.value = Converter.integerToString(value);
     }
@@ -60,7 +84,15 @@ export class Parameter {
     public getAsLong(): number {
         return Converter.stringToLong(this.value, 0); 
     }
-    
+
+    public getAsNullableLong(): number {
+        return Converter.stringToLong(this.value, null); 
+    }
+
+    public getAsLongWithDefault(defaultValue: number): number {
+        return Converter.stringToLong(this.value, defaultValue); 
+    }
+
     public setAsLong(value: number): void {
         this.value = Converter.longToString(value);
     }
@@ -68,7 +100,15 @@ export class Parameter {
     public getAsFloat(): number {
         return Converter.stringToFloat(this.value, 0); 
     }
-    
+
+    public getAsNullableFloat(): number {
+        return Converter.stringToFloat(this.value, null); 
+    }
+
+    public getAsFloatWithDefault(defaultValue: number): number {
+        return Converter.stringToFloat(this.value, defaultValue); 
+    }
+
     public setAsFloat(value: number): void {
         this.value = Converter.floatToString(value);
     }
@@ -76,7 +116,15 @@ export class Parameter {
     public getAsDouble(): number {
         return Converter.stringToDouble(this.value, 0); 
     }
-    
+
+    public getAsNullableDouble(): number {
+        return Converter.stringToDouble(this.value, null); 
+    }
+
+    public getAsDoubleWithDefault(defaultValue: number): number {
+        return Converter.stringToDouble(this.value, defaultValue); 
+    }
+
     public setAsDouble(value: number): void {
         this.value = Converter.doubleToString(value);
     }

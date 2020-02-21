@@ -16,4 +16,5 @@ exports.BenchmarkSuite = BenchmarkSuite_1.BenchmarkSuite;
 __export(require("./runner"));
 __export(require("./console"));
 __export(require("./standardbenchmarks"));
+__export(require("./random"));
 //# sourceMappingURL=index.js.map

@@ -7,6 +7,6 @@ export declare class Converter {
     static floatToString(value: number): string;
     static stringToDouble(value: string, defaultValue: number): number;
     static doubleToString(value: number): string;
-    static stringToBoolean(value: string): boolean;
+    static stringToBoolean(value: string, defaultValue: boolean): boolean;
     static booleanToString(value: boolean): string;
 }

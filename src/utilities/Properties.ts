@@ -117,7 +117,7 @@ export class Properties {
     public getAsBoolean(key: string, defaultValue: boolean): boolean {
         let value = this[key];
         if (value == null) return defaultValue;
-        return Converter.stringToBoolean(value);
+        return Converter.stringToBoolean(value, defaultValue);
     }
 
     public setAsBoolean(key: string, value: boolean): void {

@@ -32,10 +32,10 @@ suite('Converter', ()=> {
     });
 
     test('stringToBoolean', () => {
-        assert.equal(false, Converter.stringToBoolean(null));
-        assert.equal(true, Converter.stringToBoolean("True"));
-        assert.equal(true, Converter.stringToBoolean("1"));
-        assert.equal(true, Converter.stringToBoolean("T"));
+        assert.equal(false, Converter.stringToBoolean(null, false));
+        assert.equal(true, Converter.stringToBoolean("True", false));
+        assert.equal(true, Converter.stringToBoolean("1", false));
+        assert.equal(true, Converter.stringToBoolean("T", false));
     });
 
 });

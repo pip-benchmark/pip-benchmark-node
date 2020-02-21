@@ -106,7 +106,7 @@ class Properties {
         let value = this[key];
         if (value == null)
             return defaultValue;
-        return Converter_1.Converter.stringToBoolean(value);
+        return Converter_1.Converter.stringToBoolean(value, defaultValue);
     }
     setAsBoolean(key, value) {
         this[key] = Converter_1.Converter.booleanToString(value);
