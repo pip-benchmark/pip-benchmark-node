@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.PropertyFileLine = void 0;
 class PropertyFileLine {
     constructor(key, value, comment) {
         if (value == null && comment == null) {

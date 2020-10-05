@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ResultAggregator = void 0;
 const BenchmarkResult_1 = require("../results/BenchmarkResult");
 const TransactionMeter_1 = require("./TransactionMeter");
 const CpuLoadMeter_1 = require("./CpuLoadMeter");

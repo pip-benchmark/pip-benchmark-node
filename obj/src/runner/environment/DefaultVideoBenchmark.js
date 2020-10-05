@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.DefaultVideoBenchmark = void 0;
 const PassiveBenchmark_1 = require("../../PassiveBenchmark");
 class DefaultVideoBenchmark extends PassiveBenchmark_1.PassiveBenchmark {
     constructor() {

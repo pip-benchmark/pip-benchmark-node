@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.CpuLoadMeter = void 0;
 let os = require('os');
 const BenchmarkMeter_1 = require("./BenchmarkMeter");
 class CpuLoadMeter extends BenchmarkMeter_1.BenchmarkMeter {

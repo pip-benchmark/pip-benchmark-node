@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BenchmarkMeter = void 0;
 const Measurement_1 = require("../results/Measurement");
 class BenchmarkMeter {
     constructor() {

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.MeasurementType = void 0;
 var MeasurementType;
 (function (MeasurementType) {
     MeasurementType[MeasurementType["Peak"] = 0] = "Peak";

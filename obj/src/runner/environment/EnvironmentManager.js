@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.EnvironmentManager = void 0;
 let async = require('async');
 const ConfigurationManager_1 = require("../config/ConfigurationManager");
 const ResultsManager_1 = require("../results/ResultsManager");

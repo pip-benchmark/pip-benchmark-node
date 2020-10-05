@@ -6,12 +6,12 @@ export declare class BenchmarkSuiteInstance {
     private _suite;
     private _benchmarks;
     constructor(suite: BenchmarkSuite);
-    readonly suite: BenchmarkSuite;
-    readonly name: string;
-    readonly description: string;
-    readonly parameters: Parameter[];
-    readonly benchmarks: BenchmarkInstance[];
-    readonly isSelected: BenchmarkInstance[];
+    get suite(): BenchmarkSuite;
+    get name(): string;
+    get description(): string;
+    get parameters(): Parameter[];
+    get benchmarks(): BenchmarkInstance[];
+    get isSelected(): BenchmarkInstance[];
     selectAll(): void;
     selectByName(benchmarkName: string): void;
     unselectAll(): void;

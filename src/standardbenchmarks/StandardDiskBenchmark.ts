@@ -12,7 +12,7 @@ export class StandardDiskBenchmark extends Benchmark {
     private _fileName: string;
     private _fd: number;
     private _fileSize: number = 0;
-    private _buffer = new Buffer(StandardDiskBenchmark.BufferSize);
+    private _buffer =  Buffer.alloc(StandardDiskBenchmark.BufferSize);
 
     public constructor() {
         super(StandardDiskBenchmark.NameText, StandardDiskBenchmark.DescriptionText);
