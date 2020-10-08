@@ -145,8 +145,9 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
         this._benchmarkCount = this._benchmarks.length;
         this._onlyBenchmark = this._benchmarkCount == 1 ? this._benchmarks[0] : null;
         // Execute benchmarks
-        async.whilst(() => {
-            return this._running && this._lastExecutedTime < this._stopTime;
+        async.whilst((cb) => {
+            //return this._running && this._lastExecutedTime < this._stopTime;
+            cb(null, this._running && this._lastExecutedTime < this._stopTime);
         }, (callback) => {
             let benchmark = this._onlyBenchmark != null
                 ? this._onlyBenchmark : this.chooseBenchmarkProportionally();
