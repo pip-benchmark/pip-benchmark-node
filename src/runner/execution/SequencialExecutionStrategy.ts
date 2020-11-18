@@ -64,12 +64,17 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
     private execute(callback?: (err: any) => void) {
         async.eachSeries(
             this._benchmarks,
-            (benchmark, callback) => {
+            (benchmark: BenchmarkInstance, callback) => {
                 // Skip if benchmarking was interrupted
                 if (!this._running) {
                     callback();
                     return;
                 }
+
+                // Write a message
+                benchmark.benchmark.context.sendMessage(
+                    "Executing " + benchmark.name + " benchmark..."
+                );
 
                 // Start embedded strategy
                 this._current = new ProportionalExecutionStrategy(this._configuration, this._results, null, [benchmark]);

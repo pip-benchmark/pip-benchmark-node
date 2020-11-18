@@ -50,6 +50,8 @@ class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy 
                 callback();
                 return;
             }
+            // Write a message
+            benchmark.benchmark.context.sendMessage("Executing " + benchmark.name + " benchmark...");
             // Start embedded strategy
             this._current = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this._configuration, this._results, null, [benchmark]);
             this._current.start();
