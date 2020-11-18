@@ -187,8 +187,11 @@ export class ProportionalExecutionStrategy extends ExecutionStrategy {
         // Execute benchmarks
         async.whilst(
             (cb) => {
-                //return this._running && this._lastExecutedTime < this._stopTime;
-                cb(null, this._running && this._lastExecutedTime < this._stopTime);
+                if (cb != null) {
+                    cb(null, this._running && this._lastExecutedTime < this._stopTime);
+                } else {
+                    return this._running && this._lastExecutedTime < this._stopTime;
+                }
             },
             (callback) => {
                 let benchmark = this._onlyBenchmark != null 
