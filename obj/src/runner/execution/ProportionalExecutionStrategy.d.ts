@@ -13,7 +13,7 @@ export declare class ProportionalExecutionStrategy extends ExecutionStrategy {
     private _timeout;
     constructor(configuration: ConfigurationManager, results: ResultsManager, execution: any, benchmarks: BenchmarkInstance[]);
     start(callback?: (err: any) => void): void;
-    readonly isStopped: boolean;
+    get isStopped(): boolean;
     stop(callback?: (err: any) => void): void;
     private calculateProportionalRanges;
     private chooseBenchmarkProportionally;

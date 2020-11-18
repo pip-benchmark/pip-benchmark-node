@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ExecutionTypeParameter = void 0;
 const Parameter_1 = require("../../Parameter");
 const ExecutionType_1 = require("../config/ExecutionType");
 class ExecutionTypeParameter extends Parameter_1.Parameter {

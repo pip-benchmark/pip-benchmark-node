@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.StandardCpuBenchmark = void 0;
 const Benchmark_1 = require("../Benchmark");
 class StandardCpuBenchmark extends Benchmark_1.Benchmark {
     constructor() {

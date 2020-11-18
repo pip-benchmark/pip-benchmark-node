@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Converter = void 0;
 class Converter {
     static stringToInteger(value, defaultValue) {
         return Converter.stringToLong(value, defaultValue);
@@ -53,7 +54,7 @@ class Converter {
             }
             if (value.charAt(0) == '0' || value.charAt(0) == 'F' || value.charAt(0) == 'N'
                 || value.charAt(0) == 'f' || value.charAt(0) == 'n') {
-                return true;
+                return false;
             }
         }
         // Process strings

@@ -3,5 +3,6 @@ import { ConfigurationManager } from '../config/ConfigurationManager';
 export declare class NominalRateParameter extends Parameter {
     private _configuration;
     constructor(configuration: ConfigurationManager);
-    value: string;
+    get value(): string;
+    set value(value: string);
 }

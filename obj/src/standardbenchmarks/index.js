@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var StandardCpuBenchmark_1 = require("./StandardCpuBenchmark");
-exports.StandardCpuBenchmark = StandardCpuBenchmark_1.StandardCpuBenchmark;
+Object.defineProperty(exports, "StandardCpuBenchmark", { enumerable: true, get: function () { return StandardCpuBenchmark_1.StandardCpuBenchmark; } });
 var StandardDiskBenchmark_1 = require("./StandardDiskBenchmark");
-exports.StandardDiskBenchmark = StandardDiskBenchmark_1.StandardDiskBenchmark;
+Object.defineProperty(exports, "StandardDiskBenchmark", { enumerable: true, get: function () { return StandardDiskBenchmark_1.StandardDiskBenchmark; } });
 var StandardVideoBenchmark_1 = require("./StandardVideoBenchmark");
-exports.StandardVideoBenchmark = StandardVideoBenchmark_1.StandardVideoBenchmark;
+Object.defineProperty(exports, "StandardVideoBenchmark", { enumerable: true, get: function () { return StandardVideoBenchmark_1.StandardVideoBenchmark; } });
 var StandardHardwareBenchmarkSuite_1 = require("./StandardHardwareBenchmarkSuite");
-exports.StandardHardwareBenchmarkSuite = StandardHardwareBenchmarkSuite_1.StandardHardwareBenchmarkSuite;
+Object.defineProperty(exports, "StandardHardwareBenchmarkSuite", { enumerable: true, get: function () { return StandardHardwareBenchmarkSuite_1.StandardHardwareBenchmarkSuite; } });
 var UtilityBenchmarkSuite_1 = require("./UtilityBenchmarkSuite");
-exports.UtilityBenchmarkSuite = UtilityBenchmarkSuite_1.UtilityBenchmarkSuite;
+Object.defineProperty(exports, "UtilityBenchmarkSuite", { enumerable: true, get: function () { return UtilityBenchmarkSuite_1.UtilityBenchmarkSuite; } });
 //# sourceMappingURL=index.js.map

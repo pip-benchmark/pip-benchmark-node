@@ -57,7 +57,7 @@ export class Converter {
             }
             if (value.charAt(0) == '0' || value.charAt(0) == 'F' || value.charAt(0) == 'N'
                 || value.charAt(0) == 'f' || value.charAt(0) == 'n') {
-                return true;
+                return false;
             }
         }
 

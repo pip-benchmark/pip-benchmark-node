@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ExecutionContext = void 0;
 class ExecutionContext {
     constructor(suite, aggregator, strategy) {
         this._aggregator = aggregator;

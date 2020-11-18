@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SystemInfo = void 0;
 let os = require('os');
 class SystemInfo {
     constructor() {

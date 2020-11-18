@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BenchmarkBuilder = void 0;
 const BenchmarkRunner_1 = require("./BenchmarkRunner");
 class BenchmarkBuilder {
     constructor() {

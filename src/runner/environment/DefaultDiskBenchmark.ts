@@ -10,7 +10,7 @@ export class DefaultDiskBenchmark extends Benchmark {
     private _fileName: string;
     private _fd: number;
     private _fileSize: number = 0;
-    private _buffer = new Buffer(DefaultDiskBenchmark.BufferSize);
+    private _buffer =  Buffer.alloc(DefaultDiskBenchmark.BufferSize);
 
     public constructor() {
         super("Disk", "Measures system disk performance");

@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.DefaultDiskBenchmark = void 0;
 let fs = require('fs');
 const Benchmark_1 = require("../../Benchmark");
 class DefaultDiskBenchmark extends Benchmark_1.Benchmark {
     constructor() {
         super("Disk", "Measures system disk performance");
         this._fileSize = 0;
-        this._buffer = new Buffer(DefaultDiskBenchmark.BufferSize);
+        this._buffer = Buffer.alloc(DefaultDiskBenchmark.BufferSize);
     }
     setUp(callback) {
         let id = Math.ceil(1000000 + Math.random() * 9000000);
