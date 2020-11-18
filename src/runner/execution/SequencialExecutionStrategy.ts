@@ -72,7 +72,7 @@ export class SequencialExecutionStrategy extends ExecutionStrategy {
                 }
 
                 // Write a message
-                benchmark.benchmark.context.sendMessage(
+                this._results.notifyMessage(
                     "Executing " + benchmark.name + " benchmark..."
                 );
 
