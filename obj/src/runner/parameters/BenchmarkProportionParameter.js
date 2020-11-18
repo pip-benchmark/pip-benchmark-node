@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BenchmarkProportionParameter = void 0;
 var util = require('util');
 const Parameter_1 = require("../../Parameter");
 const Converter_1 = require("../../utilities/Converter");

@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BenchmarkRunner = void 0;
 const ConfigurationManager_1 = require("./config/ConfigurationManager");
 const ResultsManager_1 = require("./results/ResultsManager");
 const BenchmarksManager_1 = require("./benchmarks/BenchmarksManager");

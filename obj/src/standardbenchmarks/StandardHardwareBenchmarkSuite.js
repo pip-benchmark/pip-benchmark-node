@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StandardHardwareBenchmarkSuite = void 0;
 const BenchmarkSuite_1 = require("../BenchmarkSuite");
 const StandardCpuBenchmark_1 = require("./StandardCpuBenchmark");
 const StandardDiskBenchmark_1 = require("./StandardDiskBenchmark");

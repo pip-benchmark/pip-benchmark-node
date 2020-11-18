@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Formatter = void 0;
 let util = require('util');
 class Formatter {
     static padLeft(value, length, padSymbol) {

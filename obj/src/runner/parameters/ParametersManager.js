@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ParametersManager = void 0;
 let _ = require('lodash');
 const MeasurementTypeParameter_1 = require("./MeasurementTypeParameter");
 const NominalRateParameter_1 = require("./NominalRateParameter");

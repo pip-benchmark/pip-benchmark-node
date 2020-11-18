@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NominalRateParameter = void 0;
 const Parameter_1 = require("../../Parameter");
 const Converter_1 = require("../../utilities/Converter");
 class NominalRateParameter extends Parameter_1.Parameter {

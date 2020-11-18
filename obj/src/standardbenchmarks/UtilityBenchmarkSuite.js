@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UtilityBenchmarkSuite = void 0;
 const BenchmarkSuite_1 = require("../BenchmarkSuite");
 class UtilityBenchmarkSuite extends BenchmarkSuite_1.BenchmarkSuite {
     constructor() {

@@ -5,8 +5,8 @@ export declare class ParametersManager {
     private _configuration;
     private _parameters;
     constructor(configuration: ConfigurationManager);
-    get userDefined(): Parameter[];
-    get all(): Parameter[];
+    readonly userDefined: Parameter[];
+    readonly all: Parameter[];
     loadFromFile(path: string): void;
     saveToFile(path: string): void;
     addSuite(suite: BenchmarkSuiteInstance): void;

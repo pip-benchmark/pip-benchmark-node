@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Measurement = void 0;
 class Measurement {
     constructor(currentValue, minValue, averageValue, maxValue) {
         this.currentValue = currentValue;

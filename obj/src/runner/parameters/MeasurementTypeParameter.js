@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MeasurementTypeParameter = void 0;
 const Parameter_1 = require("../../Parameter");
 const MeasurementType_1 = require("../config/MeasurementType");
 class MeasurementTypeParameter extends Parameter_1.Parameter {

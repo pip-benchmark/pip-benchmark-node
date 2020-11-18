@@ -11,7 +11,7 @@ export declare class ResultAggregator {
     private _cpuLoadMeter;
     private _memoryUsageMeter;
     constructor(results: ResultsManager, benchmarks: BenchmarkInstance[]);
-    get result(): BenchmarkResult;
+    readonly result: BenchmarkResult;
     start(): void;
     incrementCounter(increment: number, now?: number): void;
     sendMessage(message: string): void;

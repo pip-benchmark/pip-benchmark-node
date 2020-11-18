@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReportGenerator = void 0;
 let _ = require('lodash');
 let fs = require('fs');
 let util = require('util');

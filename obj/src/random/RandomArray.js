@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RandomArray = void 0;
 /** @module random */
 const RandomInteger_1 = require("./RandomInteger");
 /**

@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Properties = void 0;
 let fs = require('fs');
 let os = require('os');
 const PropertyFileLine_1 = require("./PropertyFileLine");

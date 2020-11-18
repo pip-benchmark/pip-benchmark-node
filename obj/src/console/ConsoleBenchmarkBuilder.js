@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ConsoleBenchmarkBuilder = void 0;
 const _ = require('lodash');
 const BenchmarkBuilder_1 = require("../runner/BenchmarkBuilder");
 const ConsoleEventPrinter_1 = require("./ConsoleEventPrinter");

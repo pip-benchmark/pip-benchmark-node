@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ResultsManager = void 0;
 class ResultsManager {
     constructor() {
         this._results = [];
