@@ -1,5 +1,11 @@
 # Portable Benchmarking Framework in Node.js Changelog
 
+## <a name="2.0.0"></a> 2.1.0 (2020-11-18)
+
+### Features
+* Added BenchmarkBuilder
+* Added ConsoleBenchmarkBuilder
+
 ## <a name="2.0.0"></a> 2.0.0 (2017-02-06)
 
 Complete refactoring of benchmark runner

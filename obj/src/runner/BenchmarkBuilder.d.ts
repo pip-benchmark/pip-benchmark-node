@@ -12,6 +12,7 @@ export declare class BenchmarkBuilder {
     addSuite(suite: BenchmarkSuite): BenchmarkBuilder;
     withParameter(name: string, value: any): BenchmarkBuilder;
     withBenchmark(name: string): BenchmarkBuilder;
+    withProportionalBenchmark(name: string, propotion: number): BenchmarkBuilder;
     withAllBenchmarks(): BenchmarkBuilder;
     create(): BenchmarkRunner;
 }
