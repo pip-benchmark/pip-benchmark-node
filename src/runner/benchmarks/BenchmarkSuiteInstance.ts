@@ -12,7 +12,7 @@ export class BenchmarkSuiteInstance {
 
     public constructor(suite: BenchmarkSuite) {
         this._suite = suite;
-        
+
         this._benchmarks = _.map(suite.benchmarks, (benchmark) => {
             return new BenchmarkInstance(this, benchmark);
         });
@@ -95,35 +95,35 @@ export class BenchmarkSuiteInstance {
                         benchmark.setUp(context, callback);
                     else
                         callback();
-                }, 
+                },
                 callback
             );
         });
     }
 
     public tearDown(callback: (err: any) => void): void {
-        this._suite.tearDown((err) => {
-            if (err) {
-                callback(err);
-                return;
-            }
 
-            async.each(
-                this._benchmarks,
-                (benchmark, callback) => {
-                    if (benchmark.isSelected)
-                        benchmark.tearDown(callback);
-                    else
-                        callback();
-                }, 
-                (err) => {
+        async.each(
+            this._benchmarks,
+            (benchmark, callback) => {
+                if (benchmark.isSelected)
+                    benchmark.tearDown(callback);
+                else
+                    callback();
+            },
+            (err) => {
+                if (err) {
                     this._suite.context = null;
-                    
                     callback(err);
+                } else {
+                    this._suite.tearDown((err) => {
+                        if (err) {
+                            this._suite.context = null;
+                            callback(err);
+                        }
+                    });
                 }
-            );
-        });
-
+            }
+        );
     }
-
 }

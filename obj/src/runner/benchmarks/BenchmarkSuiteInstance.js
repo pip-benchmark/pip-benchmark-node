@@ -80,20 +80,24 @@ class BenchmarkSuiteInstance {
         });
     }
     tearDown(callback) {
-        this._suite.tearDown((err) => {
+        async.each(this._benchmarks, (benchmark, callback) => {
+            if (benchmark.isSelected)
+                benchmark.tearDown(callback);
+            else
+                callback();
+        }, (err) => {
             if (err) {
-                callback(err);
-                return;
-            }
-            async.each(this._benchmarks, (benchmark, callback) => {
-                if (benchmark.isSelected)
-                    benchmark.tearDown(callback);
-                else
-                    callback();
-            }, (err) => {
                 this._suite.context = null;
                 callback(err);
-            });
+            }
+            else {
+                this._suite.tearDown((err) => {
+                    if (err) {
+                        this._suite.context = null;
+                        callback(err);
+                    }
+                });
+            }
         });
     }
 }
