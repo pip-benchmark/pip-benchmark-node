@@ -8,7 +8,7 @@ export declare class ResultsManager {
     private _messageListeners;
     private _errorListeners;
     constructor();
-    get all(): BenchmarkResult[];
+    readonly all: BenchmarkResult[];
     add(result: BenchmarkResult): void;
     clear(): void;
     addUpdatedListener(listener: ResultCallback): void;

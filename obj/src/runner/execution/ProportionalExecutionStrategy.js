@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProportionalExecutionStrategy = void 0;
 let _ = require('lodash');
 let async = require('async');
 const MeasurementType_1 = require("../config/MeasurementType");
@@ -146,8 +145,12 @@ class ProportionalExecutionStrategy extends ExecutionStrategy_1.ExecutionStrateg
         this._onlyBenchmark = this._benchmarkCount == 1 ? this._benchmarks[0] : null;
         // Execute benchmarks
         async.whilst((cb) => {
-            //return this._running && this._lastExecutedTime < this._stopTime;
-            cb(null, this._running && this._lastExecutedTime < this._stopTime);
+            if (cb != null) {
+                cb(null, this._running && this._lastExecutedTime < this._stopTime);
+            }
+            else {
+                return this._running && this._lastExecutedTime < this._stopTime;
+            }
         }, (callback) => {
             let benchmark = this._onlyBenchmark != null
                 ? this._onlyBenchmark : this.chooseBenchmarkProportionally();

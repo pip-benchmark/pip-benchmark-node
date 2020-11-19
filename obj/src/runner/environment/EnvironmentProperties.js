@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EnvironmentProperties = void 0;
 let path = require('path');
 const Properties_1 = require("../../utilities/Properties");
 class EnvironmentProperties extends Properties_1.Properties {

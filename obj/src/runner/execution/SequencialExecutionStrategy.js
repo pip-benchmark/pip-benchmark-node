@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SequencialExecutionStrategy = void 0;
 let async = require('async');
 const ExecutionStrategy_1 = require("./ExecutionStrategy");
 const ProportionalExecutionStrategy_1 = require("./ProportionalExecutionStrategy");
@@ -51,6 +50,8 @@ class SequencialExecutionStrategy extends ExecutionStrategy_1.ExecutionStrategy 
                 callback();
                 return;
             }
+            // Write a message
+            this._results.notifyMessage("Executing " + benchmark.name + " benchmark...");
             // Start embedded strategy
             this._current = new ProportionalExecutionStrategy_1.ProportionalExecutionStrategy(this._configuration, this._results, null, [benchmark]);
             this._current.start();

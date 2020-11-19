@@ -1,7 +1,6 @@
 "use strict";
 /** @module random */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RandomDouble = void 0;
 /**
  * Random generator for double values.
  *

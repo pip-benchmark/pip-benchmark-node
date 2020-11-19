@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Benchmark = void 0;
 class Benchmark {
     constructor(name, description) {
         this._name = name;

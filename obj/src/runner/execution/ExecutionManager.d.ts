@@ -10,7 +10,7 @@ export declare class ExecutionManager {
     private _running;
     private _strategy;
     constructor(configuration: ConfigurationManager, results: ResultsManager);
-    get isRunning(): boolean;
+    readonly isRunning: boolean;
     start(benchmarks: BenchmarkInstance[]): void;
     run(benchmarks: BenchmarkInstance[], callback?: (err: any) => void): void;
     stop(): void;

@@ -5,10 +5,10 @@ export declare class EnvironmentManager extends ExecutionManager {
     private _videoMeasurement;
     private _diskMeasurement;
     constructor();
-    get systemInfo(): any;
-    get cpuMeasurement(): number;
-    get videoMeasurement(): number;
-    get diskMeasurement(): number;
+    readonly systemInfo: any;
+    readonly cpuMeasurement: number;
+    readonly videoMeasurement: number;
+    readonly diskMeasurement: number;
     measure(cpu: boolean, disk: boolean, video: boolean, callback?: (err: any) => void): void;
     private load;
     private save;

@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BenchmarkBuilder = void 0;
 const BenchmarkRunner_1 = require("./BenchmarkRunner");
 class BenchmarkBuilder {
     constructor() {
@@ -38,6 +37,11 @@ class BenchmarkBuilder {
     }
     withBenchmark(name) {
         this._runner.benchmarks.selectByName([name]);
+        return this;
+    }
+    withProportionalBenchmark(name, propotion) {
+        this._runner.benchmarks.selectByName([name]);
+        this.withParameter(name + ".Proportion", propotion);
         return this;
     }
     withAllBenchmarks() {

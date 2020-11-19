@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TransactionMeter = void 0;
 const BenchmarkMeter_1 = require("./BenchmarkMeter");
 class TransactionMeter extends BenchmarkMeter_1.BenchmarkMeter {
     constructor() {

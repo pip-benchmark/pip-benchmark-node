@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CommandLineArgs = void 0;
 const MeasurementType_1 = require("../runner/config/MeasurementType");
 const ExecutionType_1 = require("../runner/config/ExecutionType");
 const Converter_1 = require("../utilities/Converter");

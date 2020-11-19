@@ -7,10 +7,10 @@ export declare class ExecutionContext implements IExecutionContext {
     private _aggregator;
     private _strategy;
     constructor(suite: BenchmarkSuiteInstance, aggregator: ResultAggregator, strategy: ExecutionStrategy);
-    get parameters(): any;
+    readonly parameters: any;
     incrementCounter(increment?: number): void;
     sendMessage(message: string): void;
     reportError(error: any): void;
-    get isStopped(): boolean;
+    readonly isStopped: boolean;
     stop(): void;
 }

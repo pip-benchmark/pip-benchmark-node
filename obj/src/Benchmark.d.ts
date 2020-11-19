@@ -4,10 +4,9 @@ export declare abstract class Benchmark {
     private _description;
     private _context;
     constructor(name: string, description: string);
-    get name(): string;
-    get description(): string;
-    get context(): IExecutionContext;
-    set context(value: IExecutionContext);
+    readonly name: string;
+    readonly description: string;
+    context: IExecutionContext;
     setUp(callback: (err?: any) => void): void;
     abstract execute(callback: (err?: any) => void): void;
     tearDown(callback: (err?: any) => void): void;

@@ -7,7 +7,7 @@ export declare class StandardBenchmarkSuite extends BenchmarkSuite {
     private _diskBenchmark;
     private _videoBenchmark;
     constructor();
-    get cpuBenchmark(): DefaultCpuBenchmark;
-    get diskBenchmark(): DefaultDiskBenchmark;
-    get videoBenchmark(): DefaultVideoBenchmark;
+    readonly cpuBenchmark: DefaultCpuBenchmark;
+    readonly diskBenchmark: DefaultDiskBenchmark;
+    readonly videoBenchmark: DefaultVideoBenchmark;
 }

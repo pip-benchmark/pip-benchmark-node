@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BenchmarksManager = void 0;
 let _ = require('lodash');
 let path = require('path');
 const BenchmarkSuite_1 = require("../../BenchmarkSuite");

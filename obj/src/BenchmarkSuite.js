@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BenchmarkSuite = void 0;
 const Parameter_1 = require("./Parameter");
 const DelegatedBenchmark_1 = require("./DelegatedBenchmark");
 class BenchmarkSuite {

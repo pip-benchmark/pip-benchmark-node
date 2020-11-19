@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ConfigurationManager = void 0;
 const MeasurementType_1 = require("./MeasurementType");
 const ExecutionType_1 = require("./ExecutionType");
 class ConfigurationManager {

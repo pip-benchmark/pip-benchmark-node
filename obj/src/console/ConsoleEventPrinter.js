@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ConsoleEventPrinter = void 0;
 let util = require('util');
 const ExecutionState_1 = require("../runner/execution/ExecutionState");
 class ConsoleEventPrinter {

@@ -49,6 +49,12 @@ export class BenchmarkBuilder {
         return this;
     }
 
+    public withProportionalBenchmark(name: string, propotion: number): BenchmarkBuilder {
+        this._runner.benchmarks.selectByName([name]);
+        this.withParameter(name + ".Proportion", propotion);
+        return this;
+    }
+
     public withAllBenchmarks(): BenchmarkBuilder {
         this._runner.benchmarks.selectAll();
         return this;
