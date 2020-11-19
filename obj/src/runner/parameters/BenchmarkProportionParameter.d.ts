@@ -3,5 +3,6 @@ import { BenchmarkInstance } from '../benchmarks/BenchmarkInstance';
 export declare class BenchmarkProportionParameter extends Parameter {
     private _benchmark;
     constructor(benchmark: BenchmarkInstance);
-    value: string;
+    get value(): string;
+    set value(value: string);
 }

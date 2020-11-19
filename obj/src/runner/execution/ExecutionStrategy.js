@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ExecutionStrategy = void 0;
 let _ = require('lodash');
 class ExecutionStrategy {
     constructor(configuration, results, execution, benchmarks) {

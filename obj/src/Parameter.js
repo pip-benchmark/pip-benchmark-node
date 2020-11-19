@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Parameter = void 0;
 const Converter_1 = require("./utilities/Converter");
 class Parameter {
     constructor(name, description, defaultValue) {

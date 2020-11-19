@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BenchmarkInstance = void 0;
 const PassiveBenchmark_1 = require("../../PassiveBenchmark");
 class BenchmarkInstance {
     constructor(suite, benchmark) {

@@ -4,10 +4,11 @@ export declare class Parameter {
     private _defaultValue;
     private _value;
     constructor(name: string, description: string, defaultValue: string);
-    readonly name: string;
-    readonly description: string;
-    readonly defaultValue: string;
-    value: string;
+    get name(): string;
+    get description(): string;
+    get defaultValue(): string;
+    get value(): string;
+    set value(value: string);
     getAsString(): string;
     getAsNullableString(): string;
     getAsStringWithDefault(defaultValue: string): string;

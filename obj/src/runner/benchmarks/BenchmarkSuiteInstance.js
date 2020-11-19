@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BenchmarkSuiteInstance = void 0;
 var _ = require('lodash');
 var async = require('async');
 const BenchmarkInstance_1 = require("./BenchmarkInstance");
